@@ -16,21 +16,21 @@
 
 <body>
     <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-dark navbar-bg shadow">
+        <nav class="navbar navbar-expand-lg navbar-dark navbar-bg shadow " style="z-index: 9999;">
             <div class="container">
                 <a class="navbar-brand" href="index.html">
                     <img src="img/logo_small.png" width="30" height="30" class="d-inline-block align-top" alt="" />
                     Phoenix
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                     <ul class="navbar-nav d-flex">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                            <a class="nav-link" aria-current="page" href="index.html">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="https://github.com/pazvanti/Phoenix/">Source Code</a>
@@ -38,19 +38,21 @@
                         <li class="nav-item">
                             <a class="nav-link" href="https://github.com/pazvanti/Phoenix/issues">Roadmap and issues</a>
                         </li>
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown active">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
+                               data-bs-toggle="dropdown" aria-expanded="false">
                                 Documentation
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Getting started</a></li>
-                                <li><a class="dropdown-item" href="#">Configuration</a></li>
-                                <li><a class="dropdown-item" href="#">The special `@` character</a></li>
+                                <li><a class="dropdown-item" href="gettingStarted.html">Getting started</a></li>
+                                <li><a class="dropdown-item" href="configuration.html">Configuration</a></li>
+                                <li><a class="dropdown-item" href="specialChar.html">The special `@` character</a></li>
+                                <li><a class="dropdown-item" href="phoenixResponse.html">The Phoenix Response</a></li>
+                                <li><a class="dropdown-item" href="fragmentRetrieval.html">Fragment retrieval</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" href="#">Syntax and Elements</a></li>
+                                <li><a class="dropdown-item" href="elements.html">Syntax and Elements</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
@@ -155,7 +157,7 @@
         <div class="row content-two shadow">
             <div class="col-12 mt-2">
                 <h4 class="text-white">Easy to learn</h4>
-                <h6 class="text-white">Phoenix uses only the <code>@</code> special character to insert Java code inside your template</h4>
+                <h6 class="text-white">Phoenix uses only the <code>@</code> special character to insert Java code inside your template</h6>
                 <div class="col-6">
                     
                 </div>
