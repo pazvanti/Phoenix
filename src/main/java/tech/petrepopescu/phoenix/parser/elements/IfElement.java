@@ -1,0 +1,32 @@
+package tech.petrepopescu.phoenix.parser.elements;
+
+import org.apache.commons.lang3.StringUtils;
+import tech.petrepopescu.phoenix.parser.ElementFactory;
+
+import java.util.List;
+
+public class IfElement extends NestedElement {
+    public IfElement(List<String> fileLines, int lineIndex, ElementFactory elementFactory, String builderName) {
+        super(fileLines, lineIndex, elementFactory, "if", builderName);
+    }
+
+    public IfElement(List<String> fileLines, int lineIndex, ElementFactory elementFactory, String type, String builderName) {
+        super(fileLines, lineIndex, elementFactory, type, builderName);
+    }
+
+    @Override
+    public StringBuilder write() {
+        this.contentBuilder.append(StringUtils.repeat('\t', this.numTabs)).append(type).append(" (").append(statement).append(") {\n");
+        for (Element element:this.nestedElements) {
+            this.contentBuilder.append(element.write());
+        }
+        this.contentBuilder.append(StringUtils.repeat('\t', this.numTabs)).append("}");
+        if (!(nextElement instanceof ElseElement || nextElement instanceof ElseIfElement)) {
+            this.contentBuilder.append("\n");
+        }
+        if (this.nextElement != null) {
+            this.contentBuilder.append(this.nextElement.write());
+        }
+        return this.contentBuilder;
+    }
+}

@@ -1,0 +1,21 @@
+@import java.util.List;
+
+@args(int a, int b, List<String> myList)
+<head>
+    <title>Test page</title>
+</head>
+<body>
+    <p>a + b = @a + @b = @(a + b)</p>
+
+    <p>List item is: @myList.get(1)</p>
+    @with (strVal = myList.get(1)) {
+        <p>Sum = @(a + Integer.valueOf(strVal))</p>
+    }
+
+    @myContent => {
+        <p>A is @a</p>
+        <p>B is @b</p>
+    }
+
+    @myContent
+</body>

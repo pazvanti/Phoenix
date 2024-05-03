@@ -1,0 +1,27 @@
+@import java.util.List;
+
+@args(int a, int b)
+<head>
+    <title>Test page</title>
+    <link href="@asset.path("\css\mycss.css")" rel="stylesheet" />
+</head>
+@* This is a simple comment on one line *@
+
+@*
+    This is a complex comment
+    on multiple lines
+*@
+<body>
+    @users.fragment.template()
+    @if(a == 0) {
+    <h6>@b</h6>
+    }
+
+    @if(b == 0) {<h6>AAAA</h6>}
+
+    @for (int count = 0; count < 10; count++) {
+        <span>@count</span>
+    }
+
+    <p>My email is test@@localhost.test</p>
+</body>

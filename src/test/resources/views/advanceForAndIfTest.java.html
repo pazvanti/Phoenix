@@ -1,0 +1,30 @@
+@import java.util.List;
+
+@args(int a, int b, List<String> myList)
+
+<head>
+    <title>Test page</title>
+</head>
+<body>
+    <h5>A more complex test case for IF and FOR</h5>
+    @if (a == 0) {
+        @if (b == 0) {
+            <p>Both are 0</p>
+            @for(int count = 0; count<myList.size(); count++) {
+                <p>@myList.get(count)</p>
+            }
+        } else {
+            <p>b is not 0</p>
+            @for(int count = 0; count<b; count++) {
+                <p>With b=@b</p>
+                <p>@myList.get(count)</p>
+            }
+        }
+    } else {
+        <p>a is not 0</p>
+        @for(int count = 0; count<myList.size(); count++) {
+            <p>With a=@a</p>
+            <p>@myList.get(count)</p>
+        }
+    }
+</body>

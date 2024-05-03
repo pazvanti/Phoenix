@@ -1,0 +1,50 @@
+@import java.util.List;
+
+@args(int a, List<String> myList, int b)
+
+<head>
+    <title>Test page</title>
+</head>
+<body>
+    <h5>First IF</h5>
+    @for(int count = 0; count<myList.size(); count++) {
+        <span>@myList.get(count)</span>
+    }
+    <hr />
+
+    <h5>Second IF</h5>
+    @for(String item: myList) {
+        <span>@item</span>
+    }
+    <hr />
+
+    <h5>Third IF</h5>
+    @for((itt, item):myList) {
+        <span>@itt.index() : @item</span>
+    }
+    <hr />
+
+
+    <h5>Simple IF</h5>
+    @if (a == 0) {
+        <p>Zero</p>
+    }
+    <hr />
+
+    <h5>If-else</h5>
+    @if(a == b) {
+        <p>Equal</p>
+    } else {
+        <p>Not equal</p>
+    }
+    <hr />
+
+    <h5>Complex if</h5>
+    @if (a < myList.size()) {
+        <p>Smaller</p>
+    } else if (a == myList.size()) {
+        <p>Equal</p>
+    } else {
+        <p>Bigger</p>
+    }
+</body>

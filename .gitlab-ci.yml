@@ -1,0 +1,45 @@
+image: gradle:jdk17
+before_script:
+  - chmod +x ./gradlew
+
+stages:          # List of stages for jobs, and their order of execution
+  - build
+  - test
+  - publish
+
+cache:
+  paths:
+    - .gradle/wrapper
+    - .gradle/caches
+
+build:
+  stage: build
+  script:
+    - ./gradlew assemble
+  artifacts:
+    paths:
+      - build/libs/*-plain.jar
+    expire_in: 2 week
+  only:
+    - tags
+
+test:
+  stage: test
+  script:
+    - ./gradlew test
+  artifacts:
+    when: always
+    reports:
+      junit: 
+        - build/test-results/test/**/TEST-*.xml
+
+publish:
+  stage: publish
+  script:
+    - echo "Preparing for publish"
+    - ./gradlew assemble
+  only:
+    - tags
+
+after_script:
+  - echo "End CI"

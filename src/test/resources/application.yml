@@ -1,0 +1,4 @@
+phoenix:
+  controllersPackage: "test.controllers"
+  views:
+    path: src/test/resources/views
