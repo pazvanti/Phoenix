@@ -1,0 +1,55 @@
+body {
+    min-height: 100%;
+    background: linear-gradient(to right, #452F6E, #A357A7);
+}
+
+.shadow {
+    filter: drop-shadow(5px 5px 10px #000000);
+}
+
+.content-one {
+    background: linear-gradient(to right, #262C35, #090a0c);
+}
+
+.content-two {
+    background: linear-gradient(to right, #484b50, #7c8596);
+}
+
+
+.nav-link.active {
+    text-decoration: underline;
+    text-decoration-color: #E86E2A;
+    text-underline-offset: 3px;
+    /* Adjust the offset value as needed */
+    text-decoration-thickness: 2px;
+    /* Adjust the thickness value as needed */
+}
+
+.navbar-bg {
+    background: linear-gradient(to right, #191B22, #31353F);
+}
+
+.homepage-header {
+    min-height: 550px;
+    background-image: url(../img/homepage_header.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+}
+
+.btn-primary {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #F06024;
+    --bs-btn-border-color: #F06024;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #cf470d;
+    --bs-btn-hover-border-color: #e76932;
+    --bs-btn-focus-shadow-rgb: 49, 132, 253;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #e76932;
+    --bs-btn-active-border-color: #df5419;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #F06024;
+    --bs-btn-disabled-border-color: #F06024;
+}
