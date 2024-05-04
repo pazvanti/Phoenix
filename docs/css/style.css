@@ -89,3 +89,47 @@ body {
 .nav-link-tabs:hover {
     color: #ffffff;
 }
+
+.elements_ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.elements_li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    list-style-image: url(../img/orb.png);
+    list-style-position: inside;
+}
+
+.elements_li::before {
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url(../img/orb.png);
+    background-size: cover;
+    margin-right: 10px;
+  }
+
+.elements_li a {
+    color: white;
+    text-decoration: none;
+}
+
+.elements_li a:hover {
+    color: #df5419;
+    text-decoration-color: #df5419;
+    text-decoration: underline;
+}
+
+.element_title::before {
+    content: "";
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background-image: url(../img/orb.png);
+    background-size: cover;
+    margin-right: 5px;
+}
