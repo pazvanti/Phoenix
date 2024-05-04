@@ -12,7 +12,7 @@ body {
 }
 
 .content-two {
-    background: linear-gradient(to right, #484b50, #7c8596);
+    background: linear-gradient(to right, #0c0d0e, #121213);
 }
 
 
@@ -52,4 +52,40 @@ body {
     --bs-btn-disabled-color: #fff;
     --bs-btn-disabled-bg: #F06024;
     --bs-btn-disabled-border-color: #F06024;
+}
+
+.featured_bullet {
+    background-image: url(../img/orb.png);
+    background-size: 90px 90px;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-width: 90px;
+    min-height: 90px;
+    text-align: center;
+    font-size: 26pt;
+    padding-top: 20px;
+}
+
+.featured_bullet2 {
+    background-image: url(../img/orb2.png);
+    background-size: 90px 90px;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-width: 90px;
+    min-height: 90px;
+    text-align: center;
+    font-size: 20pt;
+    padding-top: 36px;
+}
+
+.nav-pills .nav-link.active {
+    background-color: #cf470d;
+}
+
+.nav-link-tabs {
+    color: #df5419;
+}
+
+.nav-link-tabs:hover {
+    color: #ffffff;
 }
