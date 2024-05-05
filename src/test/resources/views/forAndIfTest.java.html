@@ -6,19 +6,19 @@
     <title>Test page</title>
 </head>
 <body>
-    <h5>First IF</h5>
+    <h5>First for</h5>
     @for(int count = 0; count<myList.size(); count++) {
         <span>@myList.get(count)</span>
     }
     <hr />
 
-    <h5>Second IF</h5>
+    <h5>Second for</h5>
     @for(String item: myList) {
         <span>@item</span>
     }
     <hr />
 
-    <h5>Third IF</h5>
+    <h5>Third for</h5>
     @for((itt, item):myList) {
         <span>@itt.index() : @item</span>
     }

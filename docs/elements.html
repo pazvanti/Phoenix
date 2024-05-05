@@ -92,7 +92,7 @@
                 </ul>
             </div>
             <div class="col-md-8 mt-4 text-white">
-                <h4>THe Phoenix Syntax and Template Elements</h4>
+                <h4>The Phoenix Syntax and Template Elements</h4>
                 <p>In most cases, Phoenix will have the exact same syntax as Java, with the addition of the
                     <code>@</code> character being pre-pended to the statement. The <code>@</code> character must be
                     added directly adjetant to the statement, without any whitespaces.
@@ -106,13 +106,21 @@
 
 @args(int a, String b)
 
-@if(a == 0)
+@if(a == 0) {
 
-@if (a == 0)
+}
 
-@for(int count = 0; count&lt;4; count++)
+@if (a == 0) {
 
-@for (int count = 0; count&lt;4; count++)
+}
+
+@for(int count = 0; count&lt;4; count++) {
+
+}
+
+@for (int count = 0; count&lt;4; count++) {
+
+}
                             </code>
                         </pre>
                     </div>
@@ -125,12 +133,24 @@
 @ args(int a, String b)
 
 @ if(a == 0)
+{
+
+}
 
 @ if (a == 0)
+{
+
+}
 
 @ for(int count = 0; count&lt;4; count++)
+{
+
+}
 
 @ for (int count = 0; count&lt;4; count++)
+{
+
+}
                             </code>
                         </pre>
                     </div>
@@ -168,6 +188,11 @@
                         <pre>
                                 <code class="language-java">
 &lt;p&gt;My text&lt;/p&gt;@if(a == 0) {
+    &lt;p&gt;A is Zero&lt;/p&gt;
+}
+
+@if(a == 0) 
+{
     &lt;p&gt;A is Zero&lt;/p&gt;
 }
 
@@ -330,6 +355,100 @@ else {even}&quot;&gt;@if (item.getChange() &lt; 0.0) {
     Sum of @a and @b = @(a + b)
 &lt;/p&gt;
 &lt;a href=&quot;@(myPageName).html&quot;&gt;It holds another URL&lt;/a&gt;
+                        </code>
+                    </pre>
+                </div>
+                <div id="comments">
+                    <h5 class="element_title">Adding comments to your template: <code>@* *@</code></h5>
+                    <p>
+                        As with any modern programming language, hgaving comments in your code can be very usefull.
+                        Obviously, you could add traditional HTML comments, however these will be present in the final
+                        rendered HTML. If you want to have comments that will simply be ignored, you can do this using
+                        <code>@* *@</code>. The parser will simply ignore anything that is between the comment
+                        identifiers. Comments can be on a single line or on multiple lines. See examples below.
+                    </p>
+                    <pre>
+                        <code class="language-html">
+@* This is a simple comment on one line *@
+
+@*
+    This is a complex comment
+    on multiple lines
+*@
+                        </code>
+                    </pre>
+                </div>
+                <div id="for">
+                    <h5 class="element_title">For loops: <code>@for()</code></h5>
+                    <p>
+                        Phoenix supports <code>for</code> loops in a similar way Java does. You can define a loop using
+                        the <code>@for</code> syntax and use a counter to itterate between elements as well as a
+                        <code>for-in</code>. <code>For</code> statements must start on a new line, with the opening
+                        curly bracket (<code>{</code>) being on the same line. Furthermore, the ending curly bracket
+                        <code>}</code> should be on a seperate, empty line.
+                    </p>
+                    <div class="alert alert-warning" role="alert">
+                        At the moment, <code>for</code> statemnt inside JavaScript code that also uses curly brackets may break parsing.
+                    </div>
+                    <div class="row">
+                        <div class="col-md-7">
+                            <pre>
+                                <code class="language-html">
+@for(int count = 0; count&lt;myList.size(); count++) {
+    &lt;span&gt;@myList.get(count)&lt;/span&gt;
+}
+                                </code>
+                            </pre>
+                        </div>
+                        <div class="col-md-5">
+                            <pre>
+                                <code class="language-html">
+@for(String item: myList) {
+    &lt;span&gt;@item&lt;/span&gt;
+}
+                                </code>
+                            </pre>
+                        </div>
+                    </div>
+                    <p>
+                        Furthermore, Phoenix supports a <code>for-with-iterator</code> where in addition to the item
+                        being returned from the collection, an itterator is also being returned which can provide the
+                        index.
+                    </p>
+                    <pre>
+                        <code class="language-html">
+@for((itt, item):myList) {
+    &lt;span&gt;@itt.index() : @item&lt;/span&gt;
+}
+                        </code>
+                    </pre>
+                </div>
+                <div id="for">
+                    <h5 class="element_title">Conditionals: <code>@if</code>, <code> @if-else</code>,
+                        <code> @if-else if-else</code>
+                    </h5>
+                    <p>
+                        Phoenix supports standard Java <code>if</code> conditionals along with <code>if-else</code> and
+                        <code>if-else if-else</code> statements. The left curly bracket <code>{</code> must be on the
+                        same line with the statment. Phoenix allows the <code>if</code> statment to be inline completly
+                        or have the <code>if</code> statement on a new line.
+                    </p>
+                    <div class="alert alert-warning" role="alert">
+                        At the moment, <code>if</code> statemnt inside JavaScript code that also uses curly brackets may break parsing.
+                    </div>
+                    <pre>
+                        <code>
+&lt;tr class=&quot;@if (i.index() % 2 == 0) {odd} else {even}&quot;&gt;
+&lt;/tr&gt;
+
+&lt;h5&gt;Complex if&lt;/h5&gt;
+@if (a &lt; myList.size()) {
+    &lt;p&gt;Smaller&lt;/p&gt;
+} else if (a == myList.size()) {
+    &lt;p&gt;Equal&lt;/p&gt;
+} else {
+    &lt;p&gt;Bigger&lt;/p&gt;
+}
                         </code>
                     </pre>
                 </div>
