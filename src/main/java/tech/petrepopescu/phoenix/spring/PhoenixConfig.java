@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import tech.petrepopescu.phoenix.controllers.FragmentController;
 import tech.petrepopescu.phoenix.parser.ElementFactory;
@@ -19,7 +18,6 @@ import tech.petrepopescu.phoenix.spring.config.PhoenixConfiguration;
 
 import java.util.List;
 
-@EnableWebMvc
 @Configuration
 @EnableConfigurationProperties
 @Import({SecurityConfig.class, PhoenixMessageConverter.class, RouteGenerator.class, Compiler.class, ElementFactory.class,

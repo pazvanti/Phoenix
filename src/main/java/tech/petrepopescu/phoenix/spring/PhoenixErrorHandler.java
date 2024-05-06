@@ -7,14 +7,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import tech.petrepopescu.phoenix.format.Result;
 import tech.petrepopescu.phoenix.spring.config.PhoenixConfiguration;
 import tech.petrepopescu.phoenix.views.View;
 import tech.petrepopescu.phoenix.views.predefined.View404;
 import tech.petrepopescu.phoenix.views.predefined.View500;
 
-@EnableWebMvc
 @ControllerAdvice
 public class PhoenixErrorHandler {
     private final View404 view404 = new View404();
