@@ -62,7 +62,7 @@ public class ForWithIteratorElement extends NestedElement {
         if (indexOfCollectionNameStart < 1) {
             indexOfCollectionNameStart = StringUtils.indexOf(declarationString, " in ") + 4;
         }
-        int indexOfCollectionNameEnd = StringUtils.indexOf(declarationString, ")");
+        int indexOfCollectionNameEnd = StringUtils.lastIndexOf(declarationString, ")");
         this.collectionName = StringUtils.trim(StringUtils.substring(declarationString, indexOfCollectionNameStart, indexOfCollectionNameEnd));
     }
 
