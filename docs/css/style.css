@@ -133,3 +133,14 @@ body {
     background-size: cover;
     margin-right: 5px;
 }
+
+.benchmark {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden
+}
+.benchmark img {
+  height: 100%;
+  width: 100%;
+}
