@@ -260,6 +260,13 @@
                                                 d="M12 13a1 1 0 1 0 0-2a1 1 0 0 0 0 2m9 4v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2M21 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2" />
                                         </g>
                                     </svg></span>Phoenix View and Result</button>
+                            <button class="nav-link nav-link-tabs" id="v-pill-route-tab" data-bs-toggle="pill"
+                                data-bs-target="#v-pill-route" type="button" role="tab" aria-controls="v-pill-route"
+                                aria-selected="true"><span><svg xmlns="http://www.w3.org/2000/svg" width="1em"
+                                        height="1em" viewBox="0 0 24 24">
+                                        <path fill="currentColor"
+                                            d="M19 15.18V7c0-2.21-1.79-4-4-4s-4 1.79-4 4v10c0 1.1-.9 2-2 2s-2-.9-2-2V8.82C8.16 8.4 9 7.3 9 6c0-1.66-1.34-3-3-3S3 4.34 3 6c0 1.3.84 2.4 2 2.82V17c0 2.21 1.79 4 4 4s4-1.79 4-4V7c0-1.1.9-2 2-2s2 .9 2 2v8.18A2.996 2.996 0 0 0 18 21c1.66 0 3-1.34 3-3c0-1.3-.84-2.4-2-2.82M6 7c-.55 0-1-.45-1-1s.45-1 1-1s1 .45 1 1s-.45 1-1 1m12 12c-.55 0-1-.45-1-1s.45-1 1-1s1 .45 1 1s-.45 1-1 1" />
+                                    </svg></span>Reverse Routing</button>
                         </div>
                         <div class="tab-content" id="v-pills-tabContent">
                             <div class="tab-pane fade show active text-white" id="v-pill-syntax" role="tabpanel"
@@ -378,6 +385,43 @@ public class TestController {
                                         </code>
                                     </pre>
                             </div>
+                            <div class="tab-pane fade text-white" id="v-pill-route" role="tabpanel"
+                                aria-labelledby="v-pill-route-tab">
+                                <h4 class="text-white">Reverse routing for your controllers</h4>
+                                <p>Phoenix will calcualte the URLs from your controllers and will provide an easy way of
+                                    inserting the URLs inside your template. And yes, dinamic URLs are supported, with
+                                    <code>PathVariable</code> and <code>Requestparam</code>. If the URL of your endpoint
+                                    changes you won't need to make any changes to your templates.
+                                </p>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <h6>TestController.java</h6>
+                                        <pre>
+                                            <code class="language-java">
+@Controller
+public class TestController {
+
+    @GetMapping("/test.html")
+    public Result renderTest(@RequestParam(name = "a", defaultValue = "0") int a,
+                                @RequestParam(name = "b", defaultValue = "0") int b) {
+        return ok(View.of("test", a, b));
+    }
+}
+                                            </code>
+                                        </pre>
+                                    </div>
+                                    <div class="col-6">
+                                        <h6>main.java.html</h6>
+                                        <pre>
+                                            <code class="language-html">
+&lt;a href="@routes.TestController.renderTest(0, 3)"&gt;
+    Go to this page
+&lt;/a&gt;
+                                            </code>
+                                        </pre>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -389,9 +433,12 @@ public class TestController {
             </div>
             <div class="col-md-6 mt-2 text-white">
                 <h4 class="text-center text-white">Want to support the project?</h4>
-                <p>If you want to support the project in any way, feel free to contact me using the contact form from my blog. Phoenix is still in it's early stages and more work is needed to make it production ready, so any support is greatly appreciated</p>
+                <p>If you want to support the project in any way, feel free to contact me using the contact form from my
+                    blog. Phoenix is still in it's early stages and more work is needed to make it production ready, so
+                    any support is greatly appreciated</p>
                 <p>Considering offering financial support? Message me and we can talk about this as well.</p>
-                <p>Want to use Phoenix for your projects? GREAT! Share with us the link to your project/company and we may feature it.</p>
+                <p>Want to use Phoenix for your projects? GREAT! Share with us the link to your project/company and we
+                    may feature it.</p>
             </div>
         </div>
     </div>

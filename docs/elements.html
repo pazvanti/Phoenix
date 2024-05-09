@@ -86,7 +86,7 @@
                     <li class="elements_li"><a href="#with">Variable declaration: @with</a></li>
                     <li class="elements_li"><a href="#template">Calling templates/fragments:
                             @templateName.template()</a></li>
-                    <li class="elements_li"><a href="#contentBlocks">Content blocks: @myContent -> {}</a></li>
+                    <li class="elements_li"><a href="#contentBlocks">Content blocks: @myContent => { }</a></li>
                     <li class="elements_li"><a href="#route">Reverse-routing: @routes.</a></li>
                     <li class="elements_li"><a href="#csrf">CSRF protection: @csrf.meta and @csrf.input</a></li>
                 </ul>
@@ -388,7 +388,8 @@ else {even}&quot;&gt;@if (item.getChange() &lt; 0.0) {
                         <code>}</code> should be on a seperate, empty line.
                     </p>
                     <div class="alert alert-warning" role="alert">
-                        At the moment, <code>for</code> statemnt inside JavaScript code that also uses curly brackets may break parsing.
+                        At the moment, <code>for</code> statemnt inside JavaScript code that also uses curly brackets
+                        may break parsing.
                     </div>
                     <div class="row">
                         <div class="col-md-7">
@@ -434,10 +435,11 @@ else {even}&quot;&gt;@if (item.getChange() &lt; 0.0) {
                         or have the <code>if</code> statement on a new line.
                     </p>
                     <div class="alert alert-warning" role="alert">
-                        At the moment, <code>if</code> statemnt inside JavaScript code that also uses curly brackets may break parsing.
+                        At the moment, <code>if</code> statemnt inside JavaScript code that also uses curly brackets may
+                        break parsing.
                     </div>
                     <pre>
-                        <code>
+                        <code class="language-html">
 &lt;tr class=&quot;@if (i.index() % 2 == 0) {odd} else {even}&quot;&gt;
 &lt;/tr&gt;
 
@@ -451,6 +453,214 @@ else {even}&quot;&gt;@if (item.getChange() &lt; 0.0) {
 }
                         </code>
                     </pre>
+                </div>
+                <div id="with">
+                    <h5 class="element_title">Variable declaration: <code>@with</code></h5>
+                    <p>
+                        In certain scenarios you would like to declare a new variable that holds the refference to an
+                        element received from a method call, like an element from within a list, and to reuse it without
+                        the need to do multiple calls to the getter. This is why Phoenix supports declaring a variable
+                        using the <code>@with</code>
+                        block. The <code>@with</code> block declares a new variable and inside the block's body you can
+                        use with ease.
+                    </p>
+                    <div class="alert alert-info" role="alert">
+                        At the moment, <code>with</code> block supports declaring only one variable. Future versions
+                        will support multiple.
+                    </div>
+                    <pre>
+                        <code class="language-html">
+@with (s = values.get(0)) {
+     &lt;div&gt;Value is @s&lt;/div&gt;
+}
+                        </code>
+                    </pre>
+                </div>
+                <div id="template">
+                    <h5 class="element_title">Calling fragments: <code>@fragmentName.template()</code></h5>
+                    <p>
+                        Phoenix was conceived from the start to allow building of complex and modular web applciations.
+                        An important component in any template engine, Phoenix including, is the possiblity to have
+                        fragments or templates that can be reused and combined to create more complex web pages. Any
+                        Phoenix template can be combined with another by calling the template and providing the right
+                        parameters.
+                    </p>
+                    <p>A template is incoked by calling the <code>.template()</code> method on the template. As with
+                        invoking views, the template name is relative to the <code>views</code> directory, with
+                        <code>.</code> being used as a path separator for sub-folders.
+                    </p>
+                    <pre>
+                        <code class="language-html">
+@for(int count = 0; count&lt;2; count++) {
+    &lt;hr /&gt;
+    @fragments.testFragment.template(count)
+    &lt;span&gt;Count is @count&lt;/span&gt;
+    &lt;hr /&gt;
+}
+                        </code>
+                    </pre>
+
+                    <p>If the last argument is of type <code>PhoenixContent</code> (more on that later), the content can
+                        be provided as blocks of code inside curly brackets <code>{...}</code></p> All other parameters
+                    are provided normally, as arguments to the function call.
+                    <div class="row">
+                        <div class="col-6">
+                            <h6>fragments/withContent.java.html</h6>
+                            <pre>
+                                <code class="language-html">
+@args(int a, PhoenixContent content)
+
+&lt;h1&gt;Fragment @a&lt;/h1&gt;
+
+@content
+                                </code>
+                            </pre>
+                        </div>
+                        <div class="col-6">
+                            <h6>main.java.html</h6>
+                            <pre>
+                                <code class="language-html">
+&lt;h1&gt;Fragment is below&lt;/h1&gt;
+@fragments.withContent.template(a) {
+    &lt;p&gt;This is my text&lt;/p&gt;
+    &lt;a href="@(a).html"&gt;It holds an URL&lt;/a&gt;
+}
+                                </code>
+                            </pre>
+                        </div>
+                    </div>
+                </div>
+                <div id="contentBlocks">
+                    <h5 class="element_title">Content blocks: <code>@myContent => { }</code></h5>
+                    <p>
+                        Phoenix allows declaration of content blocks which can be reused multiple times or sent as
+                        inputs to other templates. Content blocks are reusable parts of content that are declared inside
+                        the same template. Once declared, content blocks can be refferenced and inserted just like any
+                        other variables.
+
+                        Content blocks have the type <code>PhoenixContent</code> and can be input parameters for other
+                        templates.
+                    </p>
+                    <pre>
+                        <code class="language-html">
+@myContent =&gt; {
+    &lt;p&gt;This is my var&lt;/p&gt;
+    &lt;a href="@a"&gt;It holds a URL&lt;/a&gt;
+}
+
+&lt;hr /&gt;
+@myContent 
+&lt;hr /&gt;
+                        </code>
+                    </pre>
+                </div>
+                <div id="route">
+                    <h5 class="element_title">Reverse routing: <code>@route</code></h5>
+                    <p>
+                        One advantage that Phoenix has over other templates engines is the presence of route elements
+                        and reverse routing calculated at compile time. Any endpoint declared in your controllers will
+                        create a route which incldues the URL, path variables and request attributes. All controllers
+                        that are defined in the configured package will be included and Pheonix currently supports
+                        ellements annotated with <code>@GetMapping</code>, <code>@PostMapping</code> and
+                        <code>@PutMapping</code>.
+                    </p>
+                    <p>The route can have multiple arguments . First, all <code>PathVariable</code> arguments are added
+                        in the defined order, followed by <code>RequestParam</code> attributes, also in the defined
+                        order. A route can be easilly invoked using the <code>@route</code> element, followed by the
+                        controller name and method name.</p>
+                    <div class="alert alert-info" role="alert">
+                        At the moment all parameters need to be provided when calling a route. In the future, default
+                        parameters may be supported by providing multiple overloaded methods.
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <h6>TestController.java</h6>
+                            <pre>
+                                <code class="language-java">
+@Controller
+public class TestController {
+
+    @GetMapping("/test.html")
+    public Result renderTest(@RequestParam(name = "a", defaultValue = "0") int a,
+                             @RequestParam(name = "b", defaultValue = "0") int b) {
+        return ok(View.of("test", a, b));
+    }
+}
+                                </code>
+                            </pre>
+                        </div>
+                        <div class="col-6">
+                            <h6>main.java.html</h6>
+                            <pre>
+                                <code class="language-html">
+&lt;a href="@routes.TestController.renderTest(0, 3)"&gt;
+    Go to this page
+&lt;/a&gt;
+                                </code>
+                            </pre>
+                        </div>
+                    </div>
+                </div>
+                <div id="csrf">
+                    <h5 class="element_title">CSRF protection: <code>@csrf.meta</code> and <code>@csrf.input</code></h5>
+                    <p>
+                        Phoenix provides an easy way of adding CSRF tokens to your web page, either via a hidden input
+                        or using meta tags. This is done using the <code>@csrf.input</code> or <code>@csrf.meta</code>
+                        respectivly.
+                    </p>
+                    <p>The <code>@csrf.input</code> will generate a hidden input field with the name <code>_csrf</code>
+                        and populated with the CSRF token provided by Spring.</p>
+                    <p>The <code>@csrf.meta</code> will generate two meta tags. The first will have the name
+                        <code>_csrf</code> and the content the CSRF token provided by Spring. The second one will have
+                        the name <code>_csrf_header</code> and the content the CSRF header name, provided by Spring. Additionally, you
+                        can provide an optional parameter to the <code>csrf.meta(false)</code>, which will skip
+                        generation for the <code>_csrf_header</code> meta element.
+                    </p>
+                    <p></p>
+                    <div class="row">
+                        <h6>CSRF Input</h6>
+                        <div class="row">
+                            <div class="col-6">
+                                <i>Phoenix element</i>
+                                <pre>
+                                    <code class="language-java">
+@csrf.input
+                                    </code>
+                                </pre>
+                            </div>
+                            <div class="col-6">
+                                <i>Example generated HTML code</i>
+                                <pre>
+                                    <code>
+&lt;input type="hidden" name="_csrf" 
+    value="1KkX7eTEipXipsECVmNW1ayt5nw_7Evxo7sj5FLGgZd1_A74sZ8hjNChv_DPk_EwN05i4JzOy0Ve23jclo5BhTanuK9Ezm-a"&gt;
+                                    </code>
+                                </pre>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <h6>CSRF meta</h6>
+                            <div class="row">
+                                <div class="col-6">
+                                    <i>Phoenix element</i>
+                                    <pre>
+                                        <code class="language-java">
+@csrf.meta
+                                        </code>
+                                    </pre>
+                                </div>
+                                <div class="col-6">
+                                    <i>Example generated HTML code</i>
+                                    <pre>
+                                        <code>
+&lt;meta name="_csrf" content="1KkX7eTEipXipsECVmNW1ayt5nw_7Evxo7sj5FLGgZd1_A74sZ8hjNChv_DPk_EwN05i4JzOy0Ve23jclo5BhTanuK9Ezm-a"&gt;
+&lt;meta name="_csrf_header" content="X-CSRF-TOKEN"&gt;
+                                        </code>
+                                    </pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

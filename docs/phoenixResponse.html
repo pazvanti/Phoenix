@@ -111,6 +111,13 @@ public class TestController {
 }
                         </code>
                     </pre>
+
+                    <p>The view name is relative to the <code>views</code> directory, with <code>.</code> being used as
+                        path separator. templates that are directly in the <code>views</code> directory will be
+                        refferenced by the name, while those that are in sub-directories will have the directory path
+                        pre-pendend.</p>
+                    <p>Example: <code>View.of("myView")</code></p>
+                    <p>Example: <code>View.of("subFolder.myScondView")</code></p>
                 </div>
             </div>
         </div>
