@@ -326,8 +326,8 @@ else {even}&quot;&gt;@if (item.getChange() &lt; 0.0) {
                 </div>
                 <div id="raw">
                     <h5 class="element_title">Automatic escaping or printing HTML code</h5>
-                    <p>By default, all variables printed are escaped using HTML4 escaping provided by Apache Commons
-                        Text. This way the rendered pages are protected from code injection via persisting data that
+                    <p>By default, all variables printed are escaped. This way the rendered pages are protected from code
+                        injection via persisting data that
                         eventually get's transmitted to the template.</p>
                     <p>However, there are scenarios where you would actually want to send HTML code to the template and
                         have it rendered as HTML. This is where the <code>@raw</code> element comes in. The variable or
@@ -612,7 +612,8 @@ public class TestController {
                         and populated with the CSRF token provided by Spring.</p>
                     <p>The <code>@csrf.meta</code> will generate two meta tags. The first will have the name
                         <code>_csrf</code> and the content the CSRF token provided by Spring. The second one will have
-                        the name <code>_csrf_header</code> and the content the CSRF header name, provided by Spring. Additionally, you
+                        the name <code>_csrf_header</code> and the content the CSRF header name, provided by Spring.
+                        Additionally, you
                         can provide an optional parameter to the <code>csrf.meta(false)</code>, which will skip
                         generation for the <code>_csrf_header</code> meta element.
                     </p>
