@@ -20,7 +20,7 @@ public class VariableElement extends Element {
         if ("String".equals(VariableRegistry.getInstance().getType(fileName, variableName))) {
             this.evalExpression = "StringEscapeUtils.escapeHtml4(" + variableName + ")";
         } else if (StringUtils.contains(variableName, "(")) {
-            this.evalExpression = "StringEscapeUtils.escapeHtml4(String.valueOf(" + variableName + "))";
+            this.evalExpression = "Stringifier.toString(" + variableName + ")";
         } else {
             this.evalExpression = variableName;
         }

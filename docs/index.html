@@ -74,7 +74,7 @@
                 <div class="col-5 mt-5 ms-4">
                     <h1 class="text-white">Fast, Modular, Easy-to-learn</h1>
                     <p class="text-white lead">
-                        Build complex and modular web pages for your Spring Boot application using the Phoenix Tempalte
+                        Build complex and modular web pages for your Spring Boot application using the Phoenix Template
                         Engine. You can use the already-familiar Java syntax inside your HTML templates.
                     </p>
                     <p class="text-white lead">
@@ -105,10 +105,10 @@
                                 </svg></div>
                             <h5 class="text-white text-center align-middle lead"><span class="align-middle">The
                                     <code>`@`</code> character </span></h5>
-                            <p class="text-white">Only one special character, <code>`@`</code>, is used to differenciate
+                            <p class="text-white">Only one special character, <code>`@`</code>, is used to distinguish
                                 between HTML
-                                and Java code. You can easilly insert <code>for</code> or <code>if</code>, using only
-                                the <code>@</code> chracter before them. And many more...</p>
+                                and Java code. You can easily insert <code>for</code> or <code>if</code>, using only
+                                the <code>@</code> character before them. And many more...</p>
                         </div>
                     </div>
                     <div class="col-md-4 p-4">
@@ -122,7 +122,7 @@
                             <h5 class="text-white text-center align-middle lead"><span class="align-middle">Create
                                     modular templates</span></h5>
                             <p class="text-white">You can easilly define fragments or templates that can be reused and
-                                imported inside other templates. Furthermore, you can send HTML content blocks as input
+                                imported inside other templates. Further more, you can send HTML content blocks as input
                                 parameters.</p>
                         </div>
                     </div>
@@ -148,9 +148,9 @@
                                     <path fill="currentColor"
                                         d="M10.758 15.192q.452.452 1.18.415q.73-.038 1.078-.515l5.253-7.323l-7.361 5.216q-.496.334-.559 1.035t.409 1.172M5.1 19q-.28 0-.512-.141q-.232-.142-.392-.386q-.592-1.021-.894-2.158T3 14q0-1.864.71-3.506q.711-1.642 1.927-2.857Q6.852 6.42 8.494 5.71T12 5q1.858 0 3.485.698t2.852 1.901t1.938 2.817t.72 3.472q.005 1.24-.294 2.409t-.903 2.253q-.14.244-.382.347q-.241.103-.522.103z" />
                                 </svg></div>
-                            <h5 class="text-white text-center align-middle lead"><span class="align-middle">Fast rendering</span></h5>
+                            <h5 class="text-white text-center align-middle lead"><span class="align-middle">Fast, fast and fast</span></h5>
                             <p class="text-white">Phoenix templates are compiled into Java classes. This means that they
-                                are fast. Phoenix is still in early developemnt, however it features promissing results
+                                are fast. Phoenix is still in early development, however it features promising results
                                 compared to other popular template engines. The resulting
                                 HTML page is quickly assembled and ready to be returned from any controller using the
                                 <code>View.of()</code> syntax.
@@ -168,7 +168,7 @@
                                     routing</span></h5>
                             <p class="text-white">Phoenix supports reverse routing, meaning that endpoints are
                                 determined at runtime by the engine. If an endpoint changes in the controller you don't
-                                need to make any changes inside your template. And yes, dyanmic URLs are supported.</p>
+                                need to make any changes inside your template. And yes, dynamic URLs are supported.</p>
                         </div>
                     </div>
                     <div class="col-md-4 p-4">
@@ -181,7 +181,7 @@
                             <h5 class="text-white text-center align-middle lead"><span class="align-middle">Easy to
                                     integrate and configure</span></h5>
                             <p class="text-white">Phoenix can be integrated with any Spring Boot application. Just
-                                import the library and it's few dependencies. Configuration is also traight-forward.</p>
+                                import the library and it's few dependencies. Configuration is also straight-forward.</p>
                         </div>
                     </div>
                     <div class="col-md-4 p-4">
@@ -193,7 +193,7 @@
                                 </svg></div>
                             <h5 class="text-white text-center align-middle lead"><span class="align-middle">Rocker
                                     compatible</span></h5>
-                            <p class="text-white">Phoenix is almost 100% compatible with Rocker tempalte engine (WIP to
+                            <p class="text-white">Phoenix is almost 100% compatible with Rocker template engine (WIP to
                                 achieve full-compatibility) while offering more features. Migrate
                                 your existing webapps that use Rocker in just a few minutes!</p>
                         </div>
@@ -305,8 +305,8 @@
                                 aria-labelledby="v-pill-templates-tab">
                                 <h4 class="text-white">Define reusable templates</h4>
                                 <p>Define reusable components that you can combine to create complex web pages. Send
-                                    parameters and even content blocks with ease from one tempalte to another.
-                                    Furthermore, Phoenix allows you to retrieve components from the client-side using
+                                    parameters and even content blocks with ease from one template to another.
+                                    Further more, Phoenix allows you to retrieve components from the client-side using
                                     simple GET requests.</p>
                                 <div class="col-12">
                                     <div class="row">
@@ -341,7 +341,7 @@
                                 aria-labelledby="v-pill-java-tab">
                                 <h4 class="text-white">Import and use Java classes inside your template</h4>
                                 <p>You can send instances of your Java objects from the controller to the HTML
-                                    tempalte with ease and even use Java static imports</p>
+                                    template with ease and even use Java static imports</p>
                                 <pre>
                                         <code class="language-html">
 @import java.util.List;
@@ -430,7 +430,11 @@ public class TestController {
         <div class="row content-one shadow">
             <div class="col-md-6 mt-2">
                 <h4 class="text-center text-white">Some quick benchmarks</h4>
-                <p class="text-white">Phoenix in still in eary development, but it has promissing results. Some quick benchmarks show that it is a lot faster compared to Thymeleaf. Rocker is still faster at the moment, but I hope things will improve</p>
+                <p class="text-white">Phoenix in still in eary development and things may change in the future, but at
+                    the moment it has really good benchmarks. Look at the <a href="benchmarks.html">benchmark page</a> for more details, but Phoenix
+                    may be one of the fastest template engines currently available for Spring. In my rudimentary
+                    benchmark, Phoenix completed in under 800ms, orders of magnitude faster than Thymeleaf and even
+                    slightly faster than Rocker.</p>
                 <div class="benchmark">
                     <img src="img/benchmark.png" />
                 </div>
@@ -438,7 +442,7 @@ public class TestController {
             <div class="col-md-6 mt-2 text-white">
                 <h4 class="text-center text-white">Want to support the project?</h4>
                 <p>If you want to support the project in any way, feel free to contact me using the contact form from my
-                    blog. Phoenix is still in it's early stages and more work is needed to make it production ready, so
+                    blog. Phoenix is still in its early stages and more work is needed to make it production ready, so
                     any support is greatly appreciated</p>
                 <p>Considering offering financial support? Message me and we can talk about this as well.</p>
                 <p>Want to use Phoenix for your projects? GREAT! Share with us the link to your project/company and we

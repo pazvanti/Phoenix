@@ -25,7 +25,7 @@ class VariableElementTest {
         VariableElement element = new VariableElement(List.of(line), 0, new ElementFactory(Set.of()), ElementFactory.DEFAULT_BUILDER_NAME);
         element.parse("");
 
-        String expected = "\t\tcontentBuilder.append(StringEscapeUtils.escapeHtml4(String.valueOf(a.b())));\n";
+        String expected = "\t\tcontentBuilder.append(Stringifier.toString(a.b()));\n";
 
         Assertions.assertEquals(expected, element.write().toString());
     }
@@ -36,7 +36,7 @@ class VariableElementTest {
         VariableElement element = new VariableElement(List.of(line), 0, new ElementFactory(Set.of()), ElementFactory.DEFAULT_BUILDER_NAME);
         element.parse("");
 
-        String expected = "\t\tcontentBuilder.append(StringEscapeUtils.escapeHtml4(String.valueOf(a.b().c())));\n";
+        String expected = "\t\tcontentBuilder.append(Stringifier.toString(a.b().c()));\n";
 
         Assertions.assertEquals(expected, element.write().toString());
     }
@@ -47,7 +47,7 @@ class VariableElementTest {
         VariableElement element = new VariableElement(List.of(line), 0, new ElementFactory(Set.of()), ElementFactory.DEFAULT_BUILDER_NAME);
         element.parse("");
 
-        String expected = "\t\tcontentBuilder.append(StringEscapeUtils.escapeHtml4(String.valueOf(a.b.c())));\n";
+        String expected = "\t\tcontentBuilder.append(Stringifier.toString(a.b.c()));\n";
 
         Assertions.assertEquals(expected, element.write().toString());
     }

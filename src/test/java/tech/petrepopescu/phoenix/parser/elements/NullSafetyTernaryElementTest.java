@@ -47,7 +47,7 @@ class NullSafetyTernaryElementTest {
         String line = "@myVar.myMethod()?:\"Alternative\"";
         NullSafetyTernaryElement element = new NullSafetyTernaryElement(List.of(line), 0, new ElementFactory(null), ElementFactory.DEFAULT_BUILDER_NAME);
         element.parse("");
-        String expected = "\t\tvar tmpVar_THISISUUID = StringEscapeUtils.escapeHtml4(String.valueOf(myVar.myMethod()));\n" +
+        String expected = "\t\tvar tmpVar_THISISUUID = Stringifier.toString(myVar.myMethod());\n" +
                 "\t\tif (tmpVar_THISISUUID != null) {\n" +
                 "\t\t\tcontentBuilder.append(tmpVar_THISISUUID);\n" +
                 "\t\t} else {\n" +

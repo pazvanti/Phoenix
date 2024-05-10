@@ -144,3 +144,42 @@ body {
   height: 100%;
   width: 100%;
 }
+
+table.benchmarks {
+    border: 4px solid #215696;
+    background-color: #555555;
+    width: 350px;
+    text-align: center;
+    border-collapse: collapse;
+  }
+  table.benchmarks td, table.benchmarks th {
+    border: 1px solid #555555;
+    padding: 5px 2px;
+  }
+  table.benchmarks tbody td {
+    font-size: 13px;
+    font-weight: bold;
+    color: #FFFFFF;
+  }
+  table.benchmarks tr:nth-child(even) {
+    background: #0C092B;
+  }
+  table.benchmarks thead {
+    background: #243196;
+  }
+  table.benchmarks thead th {
+    font-size: 19px;
+    font-weight: bold;
+    color: #FFFFFF;
+    text-align: left;
+  }
+  table.benchmarks tfoot .links {
+    text-align: right;
+  }
+  table.benchmarks tfoot .links a{
+    display: inline-block;
+    background: #792396;
+    color: #FFFFFF;
+    padding: 2px 8px;
+    border-radius: 5px;
+  }
