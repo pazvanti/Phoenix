@@ -21,7 +21,7 @@ public class ImportElement extends Element {
         if (!StringUtils.endsWith(line, ";")) {
             this.contentBuilder.append(";");
         }
-        if (StringUtils.contains(line, " static ")) {
+        if (StringUtils.contains(line, " static ") && this.elementFactory != null) {
             this.elementFactory.addStaticImport(StringUtils.substring(line, StringUtils.lastIndexOf(line, ".") + 1));
         }
         return lineNumber;

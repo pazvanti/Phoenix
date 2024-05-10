@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import tech.petrepopescu.phoenix.parser.ElementFactory;
 import tech.petrepopescu.phoenix.parser.VariableRegistry;
+import tech.petrepopescu.utils.TestUtil;
 
 import java.util.List;
 import java.util.Set;
@@ -17,12 +18,12 @@ class HtmlElementTests {
         VariableRegistry.getInstance().add("", "b", "String");
         element.parse("");
 
-        String expected = "\t\tcontentBuilder.append(\"<h6>\");\n" +
+        String expected = "\t\tcontentBuilder.append(STATIC_HTML_THISISUUID);\n" +
                 "\t\tcontentBuilder.append(StringEscapeUtils.escapeHtml4(b));\n" +
-                "\t\tcontentBuilder.append(\"</h6>\");\n" +
-                "\t\tcontentBuilder.append(\"\\n\");\n";
+                "\t\tcontentBuilder.append(STATIC_HTML_THISISUUID);\n" +
+                "\t\tcontentBuilder.append(STATIC_HTML_THISISUUID);\n";
 
-        Assertions.assertEquals(expected, element.write().toString());
+        Assertions.assertEquals(expected, TestUtil.sanitizeResult(element.write().toString()));
     }
 
     @Test
@@ -32,12 +33,12 @@ class HtmlElementTests {
         VariableRegistry.getInstance().add("", "b", "String");
         element.parse("");
 
-        String expected = "\t\tcontentBuilder.append(\"<h6>\");\n" +
+        String expected = "\t\tcontentBuilder.append(STATIC_HTML_THISISUUID);\n" +
                 "\t\tcontentBuilder.append(b);\n" +
-                "\t\tcontentBuilder.append(\"</h6>\");\n" +
-                "\t\tcontentBuilder.append(\"\\n\");\n";
+                "\t\tcontentBuilder.append(STATIC_HTML_THISISUUID);\n" +
+                "\t\tcontentBuilder.append(STATIC_HTML_THISISUUID);\n";
 
-        Assertions.assertEquals(expected, element.write().toString());
+        Assertions.assertEquals(expected, TestUtil.sanitizeResult(element.write().toString()));
     }
     @Test
     void testWithRouteElement() {
@@ -45,12 +46,12 @@ class HtmlElementTests {
         HtmlElement element = new HtmlElement(List.of(line), 0, new ElementFactory(Set.of()), ElementFactory.DEFAULT_BUILDER_NAME);
         element.parse("");
 
-        String expected = "\t\tcontentBuilder.append(\"<a href=\\\"\");\n" +
+        String expected = "\t\tcontentBuilder.append(STATIC_HTML_THISISUUID);\n" +
                 "\t\tcontentBuilder.append(routes.TestController.testElement(0, 1, 2).path());\n" +
-                "\t\tcontentBuilder.append(\"\\\">Link</a>\");\n" +
-                "\t\tcontentBuilder.append(\"\\n\");\n";
+                "\t\tcontentBuilder.append(STATIC_HTML_THISISUUID);\n" +
+                "\t\tcontentBuilder.append(STATIC_HTML_THISISUUID);\n";
 
-        Assertions.assertEquals(expected, element.write().toString());
+        Assertions.assertEquals(expected, TestUtil.sanitizeResult(element.write().toString()));
     }
 
     @Test
@@ -59,12 +60,12 @@ class HtmlElementTests {
         HtmlElement element = new HtmlElement(List.of(line), 0, new ElementFactory(Set.of()), ElementFactory.DEFAULT_BUILDER_NAME);
         element.parse("");
 
-        String expected = "\t\tcontentBuilder.append(\"<a href=\\\"mailto:test\");\n" +
+        String expected = "\t\tcontentBuilder.append(STATIC_HTML_THISISUUID);\n" +
                 "\t\tcontentBuilder.append(\"@test.com\");\n" +
-                "\t\tcontentBuilder.append(\"\\\">Email me</a>\");\n" +
-                "\t\tcontentBuilder.append(\"\\n\");\n";
+                "\t\tcontentBuilder.append(STATIC_HTML_THISISUUID);\n" +
+                "\t\tcontentBuilder.append(STATIC_HTML_THISISUUID);\n";
 
-        Assertions.assertEquals(expected, element.write().toString());
+        Assertions.assertEquals(expected, TestUtil.sanitizeResult(element.write().toString()));
     }
 
     @Test
@@ -73,15 +74,15 @@ class HtmlElementTests {
         HtmlElement element = new HtmlElement(List.of(line), 0, new ElementFactory(Set.of()), ElementFactory.DEFAULT_BUILDER_NAME);
         element.parse("");
 
-        String expected = "\t\tcontentBuilder.append(\"<tr class=\\\"\");\n" +
+        String expected = "\t\tcontentBuilder.append(STATIC_HTML_THISISUUID);\n" +
                 "\t\tif (i % 2 == 0) {\n" +
-                "\t\t\tcontentBuilder.append(\"odd\");\n" +
-                "\t\t\tcontentBuilder.append(\"\\n\");\n" +
+                "\t\t\tcontentBuilder.append(STATIC_HTML_THISISUUID);\n" +
+                "\t\t\tcontentBuilder.append(STATIC_HTML_THISISUUID);\n" +
                 "\t\t}\n" +
-                "\t\tcontentBuilder.append(\" \\\">\");\n" +
-                "\t\tcontentBuilder.append(\"\\n\");\n";
+                "\t\tcontentBuilder.append(STATIC_HTML_THISISUUID);\n" +
+                "\t\tcontentBuilder.append(STATIC_HTML_THISISUUID);\n";
 
-        Assertions.assertEquals(expected, element.write().toString());
+        Assertions.assertEquals(expected, TestUtil.sanitizeResult(element.write().toString()));
     }
 
     @Test
@@ -90,11 +91,11 @@ class HtmlElementTests {
         HtmlElement element = new HtmlElement(List.of(line), 0, new ElementFactory(Set.of()), ElementFactory.DEFAULT_BUILDER_NAME);
         element.parse("");
 
-        String expected = "\t\tcontentBuilder.append(\"<input type=\\\"text\\\" placeholder=\\\"Value of a\\\" value=\\\"\");\n" +
+        String expected = "\t\tcontentBuilder.append(STATIC_HTML_THISISUUID);\n" +
                 "\t\tcontentBuilder.append(a);\n" +
-                "\t\tcontentBuilder.append(\"\\\" name=\\\"a-value\\\">\");\n" +
-                "\t\tcontentBuilder.append(\"\\n\");\n";
+                "\t\tcontentBuilder.append(STATIC_HTML_THISISUUID);\n" +
+                "\t\tcontentBuilder.append(STATIC_HTML_THISISUUID);\n";
 
-        Assertions.assertEquals(expected, element.write().toString());
+        Assertions.assertEquals(expected, TestUtil.sanitizeResult(element.write().toString()));
     }
 }

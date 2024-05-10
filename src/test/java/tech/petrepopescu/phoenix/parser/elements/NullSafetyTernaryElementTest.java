@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import tech.petrepopescu.phoenix.parser.ElementFactory;
+import tech.petrepopescu.utils.TestUtil;
 
 import java.util.List;
 
@@ -79,18 +80,18 @@ class NullSafetyTernaryElementTest {
         ElementFactory elementFactory = new ElementFactory(null);
         Element element = elementFactory.getElement(line);
         element.parse("");
-        String expected = "\t\tcontentBuilder.append(\"<div class=\\\"\");\n" +
+        String expected = "\t\tcontentBuilder.append(STATIC_HTML_THISISUUID);\n" +
                 "\t\tvar tmpVar_THISISUUID = myVar;\n" +
                 "\t\tif (tmpVar_THISISUUID != null) {\n" +
                 "\t\t\tcontentBuilder.append(tmpVar_THISISUUID);\n" +
                 "\t\t} else {\n" +
                 "\t\t\tcontentBuilder.append(\"Alternative\");\n" +
                 "\t\t}\n" +
-                "\t\tcontentBuilder.append(\"\\\"></div>\");\n" +
-                "\t\tcontentBuilder.append(\"\\n\");\n";
+                "\t\tcontentBuilder.append(STATIC_HTML_THISISUUID);\n" +
+                "\t\tcontentBuilder.append(STATIC_HTML_THISISUUID);\n";
 
         String result = sanitizeResult(element.write().toString());
-        Assertions.assertEquals(expected, result);
+        Assertions.assertEquals(expected, TestUtil.sanitizeResult(result));
     }
 
     private String discoverUUID(String result) {

@@ -16,7 +16,7 @@ import java.util.*;
 
 public class PhoenixParser {
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PhoenixParser.class);
-    private static final String VIEWS_BASE_PACKAGE = "views.html";
+    public static final String VIEWS_BASE_PACKAGE = "views.html";
     public static final String CLASSPATH = "classpath*:";
     private final ElementFactory elementFactory;
     private final RouteGenerator routeGenerator;
@@ -42,8 +42,21 @@ public class PhoenixParser {
             javaFileObjects.addAll(parseFilesInFolder(viewsFolder, basePackage));
         }
 
+        javaFileObjects.add(buildStaticStringsFile());
+
         elementFactory.unknownFragmentsExists();
         compiler.compileAndLoad(javaFileObjects);
+    }
+
+    private JavaFileObject buildStaticStringsFile() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("package ").append(VIEWS_BASE_PACKAGE).append(";\n\n");
+        builder.append("public class StaticStrings {\n");
+        for (Map.Entry<String, String> staticVariables:VariableRegistry.getInstance().getStaticStrings().entrySet()) {
+            builder.append("\tpublic static final String ").append(staticVariables.getKey()).append(" = \"").append(staticVariables.getValue()).append("\";\n");
+        }
+        builder.append("}");
+        return new SourceCodeObject("StaticStrings", builder.toString(), VIEWS_BASE_PACKAGE, true);
     }
 
     public void parse(File viewsFolder) {

@@ -1,8 +1,10 @@
 package tech.petrepopescu.phoenix.parser.elements;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import tech.petrepopescu.phoenix.parser.ElementFactory;
+import tech.petrepopescu.utils.TestUtil;
 
 import java.util.List;
 import java.util.Set;
@@ -27,12 +29,12 @@ class AssetElementTest {
         Element element = elementFactory.getElement(line);
         element.parse("");
 
-        String expected = "\t\tcontentBuilder.append(\"<link href=\\\"\");\n" +
+        String expected = "\t\tcontentBuilder.append(STATIC_HTML_THISISUUID);\n" +
                 "\t\tcontentBuilder.append(ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString());\n" +
                 "\t\tcontentBuilder.append(\"\\\\css\\\\mycss.css\");\n" +
-                "\t\tcontentBuilder.append(\"\\\" rel=\\\"stylesheet\\\" />\");\n" +
-                "\t\tcontentBuilder.append(\"\\n\");\n";
+                "\t\tcontentBuilder.append(STATIC_HTML_THISISUUID);\n" +
+                "\t\tcontentBuilder.append(STATIC_HTML_THISISUUID);\n";
 
-        Assertions.assertEquals(expected, element.write().toString());
+        Assertions.assertEquals(expected, TestUtil.sanitizeResult(element.write().toString()));
     }
 }

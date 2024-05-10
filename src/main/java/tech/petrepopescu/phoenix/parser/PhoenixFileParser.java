@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static tech.petrepopescu.phoenix.parser.PhoenixParser.VIEWS_BASE_PACKAGE;
+
 public abstract class PhoenixFileParser {
     protected final File file;
     protected final ElementFactory elementFactory;
@@ -38,11 +40,13 @@ public abstract class PhoenixFileParser {
         Element phoenixSpecialImport = new ImportElement("tech.petrepopescu.phoenix.special.*");
         Element escapeUtilsImport = new ImportElement("org.apache.commons.text.StringEscapeUtils");
         Element springImport = new ImportElement("org.springframework.web.servlet.support.ServletUriComponentsBuilder");
+        Element staticStringsImport = new ImportElement("static " + VIEWS_BASE_PACKAGE + ".StaticStrings.*");
         imports.add(phoenixFormatImport);
         imports.add(phoenixViewImport);
         imports.add(phoenixSpecialImport);
         imports.add(escapeUtilsImport);
         imports.add(springImport);
+        imports.add(staticStringsImport);
         for (Element importElement:imports) {
             importElement.parse(fileName);
         }

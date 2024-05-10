@@ -3,6 +3,7 @@ package tech.petrepopescu.phoenix.parser.elements;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import tech.petrepopescu.phoenix.parser.ElementFactory;
+import tech.petrepopescu.utils.TestUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,9 +39,9 @@ class CommentElementTests {
         HtmlElement element = new HtmlElement(List.of(line), 0, new ElementFactory(Set.of()), ElementFactory.DEFAULT_BUILDER_NAME);
         element.parse("");
 
-        String expected = "\t\tcontentBuilder.append(\"<a href=simpleTest.html \");\n" +
-                "\t\tcontentBuilder.append(\">Test link</a>\");\n" +
-                "\t\tcontentBuilder.append(\"\\n\");\n";
-        Assertions.assertEquals(expected, element.write().toString());
+        String expected = "\t\tcontentBuilder.append(STATIC_HTML_THISISUUID);\n" +
+                "\t\tcontentBuilder.append(STATIC_HTML_THISISUUID);\n" +
+                "\t\tcontentBuilder.append(STATIC_HTML_THISISUUID);\n";
+        Assertions.assertEquals(expected, TestUtil.sanitizeResult(element.write().toString()));
     }
 }

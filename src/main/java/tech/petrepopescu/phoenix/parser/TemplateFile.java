@@ -2,9 +2,11 @@ package tech.petrepopescu.phoenix.parser;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.Pair;
 import tech.petrepopescu.phoenix.exception.ParsingException;
 import tech.petrepopescu.phoenix.parser.elements.ConstructorElement;
 import tech.petrepopescu.phoenix.parser.elements.Element;
+import tech.petrepopescu.phoenix.parser.elements.HtmlElement;
 import tech.petrepopescu.phoenix.parser.elements.ImportElement;
 import tech.petrepopescu.phoenix.spring.config.PhoenixConfiguration;
 
@@ -73,8 +75,32 @@ public class TemplateFile extends PhoenixFileParser {
 
         builder.append("\tpublic String getContent(PhoenixSpecialElementsUtil specialElementsUtil) {\n");
         builder.append("\t\t").append("final StringBuilder contentBuilder = new StringBuilder();\n");
-        for (Element element:this.lineElements) {
-            builder.append(element.write());
+        for (int count = 0; count < lineElements.size(); count++) {
+            Element element = lineElements.get(count);
+            if (element instanceof HtmlElement htmlElement && !htmlElement.hasNextElement()) {
+                StringBuilder htmlCode = new StringBuilder();
+                htmlCode.append(VariableRegistry.getInstance().getStaticString(htmlElement.getVariableName()));
+                Element nextElement = null;
+                do {
+                    count++;
+                    if (count >= lineElements.size()) {
+                        break;
+                    }
+                    nextElement = lineElements.get(count);
+                    if (nextElement instanceof HtmlElement nextHtmlElement && !nextHtmlElement.hasNextElement()) {
+                        htmlCode.append("\n").append(VariableRegistry.getInstance().getStaticString(nextHtmlElement.getVariableName()));
+                    }
+                } while (nextElement instanceof HtmlElement nextHtmlElement && !nextHtmlElement.hasNextElement());
+                HtmlElement newHtmlElement = new HtmlElement(List.of(htmlCode.toString()), 0, elementFactory, htmlElement.getBuilderName());
+                newHtmlElement.parse(this.basePackage + "." + this.file.getName());
+                builder.append(newHtmlElement.write());
+                if (count < lineElements.size() - 1 && nextElement != null) {
+                    // So that we write the next element which we already know is not an HtmlElement
+                    builder.append(nextElement.write());
+                }
+            } else {
+                builder.append(element.write());
+            }
         }
         builder.append("\t\treturn contentBuilder.toString();\n");
         builder.append("\t}\n");
