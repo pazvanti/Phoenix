@@ -345,7 +345,7 @@ else {even}&quot;&gt;@if (item.getChange() &lt; 0.0) {
                     <h5 class="element_title">Evaluating expressions: <code>@()</code></h5>
                     <p>
                         Phoenix allows you to evaluate expressions in the template. This is done using the
-                        <code>@()</code>. This element also come sin handy when you want to use a variable as part of
+                        <code>@()</code>. This element also comes in handy when you want to use a variable as part of
                         text which would otherwise be considered method calls, for example when building the URL to a
                         page where the fileName (but not the extension) is provided by your variable.
                     </p>
@@ -361,9 +361,9 @@ else {even}&quot;&gt;@if (item.getChange() &lt; 0.0) {
                 <div id="comments">
                     <h5 class="element_title">Adding comments to your template: <code>@* *@</code></h5>
                     <p>
-                        As with any modern programming language, hgaving comments in your code can be very usefull.
+                        As with any modern programming language, having comments in your code can be very usefull.
                         Obviously, you could add traditional HTML comments, however these will be present in the final
-                        rendered HTML. If you want to have comments that will simply be ignored, you can do this using
+                        rendered HTML. If you want to have comments that will simply be ignored by the Phonix parser, you can do this using
                         <code>@* *@</code>. The parser will simply ignore anything that is between the comment
                         identifiers. Comments can be on a single line or on multiple lines. See examples below.
                     </p>
@@ -383,7 +383,7 @@ else {even}&quot;&gt;@if (item.getChange() &lt; 0.0) {
                     <p>
                         Phoenix supports <code>for</code> loops in a similar way Java does. You can define a loop using
                         the <code>@for</code> syntax and use a counter to itterate between elements as well as a
-                        <code>for-in</code>. <code>For</code> statements must start on a new line, with the opening
+                        <code>for-in</code> loops. <code>For</code> statements must start on a new line, with the opening
                         curly bracket (<code>{</code>) being on the same line. Furthermore, the ending curly bracket
                         <code>}</code> should be on a seperate, empty line.
                     </p>
@@ -462,7 +462,7 @@ else {even}&quot;&gt;@if (item.getChange() &lt; 0.0) {
                         the need to do multiple calls to the getter. This is why Phoenix supports declaring a variable
                         using the <code>@with</code>
                         block. The <code>@with</code> block declares a new variable and inside the block's body you can
-                        use with ease.
+                        use it with ease.
                     </p>
                     <div class="alert alert-info" role="alert">
                         At the moment, <code>with</code> block supports declaring only one variable. Future versions
@@ -479,13 +479,13 @@ else {even}&quot;&gt;@if (item.getChange() &lt; 0.0) {
                 <div id="template">
                     <h5 class="element_title">Calling fragments: <code>@fragmentName.template()</code></h5>
                     <p>
-                        Phoenix was conceived from the start to allow building of complex and modular web applciations.
+                        Phoenix was conceived from the start to allow building of complex and modular web applications.
                         An important component in any template engine, Phoenix including, is the possiblity to have
                         fragments or templates that can be reused and combined to create more complex web pages. Any
-                        Phoenix template can be combined with another by calling the template and providing the right
+                        Phoenix template can be combined with others by calling the template and providing the right
                         parameters.
                     </p>
-                    <p>A template is incoked by calling the <code>.template()</code> method on the template. As with
+                    <p>A template is invoked by calling the <code>.template()</code> method on the template. As with
                         invoking views, the template name is relative to the <code>views</code> directory, with
                         <code>.</code> being used as a path separator for sub-folders.
                     </p>
@@ -559,9 +559,9 @@ else {even}&quot;&gt;@if (item.getChange() &lt; 0.0) {
                     <p>
                         One advantage that Phoenix has over other templates engines is the presence of route elements
                         and reverse routing calculated at compile time. Any endpoint declared in your controllers will
-                        create a route which incldues the URL, path variables and request attributes. All controllers
+                        create a route that includes the URL, path variables and request attributes. All controllers
                         that are defined in the configured package will be included and Pheonix currently supports
-                        ellements annotated with <code>@GetMapping</code>, <code>@PostMapping</code> and
+                        methods annotated with <code>@GetMapping</code>, <code>@PostMapping</code> and
                         <code>@PutMapping</code>.
                     </p>
                     <p>The route can have multiple arguments . First, all <code>PathVariable</code> arguments are added
