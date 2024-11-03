@@ -40,7 +40,10 @@ public class PhoenixSpecialElementsUtil {
         if (attributes != null) {
             // Access the HttpServletRequest
             HttpServletRequest request = attributes.getRequest();
-            return (CsrfToken) request.getAttribute(CsrfToken.class.getName());
+            CsrfToken token = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
+            request.setAttribute(CsrfToken.class.getName(), token);
+            request.setAttribute(token.getParameterName(), token);
+            return token;
         }
 
         return null;
