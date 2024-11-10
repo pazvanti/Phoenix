@@ -39,6 +39,7 @@ public class FragmentOrStaticImportCallElement extends NestedElement {
         }
 
         String contentVariableName = null;
+        line = StringUtils.trim(line);
         if (StringUtils.endsWith(line ,"{")) {
             // We have fragment content
             contentVariableName = "content_" + StringUtils.remove(UUID.randomUUID().toString(), '-');
@@ -64,6 +65,9 @@ public class FragmentOrStaticImportCallElement extends NestedElement {
         StringBuilder call = new StringBuilder("View.of(\"" + fragmentName + "\"");
         if (indexOfParamStart + 1 == indexOfParamEnd) {
             // no arguments
+            if (contentVariableName != null) {
+                call.append(", ").append(contentVariableName);
+            }
             call.append(")");
         } else {
             call.append(", ").append(StringUtils.substring(line, indexOfParamStart + 1, indexOfParamEnd));

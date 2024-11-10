@@ -38,6 +38,6 @@ public class FragmentController {
             return PhoenixResponse.notFound();
         }
 
-        return PhoenixResponse.ok(format.getContent(specialElementsUtil));
+        return PhoenixResponse.ok(format);
     }
 }
