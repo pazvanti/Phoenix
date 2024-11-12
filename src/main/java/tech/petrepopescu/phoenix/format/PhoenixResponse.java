@@ -1,6 +1,8 @@
 package tech.petrepopescu.phoenix.format;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.util.UriComponentsBuilder;
 
 public class PhoenixResponse {
     private PhoenixResponse() {
@@ -31,11 +33,25 @@ public class PhoenixResponse {
         return withHttpStatus(format, HttpStatus.NOT_FOUND);
     }
 
+    public static Result redirect(String url) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(UriComponentsBuilder.fromUriString(url).build().toUri());
+        return new Result(headers, HttpStatus.FOUND);
+    }
+
     public static Result withHttpStatus(Object object, HttpStatus status) {
         return withHttpStatus(new JsonFormat(object), status);
     }
 
     public static Result withHttpStatus(Format format, HttpStatus status) {
         return new Result(format, status);
+    }
+
+    public static Result withHttpStatus(Object object, HttpHeaders headers, HttpStatus status) {
+        return withHttpStatus(new JsonFormat(object), headers, status);
+    }
+
+    public static Result withHttpStatus(Format format, HttpHeaders headers,HttpStatus status) {
+        return new Result(format, headers, status);
     }
 }
