@@ -15,6 +15,14 @@ public class IfElement extends NestedElement {
     }
 
     @Override
+    public int parse(String fileName) {
+        elementFactory.enteringIfStatement();
+        int newLineNumber = super.parse(fileName);
+        elementFactory.exitingIfStatement();
+        return newLineNumber;
+    }
+
+    @Override
     public StringBuilder write() {
         this.contentBuilder.append(StringUtils.repeat('\t', this.numTabs)).append(type).append(" (").append(statement).append(") {\n");
         for (Element element:this.nestedElements) {

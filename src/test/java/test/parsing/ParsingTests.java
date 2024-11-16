@@ -53,6 +53,7 @@ class ParsingTests {
         tests.put("forAndIfTest", List.of(4, List.of("one", "two", "three"), 3));
         tests.put("advanceForAndIfTest", List.of(0, 3, List.of("one", "two", "three", "for", "five")));
         tests.put("variableTest", List.of(3, 4, List.of("10", "90", "50")));
+        tests.put("elseInScript", List.of(3));
 
         for (Map.Entry<String, List<Object>> entry : tests.entrySet()) {
             String htmlContent = View.of(entry.getKey(), entry.getValue().toArray(new Object[0])).getContent(phoenixSpecialElementsUtil);

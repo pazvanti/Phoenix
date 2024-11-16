@@ -47,4 +47,25 @@
     } else {
         <p>Bigger</p>
     }
+
+    <h5>Even more complex if</h5>
+    @if (a < myList.size()) {
+        @if (a > 3) {
+            <p>Smaller but greater than 3</p>
+        } else {
+            <p>Smaller and less than or equal to 3</p>
+        }
+    } else if (a == myList.size()) {
+        @if (a > 3) {
+            <p>Equal but greater than 3</p>
+        } else {
+            <p>Equal and less than or equal to 3</p>
+        }
+    } else {
+        @if (a > 3) {
+            <p>Greater and greater than 3</p>
+        } else {
+            <p>Grater but less than or equal to 3</p>
+        }
+    }
 </body>

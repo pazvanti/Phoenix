@@ -15,28 +15,45 @@ public class ElementFactory {
     public static final String DEFAULT_BUILDER_NAME = "contentBuilder";
 
     private final List<ElementBuilder> elementBuilders;
+    private final List<ElementBuilder> elseElementBuilders;
     private final List<String> staticImports;
     private final FragmentOrStaticImportElementBuilder fragmentOrStaticImportElementBuilder;
+    private int nestedIfs = 0;
 
     private String builderName = DEFAULT_BUILDER_NAME;
     public ElementFactory(Set<ElementBuilder> elementBuilders) {
         if (CollectionUtils.isEmpty(elementBuilders)) {
             fragmentOrStaticImportElementBuilder = new FragmentOrStaticImportElementBuilder();
             elementBuilders = Set.of(new EscapeCharacterElementBuilder(), new RouteElementBuilder(), new ConstructorElementBuilder(),
-                    new IfElementBuilder(), new ElseElementBuilder(), new ElseIfElementBuilder(),
+                    new IfElementBuilder(),
                     new ImportElementBuilder(), new VariableElementBuilder(), new AssetElementBuilder(),
                     new HtmlElementBuilder(), new CommentElementBuilder(), new ForElementBuilder(), new CsrfElementBuilder(),
                     new BreakElementBuilder(), new WithElementBuilder(), new EvalElementBuilder(), new RawElementBuilder(),
                     new NullSafeVariableElementBuilder(), new NullSafeTernaryElementBuilder(), new ContentBlockElementBuilder(),
                     new ForWithIteratorElementBuilder(), fragmentOrStaticImportElementBuilder);
+            elseElementBuilders = List.of(new ElseElementBuilder(), new ElseIfElementBuilder());
         } else {
+            elseElementBuilders = elementBuilders.stream().filter(
+                    (builder) -> builder instanceof ElseElementBuilder || builder instanceof ElseIfElementBuilder
+            ).toList();
+
             fragmentOrStaticImportElementBuilder = (FragmentOrStaticImportElementBuilder) elementBuilders.stream().filter(FragmentOrStaticImportElementBuilder.class::isInstance).findFirst().orElse(null);
         }
-        this.elementBuilders = elementBuilders.stream().sorted(Comparator.comparingInt(ElementBuilder::order)).toList();
+        this.elementBuilders = elementBuilders.stream().filter(builder ->
+                    !(builder instanceof ElseElementBuilder || builder instanceof ElseIfElementBuilder)
+                )
+                .sorted(Comparator.comparingInt(ElementBuilder::order)).toList();
         this.staticImports = new ArrayList<>();
     }
     public Element getElement(List<String> lines, int lineNumber) {
         String line = StringUtils.trim(lines.get(lineNumber));
+        if (nestedIfs > 0) {
+            for (ElementBuilder factory:elseElementBuilders) {
+                if (factory.isValid(line)) {
+                    return factory.buildFromLine(lines, lineNumber, this, builderName);
+                }
+            }
+        }
         for (ElementBuilder factory:elementBuilders) {
             if (factory.isValid(line)) {
                 return factory.buildFromLine(lines, lineNumber, this, builderName);
@@ -76,5 +93,13 @@ public class ElementFactory {
 
     public void resetBuilderName() {
         this.builderName = DEFAULT_BUILDER_NAME;
+    }
+
+    public void enteringIfStatement() {
+        nestedIfs++;
+    }
+
+    public void exitingIfStatement() {
+        nestedIfs--;
     }
 }
