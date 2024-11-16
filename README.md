@@ -50,7 +50,7 @@ Phoenix comes with an easy-to-use syntax that allows you to write Java code dire
 
 ### Arguments (constructor)
 
-Each template must have a constructor. This is done using hte `@args()` element. Additionally, you can provide input parameters for your template and you can use these input parameters in the code
+Each template must have a constructor. This is done using the `@args()` element. Additionally, you can provide input parameters for your template and you can use these input parameters in the code
 
 Example: `@args(String title, int numDivs)`
 
