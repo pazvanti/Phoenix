@@ -4,10 +4,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import tech.petrepopescu.phoenix.exception.ParsingException;
-import tech.petrepopescu.phoenix.parser.elements.ConstructorElement;
-import tech.petrepopescu.phoenix.parser.elements.Element;
-import tech.petrepopescu.phoenix.parser.elements.HtmlElement;
-import tech.petrepopescu.phoenix.parser.elements.ImportElement;
+import tech.petrepopescu.phoenix.parser.elements.*;
 import tech.petrepopescu.phoenix.spring.config.PhoenixConfiguration;
 
 import java.io.File;
@@ -75,6 +72,17 @@ public class TemplateFile extends PhoenixFileParser {
 
         builder.append("\tpublic String getContent(PhoenixSpecialElementsUtil specialElementsUtil) {\n");
         builder.append("\t\t").append("final StringBuilder contentBuilder = new StringBuilder();\n");
+
+        // Create the builders for all the elements
+        List<Element> sectionElements = lineElements.stream().filter(SectionElement.class::isInstance).toList();
+        if (!sectionElements.isEmpty()) {
+            for (Element element : sectionElements) {
+                builder.append("\t\t").append("final StringBuilder ")
+                        .append(element.getBuilderName())
+                        .append(" = new StringBuilder();\n");
+            }
+        }
+
         for (Element element : lineElements) {
             builder.append(element.write());
         }

@@ -1,0 +1,54 @@
+package tech.petrepopescu.phoenix.parser.elements;
+
+import org.apache.commons.lang3.StringUtils;
+import tech.petrepopescu.phoenix.parser.ElementFactory;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class SectionElement extends AbstractContainerElement {
+    private final List<Element> nestedElements;
+    private String sectionName = null;
+    public SectionElement(List<String> lines, int lineIndex, ElementFactory elementFactory, String builderName) {
+        super(lines, lineIndex, elementFactory, builderName);
+        nestedElements = new ArrayList<>();
+    }
+
+    @Override
+    public int parse(String fileName) {
+        String line = this.lines.get(this.lineNumber);
+        sectionName = extractStatement(line);
+        parseContentInside(line, this.nestedElements, fileName);
+
+        return this.lineNumber;
+    }
+
+    @Override
+    public StringBuilder write() {
+        for (Element element:this.nestedElements) {
+            this.contentBuilder.append(element.write());
+        }
+        return this.contentBuilder;
+    }
+
+    @Override
+    public String getSectionName() {
+        if (StringUtils.isBlank(sectionName)) {
+            return DEFAULT_SECTION_NAME;
+        }
+        return sectionName;
+    }
+
+    @Override
+    public String getBuilderName() {
+        if (StringUtils.isBlank(sectionName)) {
+            return this.builderName;
+        }
+        return sectionName + "ContentBuilder";
+    }
+
+
+    private String extractStatement(String line) {
+        return StringUtils.substring(line, StringUtils.indexOf(line, '(') + 2, StringUtils.lastIndexOf(line, ')') - 1);
+    }
+}

@@ -13,15 +13,16 @@ public abstract class AbstractContainerElement extends Element {
     protected void parseContentInside(String line, List<Element> nestedElements, String fileName) {
         int indexOfStatementEnd = indexOfStatementEnd(line);
         if (indexOfStatementEnd == -1) {
-            // The IF statement does not end on the same line
+            // The nested statement does not end on the same line
             this.lineNumber++;
-            do {
+            line = StringUtils.trim(this.lines.get(this.lineNumber));
+            while (!StringUtils.startsWith(line, "}")) {
                 Element subElement = elementFactory.getElement(lines, lineNumber);
                 subElement.tabs(this.numTabs + 1);
                 nestedElements.add(subElement);
                 this.lineNumber = subElement.parse(fileName) + 1;
                 line = StringUtils.trim(this.lines.get(this.lineNumber));
-            } while (!StringUtils.startsWith(line, "}"));
+            }
             if (line.length() > 1) {
                 this.lineNumber = discoverNextElement(line, lines, this.lineNumber, fileName);
             }
