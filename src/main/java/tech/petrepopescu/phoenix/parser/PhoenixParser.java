@@ -120,7 +120,12 @@ public class PhoenixParser {
     private String getRelativePath(Resource resource, String rootFolderPath) throws IOException {
         String resourcePath = resource.getURL().getPath();
         String relativePath = StringUtils.substring(resourcePath,rootFolderPath.length() + 1);
-        relativePath = StringUtils.substring(relativePath, 1, StringUtils.indexOf(relativePath, resource.getFilename()));
+
+        int startIndex = 0;
+        if (relativePath.startsWith("/")) {
+            startIndex = 1;
+        }
+        relativePath = StringUtils.substring(relativePath, startIndex, StringUtils.indexOf(relativePath, resource.getFilename()));
 
         // Replace path separators with dots (transform into package-like structure)
         relativePath = relativePath.replace("/", ".").replace("\\", ".");
