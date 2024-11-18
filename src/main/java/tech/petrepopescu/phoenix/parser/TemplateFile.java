@@ -83,7 +83,9 @@ public class TemplateFile extends PhoenixFileParser {
             }
         }
 
-        for (Element element : lineElements) {
+        List<Element> nonInsertAtElements = lineElements.stream()
+                .filter(element -> !(element instanceof InsertAtElement)).toList();
+        for (Element element : nonInsertAtElements) {
             builder.append(element.write());
         }
         builder.append("\t\treturn contentBuilder.toString();\n");

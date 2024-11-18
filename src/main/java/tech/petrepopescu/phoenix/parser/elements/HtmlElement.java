@@ -12,6 +12,7 @@ import java.util.UUID;
 
 public class HtmlElement extends Element {
     private String variableName;
+    private String actualCode;
     public HtmlElement(List<String> lines, int lineNumber, ElementFactory elementFactory, String builderName) {
         super(lines, lineNumber, elementFactory, builderName);
     }
@@ -22,18 +23,26 @@ public class HtmlElement extends Element {
         if (StringUtils.contains(line, '@')) {
             int indexOfAt = StringUtils.indexOf(line, '@');
             String untilAt = StringUtils.substring(line, 0, indexOfAt);
-            variableName = VariableRegistry.getInstance().getOrDefineStaticString(StringEscapeUtils.escapeJava(untilAt));
-            appendWithContentBuilder(variableName);
+            actualCode = StringEscapeUtils.escapeJava(untilAt);
+            variableName = VariableRegistry.getInstance().getOrDefineStaticString(actualCode);
             discoverNextElement(StringUtils.substring(line, indexOfAt), fileName);
         } else {
             variableName = VariableRegistry.getInstance().getOrDefineStaticString(StringEscapeUtils.escapeJava(line));
-            appendWithContentBuilder(variableName);
         }
         return this.lineNumber;
     }
 
     @Override
     public StringBuilder write() {
+        boolean isDebug = java.lang.management.ManagementFactory.getRuntimeMXBean().
+                getInputArguments().toString().contains("-agentlib:jdwp");
+        if (isDebug) {
+            // For debug purposes, we write the actual line. The code is not optimized, but we
+            // can more easily see the generated code
+            appendAsStringWithContentBuilder(actualCode);
+        } else {
+            appendWithContentBuilder(variableName);
+        }
         if (this.nextElement != null) {
             this.contentBuilder.append(this.nextElement.write());
         } else {

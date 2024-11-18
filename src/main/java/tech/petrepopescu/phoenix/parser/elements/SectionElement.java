@@ -2,6 +2,7 @@ package tech.petrepopescu.phoenix.parser.elements;
 
 import org.apache.commons.lang3.StringUtils;
 import tech.petrepopescu.phoenix.parser.ElementFactory;
+import tech.petrepopescu.phoenix.parser.ElementRegistry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,13 +20,13 @@ public class SectionElement extends AbstractContainerElement {
         String line = this.lines.get(this.lineNumber);
         sectionName = extractStatement(line);
         parseContentInside(line, this.nestedElements, fileName);
-
+        ElementRegistry.getInstance().register(sectionName, this.nestedElements);
         return this.lineNumber;
     }
 
     @Override
     public StringBuilder write() {
-        for (Element element:this.nestedElements) {
+        for (Element element:ElementRegistry.getInstance().getElementsForSection(sectionName)) {
             this.contentBuilder.append(element.write());
         }
         return this.contentBuilder;
