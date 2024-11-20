@@ -1,8 +1,6 @@
 package tech.petrepopescu.phoenix.parser.elements;
 
-import org.apache.commons.lang3.StringUtils;
 import tech.petrepopescu.phoenix.parser.ElementFactory;
-import tech.petrepopescu.phoenix.parser.ElementRegistry;
 
 import java.util.List;
 
@@ -13,8 +11,6 @@ public class InsertAtElement extends AbstractContainerElement {
 
     @Override
     public int parse(String fileName) {
-        String sectionName = StringUtils.substring(this.builderName, 0, StringUtils.lastIndexOf(this.builderName, "ContentBuilder"));
-        ElementRegistry.getInstance().register(sectionName, this);
         String line = this.lines.get(this.lineNumber);
         parseContentInside(line, fileName);
         return this.lineNumber;

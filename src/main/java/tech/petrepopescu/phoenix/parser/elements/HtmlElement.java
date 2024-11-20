@@ -48,7 +48,7 @@ public class HtmlElement extends Element {
             this.contentBuilder.append(this.nextElement.write());
         } else {
             if (isDebug) {
-                appendAsStringWithContentBuilder(StringEscapeUtils.escapeJava("\n"));
+                appendAsStringWithContentBuilder("\n");
             } else {
                 appendWithContentBuilder(VariableRegistry.getInstance().getOrDefineStaticString(StringEscapeUtils.escapeJava("\n")));
             }
