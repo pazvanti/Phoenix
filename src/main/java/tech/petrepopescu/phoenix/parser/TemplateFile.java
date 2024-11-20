@@ -71,7 +71,7 @@ public class TemplateFile extends PhoenixFileParser {
         builder.append(this.constructorElement.write());
 
         builder.append("\tpublic String getContent(PhoenixSpecialElementsUtil specialElementsUtil) {\n");
-        builder.append("\t\t").append("final StringBuilder contentBuilder = new StringBuilder();\n");
+        builder.append("\t\t").append("final StringBuilder htmlContentBuilder = new StringBuilder();\n");
 
         // Create the builders for all the elements
         List<Element> sectionElements = lineElements.stream().filter(SectionElement.class::isInstance).toList();
@@ -88,7 +88,7 @@ public class TemplateFile extends PhoenixFileParser {
         for (Element element : nonInsertAtElements) {
             builder.append(element.write());
         }
-        builder.append("\t\treturn contentBuilder.toString();\n");
+        builder.append("\t\treturn htmlContentBuilder.toString();\n");
         builder.append("\t}\n");
         builder.append("}\n");
 

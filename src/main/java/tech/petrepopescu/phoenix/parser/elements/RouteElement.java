@@ -24,7 +24,7 @@ public class RouteElement extends Element {
     @Override
     public StringBuilder write() {
         this.contentBuilder.append(StringUtils.repeat('\t', this.numTabs));
-        this.contentBuilder.append("contentBuilder.append(").append(routeVal).append(".path());\n");
+        this.contentBuilder.append(builderName).append(".append(").append(routeVal).append(".path());\n");
         if (this.nextElement != null) {
             this.contentBuilder.append(this.nextElement.write());
         }

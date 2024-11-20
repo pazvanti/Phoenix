@@ -39,9 +39,9 @@ class CommentElementTests {
         HtmlElement element = new HtmlElement(List.of(line), 0, new ElementFactory(Set.of()), ElementFactory.DEFAULT_BUILDER_NAME);
         element.parse("");
 
-        String expected = "\t\tcontentBuilder.append(STATIC_HTML_THISISUUID);\n" +
-                "\t\tcontentBuilder.append(STATIC_HTML_THISISUUID);\n" +
-                "\t\tcontentBuilder.append(STATIC_HTML_THISISUUID);\n";
+        String expected = "\t\thtmlContentBuilder.append(STATIC_HTML_THISISUUID);\n" +
+                "\t\thtmlContentBuilder.append(STATIC_HTML_THISISUUID);\n" +
+                "\t\thtmlContentBuilder.append(STATIC_HTML_THISISUUID);\n";
         Assertions.assertEquals(expected, TestUtil.sanitizeResult(element.write().toString()));
     }
 }

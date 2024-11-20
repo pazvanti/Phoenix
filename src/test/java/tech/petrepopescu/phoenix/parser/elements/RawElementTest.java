@@ -12,7 +12,7 @@ class RawElementTest {
         String line = "@raw(myVar)";
         RawElement element = new RawElement(List.of(line), 0, new ElementFactory(null), ElementFactory.DEFAULT_BUILDER_NAME);
         element.parse("");
-        String expected = "\t\tcontentBuilder.append(myVar);\n";
+        String expected = "\t\thtmlContentBuilder.append(myVar);\n";
         Assertions.assertEquals(expected, element.write().toString());
     }
 
@@ -21,7 +21,7 @@ class RawElementTest {
         String line = "@raw(myVar.myMethod())";
         RawElement element = new RawElement(List.of(line), 0, new ElementFactory(null), ElementFactory.DEFAULT_BUILDER_NAME);
         element.parse("");
-        String expected = "\t\tcontentBuilder.append(myVar.myMethod());\n";
+        String expected = "\t\thtmlContentBuilder.append(myVar.myMethod());\n";
         Assertions.assertEquals(expected, element.write().toString());
     }
 
@@ -30,7 +30,7 @@ class RawElementTest {
         String line = "@raw(myVar.myMethod(var1, var2))";
         RawElement element = new RawElement(List.of(line), 0, new ElementFactory(null), ElementFactory.DEFAULT_BUILDER_NAME);
         element.parse("");
-        String expected = "\t\tcontentBuilder.append(myVar.myMethod(var1, var2));\n";
+        String expected = "\t\thtmlContentBuilder.append(myVar.myMethod(var1, var2));\n";
         Assertions.assertEquals(expected, element.write().toString());
     }
 
@@ -39,7 +39,7 @@ class RawElementTest {
         String line = "@raw(myVar.first().second().third())";
         RawElement element = new RawElement(List.of(line), 0, new ElementFactory(null), ElementFactory.DEFAULT_BUILDER_NAME);
         element.parse("");
-        String expected = "\t\tcontentBuilder.append(myVar.first().second().third());\n";
+        String expected = "\t\thtmlContentBuilder.append(myVar.first().second().third());\n";
         Assertions.assertEquals(expected, element.write().toString());
     }
 }

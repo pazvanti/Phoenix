@@ -15,7 +15,7 @@ class EscapeCharacterElementTest {
 
         element.parse("");
 
-        final String expected = "\t\tcontentBuilder.append(\"@domain.com\");\n";
+        final String expected = "\t\thtmlContentBuilder.append(\"@domain.com\");\n";
         Assertions.assertEquals(expected, element.write().toString());
     }
 }
