@@ -17,7 +17,7 @@ public class ElseIfElement extends IfElement {
             line = StringUtils.substring(line, 1);
         }
         this.statement = extractStatement(line);
-        parseContentInside(line, this.nestedElements, fileName);
+        parseContentInside(line, fileName);
 
         return this.lineNumber;
     }

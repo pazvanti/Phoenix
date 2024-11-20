@@ -3,23 +3,20 @@ package tech.petrepopescu.phoenix.parser.elements;
 import org.apache.commons.lang3.StringUtils;
 import tech.petrepopescu.phoenix.parser.ElementFactory;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class WithElement extends AbstractContainerElement {
     private String statement;
-    private final List<Element> nestedElements;
 
     public WithElement(List<String> lines, int lineIndex, ElementFactory elementFactory, String builderName) {
         super(lines, lineIndex, elementFactory, builderName);
-        this.nestedElements = new ArrayList<>();
     }
 
     @Override
     public int parse(String fileName) {
         String line = this.lines.get(this.lineNumber);
         this.statement = extractStatement(line);
-        parseContentInside(line, this.nestedElements, fileName);
+        parseContentInside(line, fileName);
 
         return this.lineNumber;
     }

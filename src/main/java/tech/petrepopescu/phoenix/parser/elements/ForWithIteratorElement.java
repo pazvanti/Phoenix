@@ -20,7 +20,7 @@ public class ForWithIteratorElement extends NestedElement {
     public int parse(String fileName) {
         String line = this.lines.get(this.lineNumber);
         extractAttributes(line);
-        parseContentInside(line, this.nestedElements, fileName);
+        parseContentInside(line, fileName);
 
         return this.lineNumber;
     }

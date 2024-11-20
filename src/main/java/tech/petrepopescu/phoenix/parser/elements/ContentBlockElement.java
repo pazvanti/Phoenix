@@ -18,7 +18,7 @@ public class ContentBlockElement extends NestedElement {
         String contentBuilderName = varName + "ContentBuilder";
         this.elementFactory.setBuilderName(contentBuilderName);
         this.numTabs++;
-        parseContentInside(line, this.nestedElements, fileName);
+        parseContentInside(line, fileName);
         this.numTabs--;
         this.elementFactory.resetBuilderName();
 

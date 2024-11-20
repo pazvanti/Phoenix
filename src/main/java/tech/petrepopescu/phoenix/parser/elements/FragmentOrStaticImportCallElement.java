@@ -45,7 +45,7 @@ public class FragmentOrStaticImportCallElement extends NestedElement {
             contentVariableName = "content_" + StringUtils.remove(UUID.randomUUID().toString(), '-');
             String contentBuilderName = contentVariableName + "ContentBuilder";
             this.elementFactory.setBuilderName(contentBuilderName);
-            parseContentInside(line, nestedElements, fragmentName);
+            parseContentInside(line, fragmentName);
             this.elementFactory.resetBuilderName();
             this.contentBuilder.append(StringUtils.repeat('\t', this.numTabs))
                     .append("PhoenixContent ").append(contentVariableName).append(" = new PhoenixContent() {\n");

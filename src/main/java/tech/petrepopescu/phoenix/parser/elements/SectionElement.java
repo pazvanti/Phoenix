@@ -4,22 +4,19 @@ import org.apache.commons.lang3.StringUtils;
 import tech.petrepopescu.phoenix.parser.ElementFactory;
 import tech.petrepopescu.phoenix.parser.ElementRegistry;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SectionElement extends AbstractContainerElement {
-    private final List<Element> nestedElements;
     private String sectionName = null;
     public SectionElement(List<String> lines, int lineIndex, ElementFactory elementFactory, String builderName) {
         super(lines, lineIndex, elementFactory, builderName);
-        nestedElements = new ArrayList<>();
     }
 
     @Override
     public int parse(String fileName) {
         String line = this.lines.get(this.lineNumber);
         sectionName = extractStatement(line);
-        parseContentInside(line, this.nestedElements, fileName);
+        parseContentInside(line, fileName);
         ElementRegistry.getInstance().register(sectionName, this.nestedElements);
         return this.lineNumber;
     }

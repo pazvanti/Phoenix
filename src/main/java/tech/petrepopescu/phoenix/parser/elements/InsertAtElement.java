@@ -1,22 +1,22 @@
 package tech.petrepopescu.phoenix.parser.elements;
 
+import org.apache.commons.lang3.StringUtils;
 import tech.petrepopescu.phoenix.parser.ElementFactory;
 import tech.petrepopescu.phoenix.parser.ElementRegistry;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class InsertAtElement extends AbstractContainerElement {
-    private final List<Element> nestedElements;
     public InsertAtElement(List<String> lines, int lineIndex, ElementFactory elementFactory, String builderName) {
         super(lines, lineIndex, elementFactory, builderName);
-        this.nestedElements = new ArrayList<>();
     }
 
     @Override
     public int parse(String fileName) {
+        String sectionName = StringUtils.substring(this.builderName, 0, StringUtils.lastIndexOf(this.builderName, "ContentBuilder"));
+        ElementRegistry.getInstance().register(sectionName, this);
         String line = this.lines.get(this.lineNumber);
-        parseContentInside(line, this.nestedElements, fileName);
+        parseContentInside(line, fileName);
         return this.lineNumber;
     }
 

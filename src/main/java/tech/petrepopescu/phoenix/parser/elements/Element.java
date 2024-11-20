@@ -15,7 +15,7 @@ public abstract class Element {
 
     protected final ElementFactory elementFactory;
     protected final List<String> lines;
-    protected final String builderName;
+    protected String builderName;
     protected int lineNumber;
     protected int numTabs = 2;
     protected StringBuilder contentBuilder = new StringBuilder();
@@ -123,6 +123,13 @@ public abstract class Element {
 
     public void tabs(int numTabs) {
         this.numTabs = numTabs;
+    }
+
+    public void setBuilderName(String builderName) {
+        this.builderName = builderName;
+        if (this.nextElement != null) {
+            this.nextElement.setBuilderName(builderName);
+        }
     }
 
     /**

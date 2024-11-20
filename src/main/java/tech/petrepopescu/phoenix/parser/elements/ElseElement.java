@@ -16,7 +16,7 @@ public class ElseElement extends NestedElement {
         if (StringUtils.startsWith(line, "}")) {
             line = StringUtils.substring(line, 1);
         }
-        parseContentInside(line, this.nestedElements, fileName);
+        parseContentInside(line, fileName);
 
         return this.lineNumber;
     }

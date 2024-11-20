@@ -3,14 +3,16 @@ package tech.petrepopescu.phoenix.parser.elements;
 import org.apache.commons.lang3.StringUtils;
 import tech.petrepopescu.phoenix.parser.ElementFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractContainerElement extends Element {
+    final List<Element> nestedElements = new ArrayList<>();
     protected AbstractContainerElement(List<String> lines, int lineIndex, ElementFactory elementFactory, String builderName) {
         super(lines, lineIndex, elementFactory, builderName);
     }
 
-    protected void parseContentInside(String line, List<Element> nestedElements, String fileName) {
+    protected void parseContentInside(String line, String fileName) {
         int indexOfStatementEnd = indexOfStatementEnd(line);
         if (indexOfStatementEnd == -1) {
             // The nested statement does not end on the same line
@@ -46,5 +48,13 @@ public abstract class AbstractContainerElement extends Element {
 
     private int indexOfContentStart(String line) {
         return StringUtils.indexOf(line, '{');
+    }
+
+    @Override
+    public void setBuilderName(String builderName) {
+        this.builderName = builderName;
+        for (Element nestedElement : nestedElements) {
+            nestedElement.setBuilderName(builderName);
+        }
     }
 }

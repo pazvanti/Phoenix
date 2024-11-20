@@ -27,6 +27,7 @@ public class HtmlElement extends Element {
             variableName = VariableRegistry.getInstance().getOrDefineStaticString(actualCode);
             discoverNextElement(StringUtils.substring(line, indexOfAt), fileName);
         } else {
+            actualCode = StringEscapeUtils.escapeJava(line);
             variableName = VariableRegistry.getInstance().getOrDefineStaticString(StringEscapeUtils.escapeJava(line));
         }
         return this.lineNumber;
@@ -46,7 +47,11 @@ public class HtmlElement extends Element {
         if (this.nextElement != null) {
             this.contentBuilder.append(this.nextElement.write());
         } else {
-            appendWithContentBuilder(VariableRegistry.getInstance().getOrDefineStaticString(StringEscapeUtils.escapeJava("\n")));
+            if (isDebug) {
+                appendAsStringWithContentBuilder(StringEscapeUtils.escapeJava("\n"));
+            } else {
+                appendWithContentBuilder(VariableRegistry.getInstance().getOrDefineStaticString(StringEscapeUtils.escapeJava("\n")));
+            }
         }
         return this.contentBuilder;
     }

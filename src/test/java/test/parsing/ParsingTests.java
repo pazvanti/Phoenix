@@ -58,7 +58,7 @@ class ParsingTests {
         for (Map.Entry<String, List<Object>> entry : tests.entrySet()) {
             String htmlContent = View.of(entry.getKey(), entry.getValue().toArray(new Object[0])).getContent(phoenixSpecialElementsUtil);
             String expected = FileUtils.readFileToString(new File("src/test/resources/expected/" + entry.getKey() + ".html"), "UTF-8");
-            assertEquals(expected, htmlContent);
+            assertEquals(expected, htmlContent, entry.getKey());
         }
     }
 }
