@@ -69,9 +69,24 @@ public class TemplateFile extends PhoenixFileParser {
 
         builder.append(this.constructorElement.write());
 
+        List<FragmentOrStaticImportCallElement> fragmentCallElements = this.lineElements.stream()
+                .filter(FragmentOrStaticImportCallElement.class::isInstance)
+                .filter(element -> ((FragmentOrStaticImportCallElement) element).isFragment())
+                .map(FragmentOrStaticImportCallElement.class::cast)
+                .toList();
+
+        List<Element> insertAtElements = this.lineElements.stream()
+                .filter(InsertAtElement.class::isInstance)
+                .toList();
+
         builder.append("\n");
         builder.append("\tprivate void populateSectionCalls() {\n");
-        builder.append("\t\tcontentBySections.put(\"html\", this::getContentForHtml);\n");
+        builder.append("\t\tcontentBySections.put(\"html\", this::getContentForhtml);\n");
+        for (Element element : insertAtElements) {
+            InsertAtElement insertAtElement = (InsertAtElement) element;
+            builder.append("\t\tcontentBySections.put(\"").append(insertAtElement.getSectionName()).append("\", this::getContentFor")
+                    .append(insertAtElement.getSectionName()).append(");\n");
+        }
         builder.append("\t}\n");
 
         builder.append("\tpublic String getContent(PhoenixSpecialElementsUtil specialElementsUtil) {\n");
@@ -85,18 +100,31 @@ public class TemplateFile extends PhoenixFileParser {
         builder.append("\t\treturn contentBySections.get(sectionName).apply(specialElementsUtil);\n");
         builder.append("\t}\n\n");
 
-        builder.append("\tpublic String getContentForHtml(PhoenixSpecialElementsUtil specialElementsUtil) {\n");
-        builder.append("\t\t").append("final StringBuilder contentBuilder = new StringBuilder();\n");
-
         List<Element> nonInsertAtElements = lineElements.stream()
                 .filter(element -> !(element instanceof InsertAtElement)).toList();
-        for (Element element : nonInsertAtElements) {
-            builder.append(element.write());
+        appendGetContentForSection("html", builder, nonInsertAtElements, fragmentCallElements);
+        for (Element element : insertAtElements) {
+            InsertAtElement insertAtElement = (InsertAtElement) element;
+            appendGetContentForSection(insertAtElement.getSectionName(), builder, List.of(element), fragmentCallElements);
         }
-        builder.append("\t\treturn contentBuilder.toString();\n");
-        builder.append("\t}\n");
+
         builder.append("}\n");
 
         return builder.toString();
+    }
+
+    private void appendGetContentForSection(String sectionName, StringBuilder builder, List<Element> lineElements,
+                                            List<FragmentOrStaticImportCallElement> fragmentCallElements) {
+        builder.append("\tpublic String getContentFor").append(sectionName).append("(PhoenixSpecialElementsUtil specialElementsUtil) {\n");
+        builder.append("\t\t").append("final StringBuilder contentBuilder = new StringBuilder();\n\n");
+        for (Element element : lineElements) {
+            if (element instanceof SectionElement sectionElement) {
+                builder.append(sectionElement.write(fragmentCallElements));
+            } else {
+                builder.append(element.write());
+            }
+        }
+        builder.append("\t\treturn contentBuilder.toString();\n");
+        builder.append("\t}\n");
     }
 }

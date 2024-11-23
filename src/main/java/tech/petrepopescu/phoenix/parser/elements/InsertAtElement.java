@@ -1,12 +1,15 @@
 package tech.petrepopescu.phoenix.parser.elements;
 
+import org.apache.commons.lang3.StringUtils;
 import tech.petrepopescu.phoenix.parser.ElementFactory;
 
 import java.util.List;
 
 public class InsertAtElement extends AbstractContainerElement {
+    private final String sectionName;
     public InsertAtElement(List<String> lines, int lineIndex, ElementFactory elementFactory, String builderName) {
         super(lines, lineIndex, elementFactory, builderName);
+        this.sectionName = StringUtils.substring(builderName, 0, builderName.length() - "ContentBuilder".length());
     }
 
     @Override
@@ -22,5 +25,10 @@ public class InsertAtElement extends AbstractContainerElement {
             this.contentBuilder.append(element.write());
         }
         return this.contentBuilder;
+    }
+
+    @Override
+    public String getSectionName() {
+        return this.sectionName;
     }
 }

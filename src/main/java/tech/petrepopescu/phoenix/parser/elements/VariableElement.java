@@ -37,6 +37,8 @@ public class VariableElement extends Element {
     public StringBuilder write() {
         if (this.nextElement != null) {
             this.contentBuilder.append(this.nextElement.write());
+        } else {
+            appendAsStringWithContentBuilder("\n");
         }
         return this.contentBuilder;
     }

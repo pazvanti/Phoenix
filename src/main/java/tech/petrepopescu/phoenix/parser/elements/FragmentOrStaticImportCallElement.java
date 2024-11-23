@@ -7,7 +7,12 @@ import java.util.List;
 import java.util.UUID;
 
 public class FragmentOrStaticImportCallElement extends NestedElement {
-    public boolean isFragment = true;
+    private boolean isFragment = true;
+    private String fragmentName;
+    private String contentVariableName = null;
+    private int indexOfParamEnd;
+    private int indexOfParamStart;
+    private String parameters = null;
     public FragmentOrStaticImportCallElement(List<String> lines, int lineIndex, ElementFactory elementFactory, String builderName) {
         super(lines, lineIndex, elementFactory, "", builderName);
     }
@@ -15,14 +20,14 @@ public class FragmentOrStaticImportCallElement extends NestedElement {
     @Override
     public int parse(String fileName) {
         final String line = StringUtils.trim(this.lines.get(this.lineNumber));
-        int indexOfParamStart = StringUtils.indexOf(line, "(");
-        int indexOfParamEnd = StringUtils.indexOf(line, ")", indexOfParamStart + 1);
-        String fragmentName = StringUtils.substring(line, 1, indexOfParamStart);
+        indexOfParamStart = StringUtils.indexOf(line, "(");
+        indexOfParamEnd = StringUtils.indexOf(line, ")", indexOfParamStart + 1);
+        fragmentName = StringUtils.substring(line, 1, indexOfParamStart);
         if (elementFactory.isStaticImport(fragmentName)) {
             this.isFragment = false;
             return parseStaticImport(line, indexOfParamEnd, fileName);
         }
-        return parseFragment(line, indexOfParamStart, indexOfParamEnd, fragmentName);
+        return parseFragment(line);
     }
 
     private int parseStaticImport(String line, int indexOfParamEnd, String fileName) {
@@ -32,14 +37,13 @@ public class FragmentOrStaticImportCallElement extends NestedElement {
         return this.lineNumber;
     }
 
-    private int parseFragment(String line, int indexOfParamStart, int indexOfParamEnd, String fragmentName) {
+    private int parseFragment(String line) {
         int indexOfTemplateCall = StringUtils.indexOf(fragmentName, ".template");
         if (indexOfTemplateCall < 0) {
             // this is NOT a fragment call
             return this.lineNumber;
         }
 
-        String contentVariableName = null;
         line = StringUtils.trim(line);
         if (StringUtils.endsWith(line ,"{")) {
             // We have fragment content
@@ -48,6 +52,28 @@ public class FragmentOrStaticImportCallElement extends NestedElement {
             this.elementFactory.setBuilderName(contentBuilderName);
             parseContentInside(line, fragmentName);
             this.elementFactory.resetBuilderName();
+        }
+        if (indexOfParamStart + 1 != indexOfParamEnd) {
+            parameters = StringUtils.substring(line, indexOfParamStart + 1, indexOfParamEnd);
+        }
+        fragmentName = StringUtils.substring(fragmentName, 0, indexOfTemplateCall);
+        elementFactory.potentialFragmentCall(fragmentName);
+        return this.lineNumber;
+    }
+
+    @Override
+    public StringBuilder write() {
+        if (isFragment) {
+            this.writeContentForHtml();
+        }
+        if (this.nextElement != null) {
+            this.contentBuilder.append(this.nextElement.write());
+        }
+        return this.contentBuilder;
+    }
+
+    private void writeContentForHtml() {
+        if (!this.nestedElements.isEmpty()) {
             this.contentBuilder.append(StringUtils.repeat('\t', this.numTabs))
                     .append("PhoenixContent ").append(contentVariableName).append(" = new PhoenixContent() {\n");
             this.contentBuilder.append(StringUtils.repeat('\t', this.numTabs + 1)).append("public String render() {\n");
@@ -61,8 +87,11 @@ public class FragmentOrStaticImportCallElement extends NestedElement {
             this.contentBuilder.append(StringUtils.repeat('\t', this.numTabs + 1)).append("}\n");
             this.contentBuilder.append(StringUtils.repeat('\t', this.numTabs)).append("};\n");
         }
-        fragmentName = StringUtils.substring(fragmentName, 0, indexOfTemplateCall);
-        elementFactory.potentialFragmentCall(fragmentName);
+        StringBuilder fragmentCall = getContentForSection("html");
+        appendWithContentBuilder(fragmentCall.toString());
+    }
+
+    public StringBuilder getContentForSection(String sectionName) {
         StringBuilder call = new StringBuilder("View.of(\"" + fragmentName + "\"");
         if (indexOfParamStart + 1 == indexOfParamEnd) {
             // no arguments
@@ -71,23 +100,15 @@ public class FragmentOrStaticImportCallElement extends NestedElement {
             }
             call.append(")");
         } else {
-            call.append(", ").append(StringUtils.substring(line, indexOfParamStart + 1, indexOfParamEnd));
+            call.append(", ").append(parameters);
             if (contentVariableName != null) {
                 call.append(", ").append(contentVariableName);
             }
             call.append(")");
         }
-        call.append(".getContent(specialElementsUtil)");
-        appendWithContentBuilder(call.toString());
-        return this.lineNumber;
-    }
+        call.append(".getContentForSection(\"").append(sectionName).append("\", specialElementsUtil)");
 
-    @Override
-    public StringBuilder write() {
-        if (this.nextElement != null) {
-            this.contentBuilder.append(this.nextElement.write());
-        }
-        return this.contentBuilder;
+        return call;
     }
 
     public boolean isFragment() {

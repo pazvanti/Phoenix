@@ -2,7 +2,6 @@ package tech.petrepopescu.phoenix.parser.elements;
 
 import org.apache.commons.lang3.StringUtils;
 import tech.petrepopescu.phoenix.parser.ElementFactory;
-import tech.petrepopescu.phoenix.parser.ElementRegistry;
 
 import java.util.List;
 
@@ -17,14 +16,20 @@ public class SectionElement extends AbstractContainerElement {
         String line = this.lines.get(this.lineNumber);
         sectionName = extractStatement(line);
         parseContentInside(line, fileName);
-        ElementRegistry.getInstance().register(sectionName, this.nestedElements);
         return this.lineNumber;
     }
 
     @Override
     public StringBuilder write() {
-        for (Element element:ElementRegistry.getInstance().getElementsForSection(sectionName)) {
+        return write(List.of());
+    }
+
+    public StringBuilder write(List<FragmentOrStaticImportCallElement> fragments) {
+        for (Element element:this.nestedElements) {
             this.contentBuilder.append(element.write());
+        }
+        for (FragmentOrStaticImportCallElement fragment:fragments) {
+            appendWithContentBuilder(fragment.getContentForSection(this.sectionName).toString());
         }
         return this.contentBuilder;
     }

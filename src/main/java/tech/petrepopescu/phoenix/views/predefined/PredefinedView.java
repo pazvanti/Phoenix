@@ -10,6 +10,12 @@ public abstract class PredefinedView extends HtmlFormat {
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PredefinedView.class);
 
     @Override
+    public String getContentForSection(String sectionName, PhoenixSpecialElementsUtil specialElementsUtil) {
+        // Predefined views only have the HTML section.
+        return getContent(specialElementsUtil);
+    }
+
+    @Override
     public String getContent(PhoenixSpecialElementsUtil specialElementsUtil) {
 
         StringBuilder builder = new StringBuilder();

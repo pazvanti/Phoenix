@@ -4,9 +4,9 @@
 </div>
 
 @insertAt("css") {
-    <p>CSS section from fragment: @myVar</p>
+        .button@myVar
 }
 
 @insertAt("javascript") {
-    <p>JavaScript section from fragment: @myVar</p>
+        document.getElementById("button@myVar").setStatus("active");
 }
