@@ -16,8 +16,9 @@ class ConstructorElementTest {
         element.parse("");
 
         final String expected = "public final class testClass extends HtmlFormat {\n" +
-                "\n" +
+                "\tprivate final Map<String, Function<PhoenixSpecialElementsUtil, String>> contentBySections = new HashMap<>();\n\n" +
                 "\tprivate testClass() {\n" +
+                "\t\tpopulateSectionCalls();\n" +
                 "\t}\n" +
                 "\tpublic static Format render() {\n" +
                 "\t\treturn new testClass();\n" +
@@ -33,8 +34,9 @@ class ConstructorElementTest {
         element.parse("");
 
         final String expected = "public final class testClass extends HtmlFormat {\n" +
-                "\n" +
+                "\tprivate final Map<String, Function<PhoenixSpecialElementsUtil, String>> contentBySections = new HashMap<>();\n\n" +
                 "\tprivate testClass() {\n" +
+                "\t\tpopulateSectionCalls();\n" +
                 "\t}\n" +
                 "\tpublic static Format render() {\n" +
                 "\t\treturn new testClass();\n" +
@@ -51,10 +53,12 @@ class ConstructorElementTest {
 
         final String expected = "public final class testClass extends HtmlFormat {\n" +
                 "\tprivate final int a;\n" +
-                "\tprivate final String b;\n\n" +
+                "\tprivate final String b;\n" +
+                "\tprivate final Map<String, Function<PhoenixSpecialElementsUtil, String>> contentBySections = new HashMap<>();\n\n" +
                 "\tprivate testClass(int a, String b) {\n" +
                 "\t\tthis.a = a;\n" +
                 "\t\tthis.b = b;\n" +
+                "\t\tpopulateSectionCalls();\n" +
                 "\t}\n" +
                 "\tpublic static Format render(int a, String b) {\n" +
                 "\t\treturn new testClass(a, b);\n" +
@@ -71,10 +75,12 @@ class ConstructorElementTest {
 
         final String expected = "public final class testClass extends HtmlFormat {\n" +
                 "\tprivate final int a;\n" +
-                "\tprivate final String b;\n\n" +
+                "\tprivate final String b;\n" +
+                "\tprivate final Map<String, Function<PhoenixSpecialElementsUtil, String>> contentBySections = new HashMap<>();\n\n" +
                 "\tprivate testClass(int a, String b) {\n" +
                 "\t\tthis.a = a;\n" +
                 "\t\tthis.b = b;\n" +
+                "\t\tpopulateSectionCalls();\n" +
                 "\t}\n" +
                 "\tpublic static Format render(int a, String b) {\n" +
                 "\t\treturn new testClass(a, b);\n" +
@@ -91,10 +97,12 @@ class ConstructorElementTest {
 
         final String expected = "public final class testClass extends HtmlFormat {\n" +
                 "\tprivate final int a;\n" +
-                "\tprivate final List<String> b;\n\n" +
+                "\tprivate final List<String> b;\n" +
+                "\tprivate final Map<String, Function<PhoenixSpecialElementsUtil, String>> contentBySections = new HashMap<>();\n\n" +
                 "\tprivate testClass(int a, List<String> b) {\n" +
                 "\t\tthis.a = a;\n" +
                 "\t\tthis.b = b;\n" +
+                "\t\tpopulateSectionCalls();\n" +
                 "\t}\n" +
                 "\tpublic static Format render(int a, List<String> b) {\n" +
                 "\t\treturn new testClass(a, b);\n" +
@@ -111,10 +119,12 @@ class ConstructorElementTest {
 
         final String expected = "public final class testClass extends HtmlFormat {\n" +
                 "\tprivate final int a;\n" +
-                "\tprivate final Pair<String, String> b;\n\n" +
+                "\tprivate final Pair<String, String> b;\n" +
+                "\tprivate final Map<String, Function<PhoenixSpecialElementsUtil, String>> contentBySections = new HashMap<>();\n\n" +
                 "\tprivate testClass(int a, Pair<String, String> b) {\n" +
                 "\t\tthis.a = a;\n" +
                 "\t\tthis.b = b;\n" +
+                "\t\tpopulateSectionCalls();\n" +
                 "\t}\n" +
                 "\tpublic static Format render(int a, Pair<String, String> b) {\n" +
                 "\t\treturn new testClass(a, b);\n" +
@@ -131,10 +141,12 @@ class ConstructorElementTest {
 
         final String expected = "public final class testClass extends HtmlFormat {\n" +
                 "\tprivate final int a;\n" +
-                "\tprivate final List<List<Pair<String, String>>> b;\n\n" +
+                "\tprivate final List<List<Pair<String, String>>> b;\n" +
+                "\tprivate final Map<String, Function<PhoenixSpecialElementsUtil, String>> contentBySections = new HashMap<>();\n\n" +
                 "\tprivate testClass(int a, List<List<Pair<String, String>>> b) {\n" +
                 "\t\tthis.a = a;\n" +
                 "\t\tthis.b = b;\n" +
+                "\t\tpopulateSectionCalls();\n" +
                 "\t}\n" +
                 "\tpublic static Format render(int a, List<List<Pair<String, String>>> b) {\n" +
                 "\t\treturn new testClass(a, b);\n" +
@@ -151,10 +163,12 @@ class ConstructorElementTest {
 
         final String expected = "public final class testClass extends HtmlFormat {\n" +
                 "\tprivate final int a;\n" +
-                "\tprivate final List< List< Pair <String , String > > > b;\n\n" +
+                "\tprivate final List< List< Pair <String , String > > > b;\n" +
+                "\tprivate final Map<String, Function<PhoenixSpecialElementsUtil, String>> contentBySections = new HashMap<>();\n\n" +
                 "\tprivate testClass(int a, List< List< Pair <String , String > > > b) {\n" +
                 "\t\tthis.a = a;\n" +
                 "\t\tthis.b = b;\n" +
+                "\t\tpopulateSectionCalls();\n" +
                 "\t}\n" +
                 "\tpublic static Format render(int a, List< List< Pair <String , String > > > b) {\n" +
                 "\t\treturn new testClass(a, b);\n" +

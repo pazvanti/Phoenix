@@ -81,6 +81,7 @@ public class ConstructorElement extends Element {
         for (Pair<String, String> param:parameters) {
             appendVariableDeclaration(param);
         }
+        this.contentBuilder.append("\tprivate final Map<String, Function<PhoenixSpecialElementsUtil, String>> contentBySections = new HashMap<>();\n");
         this.contentBuilder.append("\n");
         this.contentBuilder.append("\t").append("private ").append(className).append("(");
         appendConstructorParams();
@@ -88,6 +89,7 @@ public class ConstructorElement extends Element {
         for (Pair<String, String> param:parameters) {
             appendVariableInitialisation(param);
         }
+        this.contentBuilder.append("\t\tpopulateSectionCalls();\n");
         this.contentBuilder.append("\t}\n");
 
         this.contentBuilder.append("\tpublic static Format render(");

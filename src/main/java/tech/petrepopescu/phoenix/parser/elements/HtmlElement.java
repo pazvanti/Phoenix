@@ -23,11 +23,11 @@ public class HtmlElement extends Element {
         if (StringUtils.contains(line, '@')) {
             int indexOfAt = StringUtils.indexOf(line, '@');
             String untilAt = StringUtils.substring(line, 0, indexOfAt);
-            actualCode = StringEscapeUtils.escapeJava(untilAt);
-            variableName = VariableRegistry.getInstance().getOrDefineStaticString(actualCode);
+            actualCode = untilAt;
+            variableName = VariableRegistry.getInstance().getOrDefineStaticString(StringEscapeUtils.escapeJava(actualCode));
             discoverNextElement(StringUtils.substring(line, indexOfAt), fileName);
         } else {
-            actualCode = StringEscapeUtils.escapeJava(line);
+            actualCode = line;
             variableName = VariableRegistry.getInstance().getOrDefineStaticString(StringEscapeUtils.escapeJava(line));
         }
         return this.lineNumber;

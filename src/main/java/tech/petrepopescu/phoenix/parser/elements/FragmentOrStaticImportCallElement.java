@@ -3,11 +3,11 @@ package tech.petrepopescu.phoenix.parser.elements;
 import org.apache.commons.lang3.StringUtils;
 import tech.petrepopescu.phoenix.parser.ElementFactory;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 public class FragmentOrStaticImportCallElement extends NestedElement {
+    public boolean isFragment = true;
     public FragmentOrStaticImportCallElement(List<String> lines, int lineIndex, ElementFactory elementFactory, String builderName) {
         super(lines, lineIndex, elementFactory, "", builderName);
     }
@@ -19,6 +19,7 @@ public class FragmentOrStaticImportCallElement extends NestedElement {
         int indexOfParamEnd = StringUtils.indexOf(line, ")", indexOfParamStart + 1);
         String fragmentName = StringUtils.substring(line, 1, indexOfParamStart);
         if (elementFactory.isStaticImport(fragmentName)) {
+            this.isFragment = false;
             return parseStaticImport(line, indexOfParamEnd, fileName);
         }
         return parseFragment(line, indexOfParamStart, indexOfParamEnd, fragmentName);
@@ -87,5 +88,9 @@ public class FragmentOrStaticImportCallElement extends NestedElement {
             this.contentBuilder.append(this.nextElement.write());
         }
         return this.contentBuilder;
+    }
+
+    public boolean isFragment() {
+        return this.isFragment;
     }
 }

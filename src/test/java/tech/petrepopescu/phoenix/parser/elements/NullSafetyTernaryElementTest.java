@@ -17,9 +17,9 @@ class NullSafetyTernaryElementTest {
         element.parse("");
         String expected = "\t\tvar tmpVar_THISISUUID = myVar;\n" +
                 "\t\tif (tmpVar_THISISUUID != null) {\n" +
-                "\t\t\thtmlContentBuilder.append(tmpVar_THISISUUID);\n" +
+                "\t\t\tcontentBuilder.append(tmpVar_THISISUUID);\n" +
                 "\t\t} else {\n" +
-                "\t\t\thtmlContentBuilder.append(\"Alternative\");\n" +
+                "\t\t\tcontentBuilder.append(\"Alternative\");\n" +
                 "\t\t}\n";
 
         String result = sanitizeResult(element.write().toString());
@@ -33,9 +33,9 @@ class NullSafetyTernaryElementTest {
         element.parse("");
         String expected = "\t\tvar tmpVar_THISISUUID = myVar;\n" +
                 "\t\tif (tmpVar_THISISUUID != null) {\n" +
-                "\t\t\thtmlContentBuilder.append(tmpVar_THISISUUID);\n" +
+                "\t\t\tcontentBuilder.append(tmpVar_THISISUUID);\n" +
                 "\t\t} else {\n" +
-                "\t\t\thtmlContentBuilder.append(\"Alternative\");\n" +
+                "\t\t\tcontentBuilder.append(\"Alternative\");\n" +
                 "\t\t}\n";
 
         String result = sanitizeResult(element.write().toString());
@@ -49,9 +49,9 @@ class NullSafetyTernaryElementTest {
         element.parse("");
         String expected = "\t\tvar tmpVar_THISISUUID = Stringifier.toString(myVar.myMethod());\n" +
                 "\t\tif (tmpVar_THISISUUID != null) {\n" +
-                "\t\t\thtmlContentBuilder.append(tmpVar_THISISUUID);\n" +
+                "\t\t\tcontentBuilder.append(tmpVar_THISISUUID);\n" +
                 "\t\t} else {\n" +
-                "\t\t\thtmlContentBuilder.append(\"Alternative\");\n" +
+                "\t\t\tcontentBuilder.append(\"Alternative\");\n" +
                 "\t\t}\n";
 
         String result = sanitizeResult(element.write().toString());
@@ -65,9 +65,9 @@ class NullSafetyTernaryElementTest {
         element.parse("");
         String expected = "\t\tvar tmpVar_THISISUUID = myVar;\n" +
                 "\t\tif (tmpVar_THISISUUID != null) {\n" +
-                "\t\t\thtmlContentBuilder.append(tmpVar_THISISUUID);\n" +
+                "\t\t\tcontentBuilder.append(tmpVar_THISISUUID);\n" +
                 "\t\t} else {\n" +
-                "\t\t\thtmlContentBuilder.append(anotherVar);\n" +
+                "\t\t\tcontentBuilder.append(anotherVar);\n" +
                 "\t\t}\n";
 
         String result = sanitizeResult(element.write().toString());
@@ -80,15 +80,15 @@ class NullSafetyTernaryElementTest {
         ElementFactory elementFactory = new ElementFactory(null);
         Element element = elementFactory.getElement(line);
         element.parse("");
-        String expected = "\t\thtmlContentBuilder.append(STATIC_HTML_THISISUUID);\n" +
+        String expected = "\t\tcontentBuilder.append(STATIC_HTML_THISISUUID);\n" +
                 "\t\tvar tmpVar_THISISUUID = myVar;\n" +
                 "\t\tif (tmpVar_THISISUUID != null) {\n" +
-                "\t\t\thtmlContentBuilder.append(tmpVar_THISISUUID);\n" +
+                "\t\t\tcontentBuilder.append(tmpVar_THISISUUID);\n" +
                 "\t\t} else {\n" +
-                "\t\t\thtmlContentBuilder.append(\"Alternative\");\n" +
+                "\t\t\tcontentBuilder.append(\"Alternative\");\n" +
                 "\t\t}\n" +
-                "\t\thtmlContentBuilder.append(STATIC_HTML_THISISUUID);\n" +
-                "\t\thtmlContentBuilder.append(STATIC_HTML_THISISUUID);\n";
+                "\t\tcontentBuilder.append(STATIC_HTML_THISISUUID);\n" +
+                "\t\tcontentBuilder.append(STATIC_HTML_THISISUUID);\n";
 
         String result = sanitizeResult(element.write().toString());
         Assertions.assertEquals(expected, TestUtil.sanitizeResult(result));

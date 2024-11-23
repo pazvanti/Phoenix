@@ -12,7 +12,7 @@ import java.util.*;
 
 @Component
 public class ElementFactory {
-    public static final String DEFAULT_BUILDER_NAME = "htmlContentBuilder";
+    public static final String DEFAULT_BUILDER_NAME = "contentBuilder";
 
     private final List<ElementBuilder> elementBuilders;
     private final List<ElementBuilder> elseElementBuilders;

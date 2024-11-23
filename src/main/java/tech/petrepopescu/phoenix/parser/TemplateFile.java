@@ -2,7 +2,6 @@ package tech.petrepopescu.phoenix.parser;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.tuple.Pair;
 import tech.petrepopescu.phoenix.exception.ParsingException;
 import tech.petrepopescu.phoenix.parser.elements.*;
 import tech.petrepopescu.phoenix.spring.config.PhoenixConfiguration;
@@ -70,25 +69,31 @@ public class TemplateFile extends PhoenixFileParser {
 
         builder.append(this.constructorElement.write());
 
-        builder.append("\tpublic String getContent(PhoenixSpecialElementsUtil specialElementsUtil) {\n");
-        builder.append("\t\t").append("final StringBuilder htmlContentBuilder = new StringBuilder();\n");
+        builder.append("\n");
+        builder.append("\tprivate void populateSectionCalls() {\n");
+        builder.append("\t\tcontentBySections.put(\"html\", this::getContentForHtml);\n");
+        builder.append("\t}\n");
 
-        // Create the builders for all the elements
-        List<Element> sectionElements = lineElements.stream().filter(SectionElement.class::isInstance).toList();
-        if (!sectionElements.isEmpty()) {
-            for (Element element : sectionElements) {
-                builder.append("\t\t").append("final StringBuilder ")
-                        .append(element.getBuilderName())
-                        .append(" = new StringBuilder();\n");
-            }
-        }
+        builder.append("\tpublic String getContent(PhoenixSpecialElementsUtil specialElementsUtil) {\n");
+        builder.append("\t\t").append(" return getContentForSection(\"html\", specialElementsUtil);\n");
+        builder.append("\t}\n");
+
+        builder.append("\tpublic String getContentForSection(String sectionName, PhoenixSpecialElementsUtil specialElementsUtil) {\n");
+        builder.append("\t\tif (!contentBySections.containsKey(sectionName)) {\n");
+        builder.append("\t\t\treturn \"\";\n");
+        builder.append("\t\t}\n");
+        builder.append("\t\treturn contentBySections.get(sectionName).apply(specialElementsUtil);\n");
+        builder.append("\t}\n\n");
+
+        builder.append("\tpublic String getContentForHtml(PhoenixSpecialElementsUtil specialElementsUtil) {\n");
+        builder.append("\t\t").append("final StringBuilder contentBuilder = new StringBuilder();\n");
 
         List<Element> nonInsertAtElements = lineElements.stream()
                 .filter(element -> !(element instanceof InsertAtElement)).toList();
         for (Element element : nonInsertAtElements) {
             builder.append(element.write());
         }
-        builder.append("\t\treturn htmlContentBuilder.toString();\n");
+        builder.append("\t\treturn contentBuilder.toString();\n");
         builder.append("\t}\n");
         builder.append("}\n");
 

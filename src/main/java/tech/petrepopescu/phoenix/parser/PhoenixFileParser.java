@@ -40,6 +40,9 @@ public abstract class PhoenixFileParser {
         Element phoenixSpecialImport = new ImportElement("tech.petrepopescu.phoenix.special.*");
         Element escapeUtilsImport = new ImportElement("org.apache.commons.text.StringEscapeUtils");
         Element springImport = new ImportElement("org.springframework.web.servlet.support.ServletUriComponentsBuilder");
+        Element mapImport = new ImportElement("java.util.Map");
+        Element hashMapImport = new ImportElement("java.util.HashMap");
+        Element functionImport = new ImportElement("java.util.function.Function");
         Element staticStringsImport = new ImportElement("static " + VIEWS_BASE_PACKAGE + ".StaticStrings.*");
         imports.add(phoenixFormatImport);
         imports.add(phoenixViewImport);
@@ -47,6 +50,9 @@ public abstract class PhoenixFileParser {
         imports.add(escapeUtilsImport);
         imports.add(springImport);
         imports.add(staticStringsImport);
+        imports.add(mapImport);
+        imports.add(hashMapImport);
+        imports.add(functionImport);
         for (Element importElement:imports) {
             importElement.parse(fileName);
         }

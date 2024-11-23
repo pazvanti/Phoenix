@@ -1,12 +1,12 @@
-@args(int inputVar)
+@args(int myVar)
 <div>
-    <p>This is the main content from the fragment: @(inputVar + 1)</p>
+    <p>This is the main content from the fragment: @(myVar + 1)</p>
 </div>
 
 @insertAt("css") {
-    <p>CSS section from fragment: @inputVar</p>
+    <p>CSS section from fragment: @myVar</p>
 }
 
 @insertAt("javascript") {
-    <p>JavaScript section from fragment: @inputVar</p>
+    <p>JavaScript section from fragment: @myVar</p>
 }

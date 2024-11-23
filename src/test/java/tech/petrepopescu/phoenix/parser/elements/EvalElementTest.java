@@ -12,6 +12,6 @@ class EvalElementTest {
         String line = "@(a + b)";
         EvalElement element = new EvalElement(List.of(line), 0, null, ElementFactory.DEFAULT_BUILDER_NAME);
         element.parse("");
-        Assertions.assertEquals("htmlContentBuilder.append((a + b));", element.write().toString().trim());
+        Assertions.assertEquals("contentBuilder.append((a + b));", element.write().toString().trim());
     }
 }

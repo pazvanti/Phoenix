@@ -55,11 +55,6 @@ public class PhoenixParser {
         for (TemplateFile templateFile:templateFiles) {
             JavaFileObject javaFileObject = new SourceCodeObject(templateFile.className(), templateFile.write(), templateFile.basePackage, true);
             javaFileObjects.add(javaFileObject);
-            if (!StringUtils.endsWith(templateFile.getBasePackage(), ".")) {
-                elementFactory.defineNewFragment(templateFile.getBasePackage() + "." + templateFile.className());
-            } else {
-                elementFactory.defineNewFragment(templateFile.getBasePackage() + templateFile.className());
-            }
         }
         return javaFileObjects;
     }
@@ -105,7 +100,7 @@ public class PhoenixParser {
                 try {
                     file = resource.getFile();
                     String relativePath = getRelativePath(resource, rootFolderPath);
-                    parseFile(file, relativePath);
+                    templateFiles.add(parseFile(file, relativePath));
                 } catch (Exception e) {
                     if (file == null) {
                         log.error("There was an error reading a resource file");
@@ -125,6 +120,11 @@ public class PhoenixParser {
         }
         TemplateFile templateFile = new TemplateFile(file, VIEWS_BASE_PACKAGE + relativePath, elementFactory, phoenixConfiguration);
         templateFile.parse();
+        if (!StringUtils.endsWith(templateFile.getBasePackage(), ".")) {
+            elementFactory.defineNewFragment(templateFile.getBasePackage() + "." + templateFile.className());
+        } else {
+            elementFactory.defineNewFragment(templateFile.getBasePackage() + templateFile.className());
+        }
         return templateFile;
     }
 
@@ -158,6 +158,11 @@ public class PhoenixParser {
             TemplateFile templateFile = new TemplateFile(file, basePackage.toString(), elementFactory, phoenixConfiguration);
             try {
                 templateFile.parse();
+                if (!StringUtils.endsWith(templateFile.getBasePackage(), ".")) {
+                    elementFactory.defineNewFragment(templateFile.getBasePackage() + "." + templateFile.className());
+                } else {
+                    elementFactory.defineNewFragment(templateFile.getBasePackage() + templateFile.className());
+                }
                 templateFiles.add(templateFile);
                 elementFactory.defineNewFragment(templateFile.getBasePackage() + "." + templateFile.className());
             } catch (Exception e) {
