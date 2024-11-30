@@ -5,14 +5,18 @@ import org.apache.commons.lang3.tuple.Pair;
 import tech.petrepopescu.phoenix.exception.ParsingException;
 import tech.petrepopescu.phoenix.parser.ElementFactory;
 import tech.petrepopescu.phoenix.parser.VariableRegistry;
+import tech.petrepopescu.phoenix.utils.VariableDeclaration;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ConstructorElement extends Element {
     private List<Pair<String, String>> parameters = new ArrayList<>();
 
     private String className = null;
+    private Set<VariableDeclaration> localVariables = new HashSet<>();
 
     public ConstructorElement(List<String> lines, int lineIndex, ElementFactory elementFactory, String builderName) {
         super(lines, lineIndex, elementFactory, builderName);
@@ -72,6 +76,10 @@ public class ConstructorElement extends Element {
         return varName;
     }
 
+    public void addLocalVariables(Set<VariableDeclaration> variables) {
+        this.localVariables.addAll(variables);
+    }
+
     @Override
     public StringBuilder write() {
         if (StringUtils.isBlank(className)) {
@@ -80,6 +88,9 @@ public class ConstructorElement extends Element {
         this.contentBuilder.append("public final class ").append(className).append(" extends HtmlFormat {\n");
         for (Pair<String, String> param:parameters) {
             appendVariableDeclaration(param);
+        }
+        for (VariableDeclaration entry:localVariables) {
+            appendVariableDeclaration(entry);
         }
         this.contentBuilder.append("\tprivate final Map<String, Function<PhoenixSpecialElementsUtil, String>> contentBySections = new HashMap<>();\n");
         this.contentBuilder.append("\n");
@@ -116,6 +127,15 @@ public class ConstructorElement extends Element {
     private void appendVariableDeclaration(Pair<String, String> variable) {
         this.contentBuilder.append("\t").append("private final ").append(variable.getLeft())
                 .append(" ").append(variable.getRight()).append(";\n");
+    }
+
+    private void appendVariableDeclaration(VariableDeclaration variable) {
+        this.contentBuilder.append("\t").append("private ");
+        if (variable.isStatic()) {
+            this.contentBuilder.append("static ");
+        }
+        this.contentBuilder.append(variable.getType())
+                .append(" ").append(variable.getName()).append(" = ").append(variable.getInitialValue()).append(";\n");
     }
 
     private void appendVariableInitialisation(Pair<String, String> param) {

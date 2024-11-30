@@ -3,7 +3,9 @@ package tech.petrepopescu.phoenix.parser.elements;
 import org.apache.commons.lang3.StringUtils;
 import tech.petrepopescu.phoenix.parser.ElementFactory;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class SectionElement extends AbstractContainerElement {
     private String sectionName = null;
@@ -28,8 +30,18 @@ public class SectionElement extends AbstractContainerElement {
         for (Element element:this.nestedElements) {
             this.contentBuilder.append(element.write());
         }
-        for (FragmentOrStaticImportCallElement fragment:fragments) {
-            appendWithContentBuilder(fragment.getContentForSection(this.sectionName).toString());
+        List<String> fragmentVariableNames = new ArrayList<>();
+        for (int count = 0; count < fragments.size(); count++) {
+            fragmentVariableNames.add("fragmentCall" + StringUtils.remove(UUID.randomUUID().toString(), '-'));
+        }
+        for (int count = 0; count < fragments.size(); count++) {
+            FragmentOrStaticImportCallElement fragment = fragments.get(count);
+            appendAsCode("HtmlFormat " + fragmentVariableNames.get(count) + " = ");
+            appendAsCode(fragment.getContentCallObject().toString() + ";\n");
+            appendAsCode(fragmentVariableNames.get(count) + ".setContentGroup(this.contentGroup);\n");
+        }
+        for (int count = 0; count < fragments.size(); count++) {
+            appendAsCode("contentBuilder.append(" + fragmentVariableNames.get(count) + ".getContentForSection(\"" + this.sectionName + "\", specialElementsUtil));\n");
         }
         return this.contentBuilder;
     }

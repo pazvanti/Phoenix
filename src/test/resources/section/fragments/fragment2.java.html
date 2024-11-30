@@ -1,0 +1,25 @@
+@args(int myValue)
+
+@insertAt("html") {
+    <p>F2 My value is @(myValue + 20)</p>
+}
+
+@insertAt("section1") {
+    <p>From fragment2s1: @myValue</p>
+}
+
+@insertAt("section2") {
+    <p>From fragment2s2: @myValue</p>
+}
+
+@insertAt("section3") {
+    <p>From fragment2s3: @myValue</p>
+}
+
+@insertOnce("section1") {
+    <p>From fragment2s1_insertOnce: @(myValue + 200)</p>
+}
+
+@insertOnce("section2") {
+    <p>From fragment2s2_insertOnce: @(myValue + 200)</p>
+}

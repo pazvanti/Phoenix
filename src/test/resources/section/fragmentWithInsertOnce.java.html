@@ -1,0 +1,12 @@
+@args(int myVar)
+<div>
+    <p>This is the main content from the fragment: @(myVar + 1)</p>
+</div>
+
+@insertOnce("css") {
+        .buttonCss
+}
+
+@insertOnce("javascript") {
+        document.getElementById("button").setStatus("active");
+}

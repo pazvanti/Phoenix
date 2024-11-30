@@ -5,12 +5,16 @@ import org.apache.commons.lang3.StringUtils;
 import tech.petrepopescu.phoenix.exception.ParsingException;
 import tech.petrepopescu.phoenix.parser.elements.*;
 import tech.petrepopescu.phoenix.spring.config.PhoenixConfiguration;
+import tech.petrepopescu.phoenix.utils.VariableDeclaration;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class TemplateFile extends PhoenixFileParser {
     private final List<Element> lineElements = new ArrayList<>();
@@ -66,7 +70,6 @@ public class TemplateFile extends PhoenixFileParser {
             builder.append(importElement.write());
         }
         builder.append("\n");
-
         builder.append(this.constructorElement.write());
 
         List<FragmentOrStaticImportCallElement> fragmentCallElements = this.lineElements.stream()
@@ -102,10 +105,19 @@ public class TemplateFile extends PhoenixFileParser {
 
         List<Element> nonInsertAtElements = lineElements.stream()
                 .filter(element -> !(element instanceof InsertAtElement)).toList();
-        appendGetContentForSection("html", builder, nonInsertAtElements, fragmentCallElements);
-        for (Element element : insertAtElements) {
-            InsertAtElement insertAtElement = (InsertAtElement) element;
-            appendGetContentForSection(insertAtElement.getSectionName(), builder, List.of(element), fragmentCallElements);
+        Map<String, List<InsertAtElement>> insertAtElementsGroups = insertAtElements.stream()
+                .map(element -> (InsertAtElement) element)
+                .collect(Collectors.groupingBy(InsertAtElement::getSectionName));
+        List<Element> htmlElements = new ArrayList<>(nonInsertAtElements);
+        if (insertAtElementsGroups.containsKey("html")) {
+            htmlElements.addAll(insertAtElementsGroups.get("html"));
+        }
+        appendGetContentForSection("html", builder, htmlElements, fragmentCallElements);
+        for (Map.Entry<String, List<InsertAtElement>> entry : insertAtElementsGroups.entrySet()) {
+            if (entry.getKey().equals("html")) {
+                continue;
+            }
+            appendGetContentForSection(entry.getKey(), builder, entry.getValue(), fragmentCallElements);
         }
 
         builder.append("}\n");
@@ -113,7 +125,7 @@ public class TemplateFile extends PhoenixFileParser {
         return builder.toString();
     }
 
-    private void appendGetContentForSection(String sectionName, StringBuilder builder, List<Element> lineElements,
+    private void appendGetContentForSection(String sectionName, StringBuilder builder, List<? extends Element> lineElements,
                                             List<FragmentOrStaticImportCallElement> fragmentCallElements) {
         builder.append("\tpublic String getContentFor").append(sectionName).append("(PhoenixSpecialElementsUtil specialElementsUtil) {\n");
         builder.append("\t\t").append("final StringBuilder contentBuilder = new StringBuilder();\n\n");
