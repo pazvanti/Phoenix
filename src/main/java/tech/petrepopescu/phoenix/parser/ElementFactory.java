@@ -30,7 +30,7 @@ public class ElementFactory {
                     new HtmlElementBuilder(), new CommentElementBuilder(), new ForElementBuilder(), new CsrfElementBuilder(),
                     new BreakElementBuilder(), new WithElementBuilder(), new EvalElementBuilder(), new RawElementBuilder(),
                     new NullSafeVariableElementBuilder(), new NullSafeTernaryElementBuilder(), new ContentBlockElementBuilder(),
-                    new SectionElementBuilder(), new InsertAtElementBuilder(),
+                    new SectionElementBuilder(), new InsertAtElementBuilder(), new InsertOnceElementBuilder(),
                     new ForWithIteratorElementBuilder(), fragmentOrStaticImportElementBuilder);
             elseElementBuilders = List.of(new ElseElementBuilder(), new ElseIfElementBuilder());
         } else {

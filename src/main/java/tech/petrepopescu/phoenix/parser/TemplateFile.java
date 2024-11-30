@@ -5,12 +5,15 @@ import org.apache.commons.lang3.StringUtils;
 import tech.petrepopescu.phoenix.exception.ParsingException;
 import tech.petrepopescu.phoenix.parser.elements.*;
 import tech.petrepopescu.phoenix.spring.config.PhoenixConfiguration;
+import tech.petrepopescu.phoenix.utils.VariableDeclaration;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class TemplateFile extends PhoenixFileParser {
     private final List<Element> lineElements = new ArrayList<>();
@@ -66,7 +69,6 @@ public class TemplateFile extends PhoenixFileParser {
             builder.append(importElement.write());
         }
         builder.append("\n");
-
         builder.append(this.constructorElement.write());
 
         List<FragmentOrStaticImportCallElement> fragmentCallElements = this.lineElements.stream()

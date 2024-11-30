@@ -1,0 +1,22 @@
+@args(int inputVar)
+<html>
+<body>
+
+@section("section1") {
+    <p>Section 1 content is here</p>
+}
+
+<div>This is in the main content: @inputVar</div>
+@fragments.fragment1.template(inputVar)
+@fragments.fragment2.template(inputVar)
+
+@section("section2") {
+    <p>Section 2 content is here</p>
+}
+
+@section("section3") {
+    <p>Section 3 content is here</p>
+}
+
+</body>
+</html>

@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest(classes = {SecurityConfig.class, PhoenixMessageConverter.class, RouteGenerator.class, Compiler.class, ElementFactory.class,
         DynamicClassLoader.class, PhoenixConfiguration.class, PhoenixSpecialElementsUtil.class, FragmentController.class,
         PhoenixErrorHandler.class})
-public class SectionTests {
+class SectionTests {
     @Autowired
     private Compiler compiler;
 
@@ -48,12 +48,19 @@ public class SectionTests {
         parser.parse();
 
         Map<String, List<Object>> tests = new HashMap<>();
-        tests.put("simpleSectionTest", List.of(3));
+        //tests.put("simpleSectionTest", List.of(3));
+        tests.put("insertOnceTest", List.of(3));
+
+        // We need to repeat the insertOnce test to make sure that second call is correct as well
+        tests.put("insertOnceTest", List.of(3));
+
+        tests.put("sectionTest", List.of(10));
+        tests.put("complexSectionTest", List.of(1));
 
         for (Map.Entry<String, List<Object>> entry : tests.entrySet()) {
             String htmlContent = View.of(entry.getKey(), entry.getValue().toArray(new Object[0])).getContent(phoenixSpecialElementsUtil);
             String expected = FileUtils.readFileToString(new File("src/test/resources/section/expected/" + entry.getKey() + ".html"), "UTF-8");
-            assertEquals(expected, htmlContent);
+            assertEquals(expected, htmlContent, "Failed for test: " + entry.getKey());
         }
     }
 }

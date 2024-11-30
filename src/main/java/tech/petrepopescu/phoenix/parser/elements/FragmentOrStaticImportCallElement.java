@@ -87,11 +87,11 @@ public class FragmentOrStaticImportCallElement extends NestedElement {
             this.contentBuilder.append(StringUtils.repeat('\t', this.numTabs + 1)).append("}\n");
             this.contentBuilder.append(StringUtils.repeat('\t', this.numTabs)).append("};\n");
         }
-        StringBuilder fragmentCall = getContentForSection("html");
+        StringBuilder fragmentCall = getContentCallForSection("html");
         appendWithContentBuilder(fragmentCall.toString());
     }
 
-    public StringBuilder getContentForSection(String sectionName) {
+    public StringBuilder getContentCallForSection(String sectionName) {
         StringBuilder call = new StringBuilder("View.of(\"" + fragmentName + "\"");
         if (indexOfParamStart + 1 == indexOfParamEnd) {
             // no arguments
@@ -108,6 +108,24 @@ public class FragmentOrStaticImportCallElement extends NestedElement {
         }
         call.append(".getContentForSection(\"").append(sectionName).append("\", specialElementsUtil)");
 
+        return call;
+    }
+
+    public StringBuilder getContentCallObject() {
+        StringBuilder call = new StringBuilder("View.of(\"" + fragmentName + "\"");
+        if (indexOfParamStart + 1 == indexOfParamEnd) {
+            // no arguments
+            if (contentVariableName != null) {
+                call.append(", ").append(contentVariableName);
+            }
+            call.append(")");
+        } else {
+            call.append(", ").append(parameters);
+            if (contentVariableName != null) {
+                call.append(", ").append(contentVariableName);
+            }
+            call.append(")");
+        }
         return call;
     }
 

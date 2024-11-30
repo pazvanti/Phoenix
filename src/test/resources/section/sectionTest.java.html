@@ -1,0 +1,21 @@
+@args(int inputVar)
+<html>
+<body>
+    <style>
+    @section("css") {
+        .body
+    }
+    </style>
+
+    <div>This is in the main content: @inputVar</div>
+    @toBeInserted.template(inputVar)
+    @fragmentWithInsertOnce.template(inputVar)
+    @toBeInserted.template(inputVar + 1)
+
+    <script>
+    @section("javascript") {
+        var status = "active";
+    }
+    </script>
+</body>
+</html>
