@@ -16,6 +16,8 @@ Phoenix provides many advantages compared to other template engines that are cur
 - Lighting fast and lightweight. Phoenix is orders of magnitude faster than Thymeleaf for rendering pages. This is achieved by compiling the template files, instead of interpreting them. See the benchmarks below.
 - **More features in development**
 
+For more deatails, examples and documentation, visit the [Phoenix website](https://pazvanti.github.io/Phoenix/index.htmlx)
+
 ## Sample template
 
 Here is a simple template that showcases a few key features of Phoenix.

@@ -89,6 +89,8 @@
                     <li class="elements_li"><a href="#contentBlocks">Content blocks: @myContent => { }</a></li>
                     <li class="elements_li"><a href="#route">Reverse-routing: @routes.</a></li>
                     <li class="elements_li"><a href="#csrf">CSRF protection: @csrf.meta and @csrf.input</a></li>
+                    <li class="elements_li"><a href="#section">@section</a></li>
+                    <li class="elements_li"><a href="#insertAt">@insertAt and @insertOnce</a></li>
                 </ul>
             </div>
             <div class="col-md-8 mt-4 text-white">
@@ -661,6 +663,60 @@ public class TestController {
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div id="section">
+                    <h5 class="element_title">Defining sections in your template</h5>
+                    <p>Phoenix has a feature where you can define sections in your template. Sections are rendered just as everything else,
+                    but has the advantage that code can be inserted inside from within fragments. </p>
+                    <p>Let's take an example, since it is easier to understand. You have your HTML page and inside you have the styles, the HTML part and the JavaScript part.
+                    </p>
+                    <p>You can define two sections, for the styles and the JavaScript parts, and fragments you later insert anywhere in the page can inject code inside those sections.
+                    </p>
+                    <p>This way, your fragments have everything needed to make them work, all in one place and with a single fragment call, the needed dependencies are added where they need to be.</p>
+                    <p>A section is defined using <code>@section("name")</code>. Names are case-sensitive. The default section is named "html".</p>
+                    <p>Also, similar to fragment calls, sections can have pre-populated data: </p>
+                    <div class="row">
+                        <pre>
+                            <code class="language-css">
+@section("css") {
+    .body {
+        background-color: red;
+    }
+}
+                            </code>
+                        </pre>
+                    </div>
+                </div>
+                <div id="insertAt">
+                    <h5 class="element_title">Inserting content at a specific position</h5>
+                    <p>Phoenix allows you to insert content at a specific position in the template.</p>
+                    <p>This can be achieved using either the <code>@insertAt("sectionName")</code> or <code>@insertOnce("sectionName")</code></p>
+                    <p>When defining a fragment, you can include additional code in the two tags mentioned and when the fragment is
+                    included inside another template, the specified code will be inserted in the right section. If the section does
+                    not exist, the code will be ignored.</p>
+
+                    <div class="row">
+                        <pre>
+                            <code class="language-css">
+@insertAt("css") {
+    .btn {
+        background-color: red;
+    }
+}
+                            </code>
+                        </pre>
+                    </div>
+                    <div class="row">
+                        <p>The difference between <code>@insertAt</code> and <code>@insertOnce</code> is that
+                            <code>@insertOnce</code> will only insert the code for the first call to the fragment in the template,
+                            while <code>@insertAt</code> will insert the code every time it is called.</p>
+
+                        <p>This is important since, if you use variables in the <code>@insertOnce</code>, only the first call will be executed.</p>
+                        <p>Both tags use the same input variables as defined in the <code>@args</code> tag.</p>
+                        <p>Since the default section is named "html", you can have a fragment where everything is inside an
+                        <code>@insertAt</code> tags.</p>
+                        <p><strong>IMPORTANT: The two tags must be at root-level and not nested inside other tags or elements</strong></p>
                     </div>
                 </div>
             </div>
