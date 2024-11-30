@@ -9,7 +9,7 @@ import tech.petrepopescu.phoenix.parser.elements.Element;
 import java.util.List;
 
 @Component
-public class ForWithIteratorElementBuilder extends ElementBuilder{
+public class ForWithIteratorElementBuilder extends ContainerElementBuilders {
     @Override
     public boolean isValid(String line) {
         return StringUtils.startsWith(line, "@for((") || StringUtils.startsWith(line, "@for ((");

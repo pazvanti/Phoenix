@@ -9,7 +9,7 @@ import tech.petrepopescu.phoenix.parser.elements.SectionElement;
 import java.util.List;
 
 @Component
-public class SectionElementBuilder extends ElementBuilder {
+public class SectionElementBuilder extends ContainerElementBuilders {
     @Override
     public boolean isValid(String line) {
         return StringUtils.startsWith(line, "@section(");

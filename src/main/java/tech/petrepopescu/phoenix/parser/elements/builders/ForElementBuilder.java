@@ -8,7 +8,7 @@ import tech.petrepopescu.phoenix.parser.elements.NestedElement;
 import java.util.List;
 
 @Component
-public class ForElementBuilder extends ElementBuilder {
+public class ForElementBuilder extends ContainerElementBuilders {
     @Override
     public boolean isValid(String line) {
         return line.trim().startsWith("@for");

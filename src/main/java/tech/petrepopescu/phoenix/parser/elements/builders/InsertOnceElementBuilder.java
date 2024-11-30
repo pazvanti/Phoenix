@@ -9,7 +9,7 @@ import tech.petrepopescu.phoenix.parser.elements.InsertOnceElement;
 import java.util.List;
 
 @Component
-public class InsertOnceElementBuilder extends ElementBuilder {
+public class InsertOnceElementBuilder extends ContainerElementBuilders {
     @Override
     public boolean isValid(String line) {
         return StringUtils.startsWith(line, "@insertOnce(");

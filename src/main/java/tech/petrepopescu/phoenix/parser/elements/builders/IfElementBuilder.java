@@ -9,7 +9,7 @@ import tech.petrepopescu.phoenix.parser.elements.IfElement;
 import java.util.List;
 
 @Component
-public class IfElementBuilder extends ElementBuilder {
+public class IfElementBuilder extends ContainerElementBuilders {
     @Override
     public boolean isValid(String line) {
         return StringUtils.startsWithAny(line, "@if");

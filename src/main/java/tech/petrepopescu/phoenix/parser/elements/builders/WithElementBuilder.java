@@ -8,7 +8,7 @@ import tech.petrepopescu.phoenix.parser.elements.Element;
 import java.util.List;
 
 @Component
-public class WithElementBuilder extends ElementBuilder {
+public class WithElementBuilder extends ContainerElementBuilders {
     @Override
     public boolean isValid(String line) {
         return line.trim().startsWith("@with");

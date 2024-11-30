@@ -18,12 +18,15 @@ public abstract class AbstractContainerElement extends Element {
             // The nested statement does not end on the same line
             this.lineNumber++;
             line = StringUtils.trim(this.lines.get(this.lineNumber));
-            while (!StringUtils.startsWith(line, "}")) {
+            int numOpenedBrackets = 1;
+            while (!StringUtils.startsWith(line, "}") || numOpenedBrackets > 1) {
                 Element subElement = elementFactory.getElement(lines, lineNumber);
                 subElement.tabs(this.numTabs + 1);
                 nestedElements.add(subElement);
                 this.lineNumber = subElement.parse(fileName) + 1;
                 line = StringUtils.trim(this.lines.get(this.lineNumber));
+                numOpenedBrackets += countOccurancesInHtml(subElement, "{");
+                numOpenedBrackets -= countOccurancesInHtml(subElement, "}");
             }
             if (line.length() > 1) {
                 this.lineNumber = discoverNextElement(line, lines, this.lineNumber, fileName);
@@ -40,6 +43,18 @@ public abstract class AbstractContainerElement extends Element {
                 discoverNextElement(StringUtils.substring(line, indexOfStatementEnd + 1), fileName);
             }
         }
+    }
+
+    private int countOccurancesInHtml(Element element, String searchFor) {
+        int count = 0;
+        if (element instanceof HtmlElement htmlElement) {
+            count += StringUtils.countMatches(htmlElement.getActualCode(), searchFor);
+        }
+        if (element.nextElement != null) {
+            count += countOccurancesInHtml(element.nextElement, searchFor);
+        }
+
+        return count;
     }
 
     private int indexOfStatementEnd(String line) {

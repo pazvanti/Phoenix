@@ -24,6 +24,21 @@
     }
     <hr />
 
+    <h5>For with if statements</h5>
+    @for(int count = 0; count<100; count++) {
+        @if (count == 10) {
+            <p>We reached 10</p>
+        } else if (count == 20) {
+            <p>We reached 20</p>
+        } else {
+            @if (count == 30) {
+                <p>We reached 30</p>
+            } else if (count == 40) {
+                <p>We reached 40</p>
+            }
+        }
+    }
+    <hr />
 
     <h5>Simple IF</h5>
     @if (a == 0) {

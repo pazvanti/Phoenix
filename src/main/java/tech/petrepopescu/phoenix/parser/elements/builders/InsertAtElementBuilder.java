@@ -7,7 +7,7 @@ import tech.petrepopescu.phoenix.parser.elements.InsertAtElement;
 
 import java.util.List;
 
-public class InsertAtElementBuilder extends ElementBuilder {
+public class InsertAtElementBuilder extends ContainerElementBuilders {
     @Override
     public boolean isValid(String line) {
         return StringUtils.startsWith(line, "@insertAt(");

@@ -9,7 +9,7 @@ import tech.petrepopescu.phoenix.parser.elements.ElseIfElement;
 import java.util.List;
 
 @Component
-public class ElseIfElementBuilder extends ElementBuilder {
+public class ElseIfElementBuilder extends ContainerElementBuilders {
     @Override
     public boolean isValid(String line) {
         return StringUtils.startsWithAny(line, " else if (", "else if(", " else if(", "else if (") ||

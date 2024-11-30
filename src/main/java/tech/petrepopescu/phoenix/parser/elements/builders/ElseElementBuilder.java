@@ -9,7 +9,7 @@ import tech.petrepopescu.phoenix.parser.elements.ElseElement;
 import java.util.List;
 
 @Component
-public class ElseElementBuilder extends ElementBuilder {
+public class ElseElementBuilder extends ContainerElementBuilders {
     @Override
     public boolean isValid(String line) {
         return StringUtils.startsWithAny(line," else {", "else{", " else{", "else {") ||

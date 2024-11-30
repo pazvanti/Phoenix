@@ -1,13 +1,10 @@
 package tech.petrepopescu.phoenix.parser.elements;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.text.StringEscapeUtils;
 import tech.petrepopescu.phoenix.parser.ElementFactory;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public abstract class Element {
     public static final String DEFAULT_SECTION_NAME = "html";
