@@ -8,7 +8,9 @@
 
 <div>This is in the main content: @inputVar</div>
 @fragments.fragment1.template(inputVar)
-@fragments.fragment2.template(inputVar)
+@fragments.fragment1.template(inputVar + 1000)
+@fragments.fragment1.template(inputVar + 10000)
+@fragments.fragment2.template(inputVar + 2000)
 
 @section("section2") {
     <p>Section 2 content is here</p>
