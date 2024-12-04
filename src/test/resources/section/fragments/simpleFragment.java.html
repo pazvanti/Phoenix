@@ -1,0 +1,10 @@
+@args(int myVar)
+<p>Fragment content: @myVar</p>
+
+@insertAt("section1") {
+    <p>From fragment1s1: @myVar</p>
+}
+
+@insertOnce("section1") {
+    <p>From fragment1s1_insertOnce: @(myVar + 100)</p>
+}

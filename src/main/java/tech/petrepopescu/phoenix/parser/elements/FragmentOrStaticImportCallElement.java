@@ -73,22 +73,28 @@ public class FragmentOrStaticImportCallElement extends NestedElement {
     }
 
     private void writeContentForHtml() {
-        if (!this.nestedElements.isEmpty()) {
-            this.contentBuilder.append(StringUtils.repeat('\t', this.numTabs))
-                    .append("PhoenixContent ").append(contentVariableName).append(" = new PhoenixContent() {\n");
-            this.contentBuilder.append(StringUtils.repeat('\t', this.numTabs + 1)).append("public String render() {\n");
-            this.contentBuilder.append(StringUtils.repeat('\t', this.numTabs + 2)).append("StringBuilder ")
-                    .append(contentVariableName).append("ContentBuilder = new StringBuilder();\n");
-            for (Element element:this.nestedElements) {
-                this.contentBuilder.append(element.write());
-            }
-            this.contentBuilder.append(StringUtils.repeat('\t', this.numTabs + 2)).append("return ")
-                    .append(contentVariableName).append("ContentBuilder.toString();\n");
-            this.contentBuilder.append(StringUtils.repeat('\t', this.numTabs + 1)).append("}\n");
-            this.contentBuilder.append(StringUtils.repeat('\t', this.numTabs)).append("};\n");
-        }
         StringBuilder fragmentCall = getContentCallForSection("html");
         appendWithContentBuilder(fragmentCall.toString());
+    }
+
+    public StringBuilder getNestedElementsContent() {
+        StringBuilder contentBuilder = new StringBuilder();
+        if (!this.nestedElements.isEmpty()) {
+            contentBuilder.append(StringUtils.repeat('\t', this.numTabs))
+                    .append("PhoenixContent ").append(contentVariableName).append(" = new PhoenixContent() {\n");
+            contentBuilder.append(StringUtils.repeat('\t', this.numTabs + 1)).append("public String render() {\n");
+            contentBuilder.append(StringUtils.repeat('\t', this.numTabs + 2)).append("StringBuilder ")
+                    .append(contentVariableName).append("ContentBuilder = new StringBuilder();\n");
+            for (Element element:this.nestedElements) {
+                contentBuilder.append(element.write());
+            }
+            contentBuilder.append(StringUtils.repeat('\t', this.numTabs + 2)).append("return ")
+                    .append(contentVariableName).append("ContentBuilder.toString();\n");
+            contentBuilder.append(StringUtils.repeat('\t', this.numTabs + 1)).append("}\n");
+            contentBuilder.append(StringUtils.repeat('\t', this.numTabs)).append("};\n");
+        }
+
+        return contentBuilder;
     }
 
     public StringBuilder getContentCallForSection(String sectionName) {
@@ -96,13 +102,13 @@ public class FragmentOrStaticImportCallElement extends NestedElement {
         if (indexOfParamStart + 1 == indexOfParamEnd) {
             // no arguments
             if (contentVariableName != null) {
-                call.append(", ").append(contentVariableName);
+                call.append(", ").append(contentVariableName + "()");
             }
             call.append(")");
         } else {
             call.append(", ").append(parameters);
             if (contentVariableName != null) {
-                call.append(", ").append(contentVariableName);
+                call.append(", ").append(contentVariableName + "()");
             }
             call.append(")");
         }
@@ -116,13 +122,13 @@ public class FragmentOrStaticImportCallElement extends NestedElement {
         if (indexOfParamStart + 1 == indexOfParamEnd) {
             // no arguments
             if (contentVariableName != null) {
-                call.append(", ").append(contentVariableName);
+                call.append(", ").append(contentVariableName + "()");
             }
             call.append(")");
         } else {
             call.append(", ").append(parameters);
             if (contentVariableName != null) {
-                call.append(", ").append(contentVariableName);
+                call.append(", ").append(contentVariableName + "()");
             }
             call.append(")");
         }
@@ -131,5 +137,9 @@ public class FragmentOrStaticImportCallElement extends NestedElement {
 
     public boolean isFragment() {
         return this.isFragment;
+    }
+
+    public String getContentVariableName() {
+        return this.contentVariableName;
     }
 }

@@ -1,0 +1,10 @@
+@args(int variable)
+
+@section("section1") {
+    <p>Section 1 content is here</p>
+}
+
+<p>Main content</p>
+@for(int i = 0; i < 3; i++) {
+    @fragments.simpleFragment.template(i)
+}

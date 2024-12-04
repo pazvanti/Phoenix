@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.StringEscapeUtils;
 import tech.petrepopescu.phoenix.parser.ElementFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Element {
@@ -120,6 +121,22 @@ public abstract class Element {
 
     public void tabs(int numTabs) {
         this.numTabs = numTabs;
+    }
+
+    public StringBuilder getFragmentOrStaticImportCallElementWriter(String sectionName) {
+        if (this.nextElement == null || sectionName == null) {
+            return new StringBuilder();
+        }
+
+        if (nextElement instanceof FragmentOrStaticImportCallElement fragmentOrStaticImportCallElement) {
+            StringBuilder fragmentCallElementWriter = new StringBuilder();
+            if (fragmentOrStaticImportCallElement.isFragment()) {
+                fragmentCallElementWriter.append("\n").append(fragmentOrStaticImportCallElement.getContentCallObject());
+            }
+            return fragmentCallElementWriter;
+        }
+
+        return nextElement.getFragmentOrStaticImportCallElementWriter(sectionName);
     }
 
     public void setBuilderName(String builderName) {

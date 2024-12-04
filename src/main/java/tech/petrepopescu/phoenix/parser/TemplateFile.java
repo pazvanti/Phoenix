@@ -70,11 +70,12 @@ public class TemplateFile extends PhoenixFileParser {
         builder.append("\n");
         builder.append(this.constructorElement.write());
 
-        List<FragmentOrStaticImportCallElement> fragmentCallElements = this.lineElements.stream()
+        List<FragmentOrStaticImportCallElement> fragmentCallElements = new ArrayList<>();
+        fragmentCallElements.addAll(this.lineElements.stream()
                 .filter(FragmentOrStaticImportCallElement.class::isInstance)
                 .filter(element -> ((FragmentOrStaticImportCallElement) element).isFragment())
                 .map(FragmentOrStaticImportCallElement.class::cast)
-                .toList();
+                .toList());
 
         List<Element> insertAtElements = this.lineElements.stream()
                 .filter(InsertAtElement.class::isInstance)
@@ -104,12 +105,13 @@ public class TemplateFile extends PhoenixFileParser {
         List<Element> nonInsertAtElements = lineElements.stream()
                 .filter(element -> !(element instanceof InsertAtElement)).toList();
         Map<String, List<InsertAtElement>> insertAtElementsGroups = insertAtElements.stream()
-                .map(element -> (InsertAtElement) element)
+                .map(InsertAtElement.class::cast)
                 .collect(Collectors.groupingBy(InsertAtElement::getSectionName));
         List<Element> htmlElements = new ArrayList<>(nonInsertAtElements);
         if (insertAtElementsGroups.containsKey("html")) {
             htmlElements.addAll(insertAtElementsGroups.get("html"));
         }
+        buildContentCallsForFragments(fragmentCallElements);
         appendGetContentForSection("html", builder, htmlElements, fragmentCallElements);
         for (Map.Entry<String, List<InsertAtElement>> entry : insertAtElementsGroups.entrySet()) {
             if (entry.getKey().equals("html")) {
@@ -123,13 +125,29 @@ public class TemplateFile extends PhoenixFileParser {
         return builder.toString();
     }
 
+    private void buildContentCallsForFragments(List<FragmentOrStaticImportCallElement> fragmentCallElements) {
+        for (FragmentOrStaticImportCallElement fragmentCallElement : fragmentCallElements) {
+            if (fragmentCallElement.isFragment() && fragmentCallElement.getContentVariableName() != null) {
+                builder.append("\tprivate PhoenixContent ").append(fragmentCallElement.getContentVariableName())
+                        .append("() {\n");
+                builder.append(fragmentCallElement.getNestedElementsContent());
+                builder.append("\t\treturn ").append(fragmentCallElement.getContentVariableName()).append(";\n");
+                builder.append("\t}\n");
+            }
+        }
+    }
+
     private void appendGetContentForSection(String sectionName, StringBuilder builder, List<? extends Element> lineElements,
                                             List<FragmentOrStaticImportCallElement> fragmentCallElements) {
         builder.append("\tpublic String getContentFor").append(sectionName).append("(PhoenixSpecialElementsUtil specialElementsUtil) {\n");
         builder.append("\t\t").append("final StringBuilder contentBuilder = new StringBuilder();\n\n");
         for (Element element : lineElements) {
             if (element instanceof SectionElement sectionElement) {
-                builder.append(sectionElement.write(fragmentCallElements));
+                builder.append(
+                        sectionElement.write(fragmentCallElements,
+                                lineElements.stream().filter(NestedElement.class::isInstance).map(NestedElement.class::cast).toList()
+                        )
+                );
             } else {
                 builder.append(element.write());
             }

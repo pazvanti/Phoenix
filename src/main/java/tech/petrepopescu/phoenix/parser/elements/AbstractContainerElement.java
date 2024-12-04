@@ -25,8 +25,8 @@ public abstract class AbstractContainerElement extends Element {
                 nestedElements.add(subElement);
                 this.lineNumber = subElement.parse(fileName) + 1;
                 line = StringUtils.trim(this.lines.get(this.lineNumber));
-                numOpenedBrackets += countOccurancesInHtml(subElement, "{");
-                numOpenedBrackets -= countOccurancesInHtml(subElement, "}");
+                numOpenedBrackets += countOccurrencesInHtml(subElement, "{");
+                numOpenedBrackets -= countOccurrencesInHtml(subElement, "}");
             }
             if (line.length() > 1) {
                 this.lineNumber = discoverNextElement(line, lines, this.lineNumber, fileName);
@@ -45,13 +45,13 @@ public abstract class AbstractContainerElement extends Element {
         }
     }
 
-    private int countOccurancesInHtml(Element element, String searchFor) {
+    private int countOccurrencesInHtml(Element element, String searchFor) {
         int count = 0;
         if (element instanceof HtmlElement htmlElement) {
             count += StringUtils.countMatches(htmlElement.getActualCode(), searchFor);
         }
         if (element.nextElement != null) {
-            count += countOccurancesInHtml(element.nextElement, searchFor);
+            count += countOccurrencesInHtml(element.nextElement, searchFor);
         }
 
         return count;
@@ -71,5 +71,20 @@ public abstract class AbstractContainerElement extends Element {
         for (Element nestedElement : nestedElements) {
             nestedElement.setBuilderName(builderName);
         }
+    }
+
+    @Override
+    public StringBuilder getFragmentOrStaticImportCallElementWriter(String sectionName) {
+        StringBuilder fragmentCallElements = super.getFragmentOrStaticImportCallElementWriter(sectionName);
+        for (Element nestedElement : nestedElements) {
+            if (nestedElement instanceof FragmentOrStaticImportCallElement fragmentOrStaticImportCallElement &&
+                    fragmentOrStaticImportCallElement.isFragment()) {
+                fragmentCallElements.append("\n").append(fragmentOrStaticImportCallElement.getContentCallObject());
+            } else {
+                fragmentCallElements.append("\n").append(nestedElement.getFragmentOrStaticImportCallElementWriter(sectionName));
+            }
+        }
+
+        return fragmentCallElements;
     }
 }

@@ -23,10 +23,10 @@ public class SectionElement extends AbstractContainerElement {
 
     @Override
     public StringBuilder write() {
-        return write(List.of());
+        return write(List.of(), List.of());
     }
 
-    public StringBuilder write(List<FragmentOrStaticImportCallElement> fragments) {
+    public StringBuilder write(List<FragmentOrStaticImportCallElement> fragments, List<NestedElement> nestedElements) {
         for (Element element:this.nestedElements) {
             this.contentBuilder.append(element.write());
         }
@@ -42,6 +42,10 @@ public class SectionElement extends AbstractContainerElement {
         }
         for (int count = 0; count < fragments.size(); count++) {
             appendAsCode("contentBuilder.append(" + fragmentVariableNames.get(count) + ".getContentForSection(\"" + this.sectionName + "\", specialElementsUtil));\n");
+        }
+
+        for (NestedElement nestedElement:nestedElements) {
+            appendAsCode(nestedElement.getFragmentOrStaticImportCallElementWriter(this.sectionName).toString());
         }
         return this.contentBuilder;
     }

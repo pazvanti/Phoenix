@@ -56,6 +56,7 @@ class SectionTests {
 
         tests.put("sectionTest", List.of(10));
         tests.put("complexSectionTest", List.of(1));
+        tests.put("sectionTestWithLoop", List.of(1));
 
         for (Map.Entry<String, List<Object>> entry : tests.entrySet()) {
             String htmlContent = View.of(entry.getKey(), entry.getValue().toArray(new Object[0])).getContent(phoenixSpecialElementsUtil);

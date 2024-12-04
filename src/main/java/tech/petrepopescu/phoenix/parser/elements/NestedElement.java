@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import tech.petrepopescu.phoenix.parser.ElementFactory;
 
 import java.util.List;
+import java.util.UUID;
 
 public class NestedElement extends AbstractContainerElement {
     protected String statement;
@@ -38,5 +39,31 @@ public class NestedElement extends AbstractContainerElement {
 
     protected String extractStatement(String line) {
         return StringUtils.substring(line, StringUtils.indexOf(line, '(') + 1, StringUtils.lastIndexOf(line, ')'));
+    }
+
+    @Override
+    public StringBuilder getFragmentOrStaticImportCallElementWriter(String sectionName) {
+        StringBuilder fragmentCallElementWriter = new StringBuilder();
+        if (sectionName == null || nestedElements.isEmpty()) {
+            return fragmentCallElementWriter;
+        }
+        fragmentCallElementWriter.append(StringUtils.repeat('\t', this.numTabs)).append(type).append(" (").append(statement).append(") {\n");
+        for (Element element:nestedElements) {
+            if (element instanceof FragmentOrStaticImportCallElement fragmentOrStaticImportCallElement &&
+                    fragmentOrStaticImportCallElement.isFragment()) {
+                String variableName = "fragmentCall" + StringUtils.remove(UUID.randomUUID().toString(), "-");
+                fragmentCallElementWriter.append("\t\t").append("HtmlFormat ").append(variableName).append(" = ");
+                fragmentCallElementWriter.append(fragmentOrStaticImportCallElement.getContentCallObject());
+                fragmentCallElementWriter.append(";\n");
+                fragmentCallElementWriter.append("\t\t").append(variableName).append(".setContentGroup(this.contentGroup);\n");
+                fragmentCallElementWriter.append("\t\t").append("contentBuilder.append(").append(variableName).append(".getContentForSection(\"");
+                fragmentCallElementWriter.append(sectionName).append("\", specialElementsUtil));\n");
+            } else {
+                fragmentCallElementWriter.append("\n").append(element.getFragmentOrStaticImportCallElementWriter(sectionName));
+            }
+        }
+        fragmentCallElementWriter.append(StringUtils.repeat('\t', this.numTabs)).append("}\n");
+
+        return fragmentCallElementWriter;
     }
 }
