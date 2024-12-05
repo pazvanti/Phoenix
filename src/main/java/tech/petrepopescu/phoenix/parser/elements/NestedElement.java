@@ -44,7 +44,6 @@ public class NestedElement extends AbstractContainerElement {
     @Override
     public StringBuilder getFragmentOrStaticImportCallElementWriter(String sectionName) {
         StringBuilder fragmentCallElementWriter = new StringBuilder();
-        fragmentCallElementWriter.append("// in nested element: ").append(this.type).append("\n");
         if (sectionName == null || nestedElements.isEmpty() || this.statement == null) {
             return fragmentCallElementWriter;
         }
@@ -64,8 +63,6 @@ public class NestedElement extends AbstractContainerElement {
             }
         }
         fragmentCallElementWriter.append(StringUtils.repeat('\t', this.numTabs)).append("}\n");
-
-        fragmentCallElementWriter.append("//exiting nested element: ").append(this.type).append("\n");
         return fragmentCallElementWriter;
     }
 }
