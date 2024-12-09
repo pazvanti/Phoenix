@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import tech.petrepopescu.phoenix.parser.ElementFactory;
 
 import java.util.List;
+import java.util.UUID;
 
 public class CsrfInputElement extends Element {
     private String startingWhitespaces = "";
@@ -22,10 +23,12 @@ public class CsrfInputElement extends Element {
     @Override
     public StringBuilder write() {
         appendAsStringWithContentBuilder(startingWhitespaces);
+        String variableName = UUID.randomUUID().toString().replaceAll("-", "");
+        appendAsCode("var token" + variableName + " = specialElementsUtil.getCsrfToken();\n");
         appendAsStringWithContentBuilder("<input type=\"hidden\" name=\"");
-        appendWithContentBuilder("specialElementsUtil.getCsrfTokenName()");
+        appendWithContentBuilder("specialElementsUtil.getCsrfTokenName(token" + variableName + ")");
         appendAsStringWithContentBuilder("\" value=\"");
-        appendWithContentBuilder("specialElementsUtil.getCsrfTokenValue()");
+        appendWithContentBuilder("specialElementsUtil.getCsrfTokenValue(token" + variableName + ")");
         appendAsStringWithContentBuilder("\"/>\n");
         return this.contentBuilder;
     }

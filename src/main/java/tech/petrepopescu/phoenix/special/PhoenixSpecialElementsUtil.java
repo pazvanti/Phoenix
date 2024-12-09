@@ -8,8 +8,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 @Component
 public class PhoenixSpecialElementsUtil {
-    public String getCsrfTokenName() {
-        CsrfToken csrfToken = getCsrfToken();
+    public String getCsrfTokenName(CsrfToken csrfToken) {
         if (csrfToken != null) {
             return csrfToken.getParameterName();
         }
@@ -17,8 +16,7 @@ public class PhoenixSpecialElementsUtil {
         return "";
     }
 
-    public String getCsrfHeaderName() {
-        CsrfToken csrfToken = getCsrfToken();
+    public String getCsrfHeaderName(CsrfToken csrfToken) {
         if (csrfToken != null) {
             return csrfToken.getHeaderName();
         }
@@ -26,8 +24,7 @@ public class PhoenixSpecialElementsUtil {
         return "";
     }
 
-    public String getCsrfTokenValue() {
-        CsrfToken csrfToken = getCsrfToken();
+    public String getCsrfTokenValue(CsrfToken csrfToken) {
         if (csrfToken != null) {
             return csrfToken.getToken();
         }
@@ -35,17 +32,8 @@ public class PhoenixSpecialElementsUtil {
         return "";
     }
 
-    private CsrfToken getCsrfToken() {
-        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        if (attributes != null) {
-            // Access the HttpServletRequest
-            HttpServletRequest request = attributes.getRequest();
-            CsrfToken token = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
-            request.setAttribute(CsrfToken.class.getName(), token);
-            request.setAttribute(token.getParameterName(), token);
-            return token;
-        }
-
-        return null;
+    public CsrfToken getCsrfToken() {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        return (CsrfToken) request.getAttribute(CsrfToken.class.getName());
     }
 }

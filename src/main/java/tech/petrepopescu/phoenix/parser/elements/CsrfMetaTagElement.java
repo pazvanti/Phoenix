@@ -28,14 +28,15 @@ public class CsrfMetaTagElement extends Element {
     @Override
     public StringBuilder write() {
         appendAsStringWithContentBuilder(startingWhitespaces);
+        appendAsCode("var token = specialElementsUtil.getCsrfToken();\n");
         appendAsStringWithContentBuilder("<meta name=\"_csrf\" content=\"");
-        appendWithContentBuilder("specialElementsUtil.getCsrfTokenValue()");
+        appendWithContentBuilder("specialElementsUtil.getCsrfTokenValue(token)");
         appendAsStringWithContentBuilder("\"/>");
         if (includeHeaderName) {
             appendAsStringWithContentBuilder("\n");
             appendAsStringWithContentBuilder(startingWhitespaces);
             appendAsStringWithContentBuilder("<meta name=\"_csrf_header\" content=\"");
-            appendWithContentBuilder("specialElementsUtil.getCsrfHeaderName()");
+            appendWithContentBuilder("specialElementsUtil.getCsrfHeaderName(token)");
             appendAsStringWithContentBuilder("\"/>");
         }
         appendAsStringWithContentBuilder("\n");
