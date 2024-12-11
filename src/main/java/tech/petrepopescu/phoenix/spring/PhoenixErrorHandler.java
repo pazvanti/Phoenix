@@ -39,6 +39,7 @@ public class PhoenixErrorHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Result handlerAnyException(Exception e, WebRequest request) {
         try {
+            log.error("Error occurred", e);
             if (configuration.getErrorPages() == null || StringUtils.isBlank(configuration.getErrorPages().getCode500())) {
                 return new Result(view500, HttpStatus.NOT_FOUND);
             }
