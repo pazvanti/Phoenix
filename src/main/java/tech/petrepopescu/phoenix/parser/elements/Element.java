@@ -82,22 +82,27 @@ public abstract class Element {
     }
 
     protected int indexOfElementEnd(String partialLine, int start, boolean checkQuote) {
+        return indexOfElementEnd(partialLine, start, checkQuote, END_CHARACTERS);
+    }
+
+    protected int indexOfElementEnd(String partialLine, int start, boolean checkQuote, List<Character> endCharacters) {
         int end = start;
         int countOpenParentheses = 0;
         int countEndParentheses = 0;
         int countQuote = 0;
         while (end < partialLine.length()) {
-            if (partialLine.charAt(end) == '(') {
+            char currentChar = partialLine.charAt(end);
+            if (currentChar == '(') {
                 countOpenParentheses++;
             }
-            if (partialLine.charAt(end) == ')') {
+            if (currentChar == ')') {
                 countEndParentheses++;
             }
-            if (partialLine.charAt(end) == '\"') {
+            if (currentChar == '\"') {
                 countQuote++;
             }
-            if (END_CHARACTERS.contains(partialLine.charAt(end)) && countEndParentheses == countOpenParentheses) {
-                if (partialLine.charAt(end) == ')') {
+            if (endCharacters.contains(currentChar) && countEndParentheses == countOpenParentheses) {
+                if (currentChar == ')') {
                     // If we end on `)` we need to include it as well since it is the end of a function call
                     end++;
                 }

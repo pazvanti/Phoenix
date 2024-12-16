@@ -15,9 +15,9 @@ public class RouteElement extends Element {
     @Override
     public int parse(String fileName) {
         String line = StringUtils.trim(this.lines.get(this.lineNumber));
-        int indexOfVariableEnd = StringUtils.indexOf(line, ")", 1);
-        routeVal = StringUtils.substring(line, 1, indexOfVariableEnd) + ")";
-        discoverNextElement(StringUtils.substring(line, indexOfVariableEnd + 1), fileName);
+        int indexOfVariableEnd = indexOfElementEnd(line, StringUtils.indexOf(line, "("), true, List.of(')'));
+        routeVal = StringUtils.substring(line, 1, indexOfVariableEnd);
+        discoverNextElement(StringUtils.substring(line, indexOfVariableEnd), fileName);
         return lineNumber;
     }
 
