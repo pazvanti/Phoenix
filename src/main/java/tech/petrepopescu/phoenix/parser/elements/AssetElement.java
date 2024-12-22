@@ -18,7 +18,9 @@ public class AssetElement extends Element {
     public int parse(String fileName) {
         final String line = lines.get(this.lineNumber);
         String lineNoRoute = StringUtils.substring(line, "@asset.path(\"".length());
-        int elementEnd = indexOfElementEnd(lineNoRoute, 0);
+        int elementEnd = StringUtils.indexOf(lineNoRoute, "\")");
+
+        // TODO: We need to be able to parse variable inside asset element path
         path = StringUtils.substring(lineNoRoute, 0, elementEnd);
         discoverNextElement(StringUtils.substring(lineNoRoute, elementEnd + 2), fileName);
         return this.lineNumber;
