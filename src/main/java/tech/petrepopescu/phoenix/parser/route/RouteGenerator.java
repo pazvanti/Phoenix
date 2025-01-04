@@ -105,6 +105,9 @@ public class RouteGenerator {
             }
         }
 
+        if (!StringUtils.startsWith(url, "/")) {
+            url = "/" + url;
+        }
         return RoutePath.builder().url(url)
                 .name(name)
                 .pathVariables(pathVariables)

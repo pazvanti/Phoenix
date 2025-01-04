@@ -8,6 +8,8 @@ import tech.petrepopescu.phoenix.parser.VariableRegistry;
 import java.util.List;
 
 public class HtmlElement extends Element {
+    public static final String TEST_ENV_PROPERTY = "phoenix.is.unit.test";
+
     private String variableName;
     private String actualCode;
     public HtmlElement(List<String> lines, int lineNumber, ElementFactory elementFactory, String builderName) {
@@ -34,7 +36,7 @@ public class HtmlElement extends Element {
     public StringBuilder write() {
         boolean isDebug = java.lang.management.ManagementFactory.getRuntimeMXBean().
                 getInputArguments().toString().contains("-agentlib:jdwp");
-        if (isDebug) {
+        if (isDebug || Boolean.getBoolean(TEST_ENV_PROPERTY)) {
             // For debug purposes, we write the actual line. The code is not optimized, but we
             // can more easily see the generated code
             appendAsStringWithContentBuilder(actualCode);
@@ -44,7 +46,7 @@ public class HtmlElement extends Element {
         if (this.nextElement != null) {
             this.contentBuilder.append(this.nextElement.write());
         } else {
-            if (isDebug) {
+            if (isDebug || Boolean.getBoolean(TEST_ENV_PROPERTY)) {
                 appendAsStringWithContentBuilder("\n");
             } else {
                 appendWithContentBuilder(VariableRegistry.getInstance().getOrDefineStaticString(StringEscapeUtils.escapeJava("\n")));
