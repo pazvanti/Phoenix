@@ -34,17 +34,29 @@ public class RouteGenerator {
             for (Method m:controllerClass.getMethods()) {
                 GetMapping getAnnotation = m.getAnnotation(GetMapping.class);
                 if (getAnnotation != null) {
-                    paths.add(parseAnnotation(getAnnotation.value()[0], m, HttpMethod.GET));
+                    if (getAnnotation.value().length > 0) {
+                        paths.add(parseAnnotation(getAnnotation.value()[0], m, HttpMethod.GET));
+                    } else if (getAnnotation.path().length > 0) {
+                        paths.add(parseAnnotation(getAnnotation.path()[0], m, HttpMethod.GET));
+                    }
                 }
 
                 PostMapping postAnnotation = m.getAnnotation(PostMapping.class);
                 if (postAnnotation != null) {
-                    paths.add(parseAnnotation(postAnnotation.value()[0], m, HttpMethod.POST));
+                    if (postAnnotation.value().length > 0) {
+                        paths.add(parseAnnotation(postAnnotation.value()[0], m, HttpMethod.POST));
+                    } else if (postAnnotation.path().length > 0) {
+                        paths.add(parseAnnotation(postAnnotation.path()[0], m, HttpMethod.POST));
+                    }
                 }
 
                 PutMapping putAnnotation = m.getAnnotation(PutMapping.class);
                 if (putAnnotation != null) {
-                    paths.add(parseAnnotation(putAnnotation.value()[0], m, HttpMethod.PUT));
+                    if (putAnnotation.value().length > 0) {
+                        paths.add(parseAnnotation(putAnnotation.value()[0], m, HttpMethod.PUT));
+                    } else if (putAnnotation.path().length > 0) {
+                        paths.add(parseAnnotation(putAnnotation.path()[0], m, HttpMethod.PUT));
+                    }
                 }
             }
 
