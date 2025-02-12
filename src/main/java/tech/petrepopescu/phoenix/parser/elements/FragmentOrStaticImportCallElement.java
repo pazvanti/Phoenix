@@ -1,6 +1,7 @@
 package tech.petrepopescu.phoenix.parser.elements;
 
 import org.apache.commons.lang3.StringUtils;
+import tech.petrepopescu.phoenix.exception.ParsingException;
 import tech.petrepopescu.phoenix.parser.ElementFactory;
 
 import java.util.List;
@@ -21,13 +22,29 @@ public class FragmentOrStaticImportCallElement extends NestedElement {
     public int parse(String fileName) {
         final String line = StringUtils.trim(this.lines.get(this.lineNumber));
         indexOfParamStart = StringUtils.indexOf(line, "(");
-        indexOfParamEnd = StringUtils.indexOf(line, ")", indexOfParamStart + 1);
+        indexOfParamEnd = findParameterEnd(line, indexOfParamStart);
         fragmentName = StringUtils.substring(line, 1, indexOfParamStart);
         if (elementFactory.isStaticImport(fragmentName)) {
             this.isFragment = false;
             return parseStaticImport(line, indexOfParamEnd, fileName);
         }
         return parseFragment(line);
+    }
+
+    private int findParameterEnd(String line, int parameterStart) {
+        int openedBrackets = 0;
+        int parameterEnd;
+        for (parameterEnd = parameterStart + 1; parameterEnd < line.length(); parameterEnd++) {
+            if (line.charAt(parameterEnd) == '(') {
+                openedBrackets++;
+            }
+            if (line.charAt(parameterEnd) == ')') {
+                if (openedBrackets == 0) return parameterEnd;
+                openedBrackets--;
+            }
+        }
+
+        throw new ParsingException("Could not parse fragment call: " + line);
     }
 
     private int parseStaticImport(String line, int indexOfParamEnd, String fileName) {
