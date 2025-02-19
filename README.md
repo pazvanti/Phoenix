@@ -147,7 +147,7 @@ Example:
 
 | Phoenix 	      | Generated HTML 	                                                                                 | 
 |----------------|--------------------------------------------------------------------------------------------------|
-| `@csrf.meta()` | `<meta name="_csrf" content="token"><br/> \n  <meta name="_csrf_header" content="X-CSRF-TOKEN">` |
+| `@csrf.meta()` | `<meta name="_csrf" content="token">`<br/> `<meta name="_csrf_header" content="X-CSRF-TOKEN">` |
 
 
 If you only need to include the token and not the header name, you can do so by providing an optional boolean parameter:
