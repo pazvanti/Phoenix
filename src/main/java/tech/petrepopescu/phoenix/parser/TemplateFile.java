@@ -1,6 +1,5 @@
 package tech.petrepopescu.phoenix.parser;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import tech.petrepopescu.phoenix.exception.ParsingException;
 import tech.petrepopescu.phoenix.parser.elements.*;
@@ -9,6 +8,8 @@ import tech.petrepopescu.phoenix.spring.config.PhoenixConfiguration;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +28,7 @@ public class TemplateFile extends PhoenixFileParser {
 
     @Override
     protected void doParse() throws IOException {
-        final List<String> lines = FileUtils.readLines(file, Charset.defaultCharset())
+        final List<String> lines = readLines(file, Charset.defaultCharset())
                 .stream().filter(StringUtils::isNotBlank).toList();
         final String fileName = file.getName().substring(0, file.getName().indexOf(configuration.getViews().getExtension()));
 
@@ -51,6 +52,15 @@ public class TemplateFile extends PhoenixFileParser {
         if (constructorElement == null) {
             throw new ParsingException("No constructor defined for " + file.getName());
         }
+    }
+
+    private List<String> readLines(File file, Charset charset) throws IOException {
+        if (file == null) {
+            throw new IllegalArgumentException("File cannot be null");
+        }
+
+        Path path = file.toPath();
+        return Files.readAllLines(path, charset);
     }
 
     public String className() {

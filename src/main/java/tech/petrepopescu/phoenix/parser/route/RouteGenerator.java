@@ -1,7 +1,6 @@
 package tech.petrepopescu.phoenix.parser.route;
 
 import org.apache.commons.lang3.StringUtils;
-import org.reflections.Reflections;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
@@ -19,15 +18,15 @@ import java.util.Set;
 @Component
 public class RouteGenerator {
     private final PhoenixConfiguration config;
+    private final AnnotationScanner annotationScanner = new AnnotationScanner();
 
     public RouteGenerator(PhoenixConfiguration config) {
         this.config = config;
     }
 
     public List<JavaFileObject> generateRoutes() {
-        Reflections reflections = new Reflections(config.getControllersPackage());
         List<JavaFileObject> fileObjects = new ArrayList<>();
-        Set<Class<?>> allControllers = reflections.getTypesAnnotatedWith(Controller.class);
+        Set<Class<?>> allControllers = annotationScanner.getTypesAnnotatedWith(Controller.class);
 
         for (Class<?> controllerClass:allControllers) {
             List<RoutePath> paths = new ArrayList<>();

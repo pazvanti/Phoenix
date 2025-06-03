@@ -4,25 +4,19 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import tech.petrepopescu.phoenix.parser.ElementFactory;
 import tech.petrepopescu.phoenix.parser.elements.Element;
-import tech.petrepopescu.phoenix.parser.elements.NullSafeVariableElement;
+import tech.petrepopescu.phoenix.parser.elements.NullSafeRawElement;
 
 import java.util.List;
 
 @Component
-public class NullSafeVariableElementBuilder extends ElementBuilder {
-    @Override
-    public int order() {
-        // Moved priority down so that we guarantee that `@?raw()` is first
-        return 100;
-    }
-
+public class NullSafeRawElementBuilder extends ElementBuilder {
     @Override
     public boolean isValid(String line) {
-        return StringUtils.startsWith(line, "@?");
+        return StringUtils.startsWith(line, "@?raw(");
     }
 
     @Override
     public Element buildFromLine(List<String> lines, int lineNumber, ElementFactory elementFactory, String builderName) {
-        return new NullSafeVariableElement(lines, lineNumber, elementFactory, builderName);
+        return new NullSafeRawElement(lines, lineNumber, elementFactory, builderName);
     }
 }

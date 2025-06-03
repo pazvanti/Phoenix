@@ -1,6 +1,5 @@
 package test.parsing;
 
-import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,8 +16,10 @@ import tech.petrepopescu.phoenix.spring.SecurityConfig;
 import tech.petrepopescu.phoenix.spring.config.PhoenixConfiguration;
 import tech.petrepopescu.phoenix.spring.config.ViewsConfiguration;
 import tech.petrepopescu.phoenix.views.View;
+import tech.petrepopescu.utils.ReadFileUtil;
 
 import java.io.File;
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,7 +49,7 @@ class SectionTests {
         parser.parse();
 
         Map<String, List<Object>> tests = new HashMap<>();
-        //tests.put("simpleSectionTest", List.of(3));
+        tests.put("simpleSectionTest", List.of(3));
         tests.put("insertOnceTest", List.of(3));
 
         // We need to repeat the insertOnce test to make sure that second call is correct as well
@@ -60,7 +61,7 @@ class SectionTests {
 
         for (Map.Entry<String, List<Object>> entry : tests.entrySet()) {
             String htmlContent = View.of(entry.getKey(), entry.getValue().toArray(new Object[0])).getContent(phoenixSpecialElementsUtil);
-            String expected = FileUtils.readFileToString(new File("src/test/resources/section/expected/" + entry.getKey() + ".html"), "UTF-8");
+            String expected = ReadFileUtil.readFileToString(new File("src/test/resources/section/expected/" + entry.getKey() + ".html"), Charset.defaultCharset());
             assertEquals(expected, htmlContent, "Failed for test: " + entry.getKey());
         }
     }

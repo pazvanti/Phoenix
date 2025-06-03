@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="img/logo.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/java.min.js"></script>
 </head>
@@ -19,7 +20,8 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg sticky-top">
         <div class="container">
-            <a class="navbar-brand" href="index.html"><img src="img/logo.svg" alt="Phoenix Logo" width="40" style="margin-right: 4px;">Phoenix</a>
+            <a class="navbar-brand" href="index.html"><img src="img/logo.svg" alt="Phoenix Logo" width="40"
+                    style="margin-right: 4px;">Phoenix</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -30,13 +32,15 @@
                         <a class="nav-link" aria-current="page" href="index.html">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" target="_blank" href="https://github.com/pazvanti/Phoenix">Source Code</a>
+                        <a class="nav-link" aria-current="page" target="_blank"
+                            href="https://github.com/pazvanti/Phoenix">Source Code</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" target="_blank" href="https://github.com/pazvanti/Phoenix/issues">Issues tracker</a>
+                        <a class="nav-link" aria-current="page" target="_blank"
+                            href="https://github.com/pazvanti/Phoenix/issues">Issues tracker</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="why_ssr.html">Why SSR?</a>
+                        <a class="nav-link active" aria-current="page" href="why_ssr.html">Why SSR?</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarCommunitiesDropdown" role="button"
@@ -48,13 +52,16 @@
                             <li><a class="dropdown-item" href="configuration.html">Configuration</a></li>
                             <li><a class="dropdown-item" href="specialChar.html">The special `@` character</a></li>
                             <li><a class="dropdown-item" href="phoenixResponse.html">The Phoenix response</a></li>
-                            <li><a class="dropdown-item active" href="fragmentRetrieval.html">Fragment retrieval</a></li>
-                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="fragmentRetrieval.html">Fragment retrieval</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
                             <li><a class="dropdown-item" href="elements.html">Syntax and elements</a></li>
                         </ul>
                     </li>
                     <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
-                        <a class="btn btn-custom-orange px-3 py-2" href="https://github.com/pazvanti/Phoenix/tree/main/releases">Download Phoenix</a>
+                        <a class="btn btn-custom-orange px-3 py-2"
+                            href="https://github.com/pazvanti/Phoenix/tree/main/releases">Download Phoenix</a>
                     </li>
                 </ul>
             </div>
@@ -64,49 +71,63 @@
     <main>
         <section class="py-5">
             <div class="container">
-                <p class="text-custom-orange section-subtitle  text-center">Retrieve a fragment and use it in your already-rendered page</p>
-                <h2 class="section-title display-4 mb-5  text-center">Fragment retrieval</h2>
+                <p class="text-custom-orange section-subtitle  text-center">Here is how Phoenix can help</p>
+                <h2 class="section-title display-4 mb-5  text-center">Server-Side Rendering vs Client-Side Rendering:
+                    Key Benefits for Spring Boot Applications</h2>
                 <div class="row mt-4 p-1 text-white">
                     <div class="col-md-12 d-flex">
                         <div class="card p-4 w-100">
                             <i class="bi bi-chevron-down card-dropdown-icon"></i>
                             <div class="card-icon text-center"><i class="bi bi-fire"></i></div>
                             <div class="card-body p-0">
-                                <p>Phoenix has a special feature which allows fragments to be rendered server-side and returned to
-                                    the client-side via <code>GET</code> requests. This features allows building of modern and
-                                    complex web
-                                    applications with dynamically constructed web-pages and elements added on the page after the
-                                    page load. Similar to modern JavaScript UI frameworks, Phoenix allows the creation and
-                                    reusability of fragments/components.</p>
-                                <p>To enable this feature, include the following configuration option:
-                                    <code>fragmentRetrieveEnabled: true</code>
-                                </p>
-                                <p>When this option is on, a special controller is activated in your Spring application which can be
-                                    called to retrieve the HTML code generated by a fragment. The endpoint requires the fragment
-                                    name as a RequestParameter and a list of Strings representing the String representation of the
-                                    fragment's input parameters. If the fragment has no input parameters, then no secondary
-                                    RequestParameters are sent.</p>
-                                <p>Example: <code>GET /phoenix/fragment?name=myfragments.testFragment&amp;param=4&amp;param=Test</code></p>
-                                <p>The order of the parameters must match the order they are declared in the fragment. Furthermore,
-                                    due to limitations that are currently present in the code, only primitive types and Strings are
-                                    allowed as input parameters. See list of allowed input types below.</p>
-                                <p>The endpoint will return the HTML code rendered by the specified fragment or notFound() if the
-                                    fragment and parameter combination can't be found.</p>
-                                <p>Calling this endpoint makes it easy to dynamically add elements to a web page that has already
-                                    been rendered by calling the endpoint from JavaScript and appending the returned HTML code to
-                                    the DOM.</p>
-                                <h6>Allowed input types for client-retrieved fragments</h6>
-                                <ul class="ps-5">
-                                    <li>int/Integer</li>
-                                    <li>double/Double</li>
-                                    <li>float/Float</li>
-                                    <li>long/Long</li>
-                                    <li>short/Short</li>
-                                    <li>byte/Byte</li>
-                                    <li>char/Character</li>
-                                    <li>boolean/Boolean</li>
-                                    <li>String</li>
-                                </ul>
+                                <p>When building web applications with Spring Boot, developers can choose between
+                                    server-side rendering (SSR) and client-side JavaScript frameworks. While SPAs have
+                                    gained popularity, server-side rendering offers distinct advantages for many
+                                    applications.</p>
+
+                                <h2>Performance Benefits</h2>
+
+                                <p>Server-side rendering delivers immediate performance advantages. Users receive
+                                    fully-formed HTML content that browsers can display instantly, without waiting for
+                                    JavaScript bundles to download and execute. This results in faster initial page
+                                    loads and better user experience, especially on slower networks or devices.</p>
+
+                                <p>Client-side rendering requires multiple round trips—fetching HTML shells, downloading
+                                    JavaScript, and making API calls—creating noticeable delays and loading spinners
+                                    that hurt user experience.</p>
+
+                                <h2>Better SEO</h2>
+
+                                <p>Search engines favor content immediately available in HTML source code. Server-side
+                                    rendered pages provide complete, indexable content from the moment they're served,
+                                    ensuring better search rankings. JavaScript-heavy SPAs often struggle with SEO and
+                                    require additional complexity to achieve similar search visibility.</p>
+
+                                <h2>Simplified Architecture</h2>
+
+                                <p>SSR aligns naturally with Spring Boot's ecosystem, allowing developers to use
+                                    familiar tools like Spring MVC controllers, Thymeleaf templates, and Spring Security
+                                    in straightforward patterns. Client-side rendering introduces architectural
+                                    complexity with separate API endpoints, state management, and often duplicated
+                                    validation logic between client and server.</p>
+
+                                <h2>Enhanced Security and Accessibility</h2>
+
+                                <p>Server-side rendering keeps sensitive business logic on the server, reducing security
+                                    risks. It also works by default without JavaScript, providing better accessibility
+                                    and progressive enhancement for users with disabilities or older browsers.</p>
+
+                                <h2>When to Choose Each Approach</h2>
+
+                                <p>Client-side rendering excels for highly interactive applications like dashboards or
+                                    collaborative tools that need complex state management and real-time updates.
+                                    However, for content-driven sites, e-commerce platforms, and applications
+                                    prioritizing performance and maintainability, server-side rendering remains the
+                                    superior choice.</p>
+
+                                <p>Modern hybrid approaches using tools like HTMX or Alpine.js can add interactivity to
+                                    server-rendered pages without the complexity of full SPAs, offering the best of both
+                                    worlds.</p>
                             </div>
                         </div>
                     </div>
@@ -138,7 +159,8 @@
                     <ul>
                         <li><a href="https://github.com/pazvanti/Phoenix" target="_blank">Phoenix Source Code</a></li>
                         <li><a href="https://github.com/pazvanti/Phoenix/issues" target="_blank">Issue tracker</a></li>
-                        <li><a href="https://github.com/pazvanti/Phoenix-Benchmarks" target="_blank">Benchmarks source code</a></li>
+                        <li><a href="https://github.com/pazvanti/Phoenix-Benchmarks" target="_blank">Benchmarks source
+                                code</a></li>
                     </ul>
                 </div>
                 <div class="col-md-4 mb-4 mb-md-0">

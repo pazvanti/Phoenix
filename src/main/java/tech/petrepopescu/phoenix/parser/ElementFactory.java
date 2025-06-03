@@ -25,7 +25,7 @@ public class ElementFactory {
         if (CollectionUtils.isEmpty(elementBuilders)) {
             fragmentOrStaticImportElementBuilder = new FragmentOrStaticImportElementBuilder();
             elementBuilders = Set.of(new EscapeCharacterElementBuilder(), new RouteElementBuilder(), new ConstructorElementBuilder(),
-                    new IfElementBuilder(),
+                    new IfElementBuilder(), new AutowiredElementBuilder(), new NullSafeRawElementBuilder(),
                     new ImportElementBuilder(), new VariableElementBuilder(), new AssetElementBuilder(),
                     new HtmlElementBuilder(), new CommentElementBuilder(), new ForElementBuilder(), new CsrfElementBuilder(),
                     new BreakElementBuilder(), new WithElementBuilder(), new EvalElementBuilder(), new RawElementBuilder(),

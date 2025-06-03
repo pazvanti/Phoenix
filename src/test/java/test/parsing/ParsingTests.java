@@ -1,6 +1,5 @@
 package test.parsing;
 
-import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,9 +16,12 @@ import tech.petrepopescu.phoenix.spring.SecurityConfig;
 import tech.petrepopescu.phoenix.spring.config.PhoenixConfiguration;
 import tech.petrepopescu.phoenix.spring.config.ViewsConfiguration;
 import tech.petrepopescu.phoenix.views.View;
+import tech.petrepopescu.utils.ReadFileUtil;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,10 +56,16 @@ class ParsingTests {
         tests.put("advanceForAndIfTest", List.of(0, 3, List.of("one", "two", "three", "for", "five")));
         tests.put("variableTest", List.of(3, 4, List.of("10", "90", "50")));
         tests.put("elseInScript", List.of(3));
+        tests.put("autowiredTest", List.of(3));
+
+        List<Object> rawTestParams = new ArrayList<>();
+        rawTestParams.add("<span>test</span>");
+        rawTestParams.add(null);
+        tests.put("rawTest", rawTestParams);
 
         for (Map.Entry<String, List<Object>> entry : tests.entrySet()) {
             String htmlContent = View.of(entry.getKey(), entry.getValue().toArray(new Object[0])).getContent(phoenixSpecialElementsUtil);
-            String expected = FileUtils.readFileToString(new File("src/test/resources/expected/" + entry.getKey() + ".html"), "UTF-8");
+            String expected = ReadFileUtil.readFileToString(new File("src/test/resources/expected/" + entry.getKey() + ".html"), Charset.defaultCharset());
             assertEquals(expected, htmlContent, entry.getKey());
         }
     }
