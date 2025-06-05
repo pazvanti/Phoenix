@@ -1,6 +1,6 @@
 package tech.petrepopescu.phoenix.parser.route;
 
-import org.apache.commons.lang3.StringUtils;
+import tech.petrepopescu.phoenix.utils.StringUtils;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;

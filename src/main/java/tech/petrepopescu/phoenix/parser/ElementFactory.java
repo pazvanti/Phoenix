@@ -1,7 +1,7 @@
 package tech.petrepopescu.phoenix.parser;
 
 
-import org.apache.commons.lang3.StringUtils;
+import tech.petrepopescu.phoenix.utils.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import tech.petrepopescu.phoenix.parser.elements.Element;

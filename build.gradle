@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'tech.petrepopescu'
-version = '1.0.0'
+version = '1.0.1'
 sourceCompatibility = '17'
 
 repositories {
@@ -15,7 +15,6 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.apache.commons:commons-lang3:3.17.0'
 	implementation 'org.apache.commons:commons-text:1.13.1'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }

@@ -1,6 +1,6 @@
 package tech.petrepopescu.phoenix.parser;
 
-import org.apache.commons.lang3.StringUtils;
+import tech.petrepopescu.phoenix.utils.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;

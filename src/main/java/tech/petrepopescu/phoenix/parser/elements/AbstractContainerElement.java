@@ -1,6 +1,6 @@
 package tech.petrepopescu.phoenix.parser.elements;
 
-import org.apache.commons.lang3.StringUtils;
+import tech.petrepopescu.phoenix.utils.StringUtils;
 import tech.petrepopescu.phoenix.parser.ElementFactory;
 
 import java.util.ArrayList;

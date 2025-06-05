@@ -1,6 +1,6 @@
 package tech.petrepopescu.utils;
 
-import org.apache.commons.lang3.StringUtils;
+import tech.petrepopescu.phoenix.utils.StringUtils;
 
 public class TestUtil {
     public static String sanitizeResult(String result) {

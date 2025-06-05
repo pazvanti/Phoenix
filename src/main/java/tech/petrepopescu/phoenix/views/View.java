@@ -1,6 +1,6 @@
 package tech.petrepopescu.phoenix.views;
 
-import org.apache.commons.lang3.StringUtils;
+import tech.petrepopescu.phoenix.utils.StringUtils;
 import tech.petrepopescu.phoenix.format.HtmlFormat;
 import tech.petrepopescu.phoenix.views.predefined.PhoenixErrorView;
 import tech.petrepopescu.phoenix.views.predefined.ViewNotFoundView;

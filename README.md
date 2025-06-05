@@ -1,8 +1,5 @@
 # Phoenix Template Engine
 
-*NOTE:* This is an experimental template engine that is still in development and should not be used in production. It is unstable and has errors/bugs. At this moment only partial configuration is available. Further work is needed to prepare Phoenix for normal usage inside an application
-
-
 ## What is Phoenix
 
 Phoenix aims to be a modern template engine that will facilitate development of complex web application by providing an ease to use and easy to understand syntax for developing the HTML pages that will be rendered by the backend. Phoenix uses Server-Side-Rendering (SSR) to speed webpage load times and to provide close integration between the front-end and the back-end of a web application.
@@ -369,10 +366,7 @@ Additionally, the following other dependencies are required:
 ```gradle
 implementation 'org.springframework.boot:spring-boot-starter-web'
 implementation 'org.springframework.boot:spring-boot-starter-security'
-implementation 'org.apache.commons:commons-lang3:3.14.0'
 implementation 'org.apache.commons:commons-text:1.11.0'
-implementation 'commons-io:commons-io:2.11.0'
-implementation 'org.reflections:reflections:0.10.2'
 ```
 
 Finally, create a configuration file for your Spring Boot app and import the `PhoenixConfig` configuration:

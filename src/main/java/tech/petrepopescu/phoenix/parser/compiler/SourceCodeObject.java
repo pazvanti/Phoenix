@@ -1,6 +1,6 @@
 package tech.petrepopescu.phoenix.parser.compiler;
 
-import org.apache.commons.lang3.StringUtils;
+import tech.petrepopescu.phoenix.utils.StringUtils;
 
 import javax.tools.SimpleJavaFileObject;
 import java.net.URI;

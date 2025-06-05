@@ -1,6 +1,6 @@
 package tech.petrepopescu.phoenix.parser.elements.builders;
 
-import org.apache.commons.lang3.StringUtils;
+import tech.petrepopescu.phoenix.utils.StringUtils;
 import org.springframework.stereotype.Component;
 import tech.petrepopescu.phoenix.parser.ElementFactory;
 import tech.petrepopescu.phoenix.parser.elements.AssetElement;
