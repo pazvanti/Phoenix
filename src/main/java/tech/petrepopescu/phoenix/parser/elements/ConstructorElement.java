@@ -1,10 +1,10 @@
 package tech.petrepopescu.phoenix.parser.elements;
 
-import tech.petrepopescu.phoenix.utils.StringUtils;
-import org.apache.commons.lang3.tuple.Pair;
 import tech.petrepopescu.phoenix.exception.ParsingException;
 import tech.petrepopescu.phoenix.parser.ElementFactory;
 import tech.petrepopescu.phoenix.parser.VariableRegistry;
+import tech.petrepopescu.phoenix.utils.Pair;
+import tech.petrepopescu.phoenix.utils.StringUtils;
 import tech.petrepopescu.phoenix.utils.VariableDeclaration;
 
 import java.util.ArrayList;

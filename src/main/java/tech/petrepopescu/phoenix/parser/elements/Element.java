@@ -1,8 +1,8 @@
 package tech.petrepopescu.phoenix.parser.elements;
 
-import tech.petrepopescu.phoenix.utils.StringUtils;
-import org.apache.commons.text.StringEscapeUtils;
 import tech.petrepopescu.phoenix.parser.ElementFactory;
+import tech.petrepopescu.phoenix.utils.StringEscapeUtils;
+import tech.petrepopescu.phoenix.utils.StringUtils;
 
 import java.util.List;
 

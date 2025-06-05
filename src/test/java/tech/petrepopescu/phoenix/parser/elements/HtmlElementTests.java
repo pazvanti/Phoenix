@@ -31,7 +31,7 @@ class HtmlElementTests {
         element.parse("");
 
         String expected = "\t\tcontentBuilder.append(\"<h6>\");\n" +
-                "\t\tcontentBuilder.append(StringEscapeUtils.escapeHtml4(b));\n" +
+                "\t\tcontentBuilder.append(StringEscapeUtils.escapeHtml(b));\n" +
                 "\t\tcontentBuilder.append(\"</h6>\");\n" +
                 "\t\tcontentBuilder.append(\"\\n\");\n";
 

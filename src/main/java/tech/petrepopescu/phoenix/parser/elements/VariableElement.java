@@ -18,7 +18,7 @@ public class VariableElement extends Element {
         int elementEnd = indexOfElementEnd(line, 0);
         String variableName = StringUtils.substring(line, 1, elementEnd);
         if ("String".equals(VariableRegistry.getInstance().getType(fileName, variableName))) {
-            this.evalExpression = "StringEscapeUtils.escapeHtml4(" + variableName + ")";
+            this.evalExpression = "StringEscapeUtils.escapeHtml(" + variableName + ")";
         } else if (StringUtils.contains(variableName, "(")) {
             this.evalExpression = "Stringifier.toString(" + variableName + ")";
         } else {

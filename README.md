@@ -366,7 +366,6 @@ Additionally, the following other dependencies are required:
 ```gradle
 implementation 'org.springframework.boot:spring-boot-starter-web'
 implementation 'org.springframework.boot:spring-boot-starter-security'
-implementation 'org.apache.commons:commons-text:1.11.0'
 ```
 
 Finally, create a configuration file for your Spring Boot app and import the `PhoenixConfig` configuration:

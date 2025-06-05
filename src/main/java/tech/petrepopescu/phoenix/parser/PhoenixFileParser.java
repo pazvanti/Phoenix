@@ -37,8 +37,8 @@ public abstract class PhoenixFileParser {
     void addMandatoryImports(String fileName) {
         Element phoenixFormatImport = new ImportElement("tech.petrepopescu.phoenix.format.*");
         Element phoenixViewImport = new ImportElement("tech.petrepopescu.phoenix.views.View");
+        Element phoenixStringEscapeUtilsImport = new ImportElement("tech.petrepopescu.phoenix.utils.StringEscapeUtils");
         Element phoenixSpecialImport = new ImportElement("tech.petrepopescu.phoenix.special.*");
-        Element escapeUtilsImport = new ImportElement("org.apache.commons.text.StringEscapeUtils");
         Element springImport = new ImportElement("org.springframework.web.servlet.support.ServletUriComponentsBuilder");
         Element mapImport = new ImportElement("java.util.Map");
         Element hashMapImport = new ImportElement("java.util.HashMap");
@@ -46,8 +46,8 @@ public abstract class PhoenixFileParser {
         Element staticStringsImport = new ImportElement("static " + VIEWS_BASE_PACKAGE + ".StaticStrings.*");
         imports.add(phoenixFormatImport);
         imports.add(phoenixViewImport);
+        imports.add(phoenixStringEscapeUtilsImport);
         imports.add(phoenixSpecialImport);
-        imports.add(escapeUtilsImport);
         imports.add(springImport);
         imports.add(staticStringsImport);
         imports.add(mapImport);
